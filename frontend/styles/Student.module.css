@@ -1,0 +1,40 @@
+.containerstudents {
+  align-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.card {
+  border: 2px solid #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 5px;
+  width: 200px;
+  text-align: left;
+}
+
+.card .title {
+  color: #124375;
+  padding: 0px 10px;
+  display: flex;
+  font-weight: 500;
+  width: 220px;
+}
+
+.card .content {
+  color: #373737;
+  padding: 2px;
+}
+
+.card .content p {
+  text-indent: 15px;
+  font-size: 0.875em;
+  margin-top: 0px;
+  margin-bottom: 3px;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  border: 2px solid #124375;
+}

@@ -1,36 +1,50 @@
+.ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+}
+
+.li a {
+  display: block;
+  color: #248df4;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+.li a:hover {
+  background-color: #248df4;
+  color: white;
+}
+
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
+  padding: 0 2rem;
+}
+
+.containerclasses {
+  align-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.containercharts {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.maincontainer {
+  align-content: flex-start;
+  width: 90%;
 }
 
 .main {
-  padding: 5rem 0;
+  min-height: 100vh;
+  padding: 4rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer {
-  width: 100%;
-  height: 100px;
-  border-top: 1px solid #eaeaea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer img {
-  margin-left: 0.5rem;
-}
-
-.footer a {
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -58,6 +72,7 @@
 }
 
 .description {
+  margin: 4rem 0;
   line-height: 1.5;
   font-size: 1.5rem;
 }
@@ -77,12 +92,39 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
-  margin-top: 3rem;
+}
+
+.secondarycard {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  color: #273b73;
+  background-color: #fff;
+  border: 0px solid #5882fa;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+.maincard {
+  margin: 10px;
+  padding: 20px;
+  text-align: left;
+  color: #273b73;
+  background-color: #fff;
+  border: 0px solid #5882fa;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+.maincard h3 {
+  text-align: center;
 }
 
 .card {
   margin: 1rem;
-  flex-basis: 45%;
   padding: 1.5rem;
   text-align: left;
   color: inherit;
@@ -95,11 +137,10 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
   border-color: #0070f3;
 }
 
-.card h3 {
+.card h2 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
 }
@@ -112,11 +153,5 @@
 
 .logo {
   height: 1em;
-}
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+  margin-left: 0.5rem;
 }
