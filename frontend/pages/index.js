@@ -20,6 +20,8 @@ export default function Home() {
   const [password, setPassword] = useState('')
   const [openAlert, setOpenAlert] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+
   async function handleSubmit(e) {
     e.preventDefault()
   }
@@ -39,17 +41,34 @@ export default function Home() {
           marginLeft: '30px'
         }}
       >
-        <Image src="/logo_name_h.svg" width={180} height={30} priority="true" />
-        <Typography variant="body1">
-          Dataviewer é uma ferramenta de análise de dados que apresenta
-          informações relevantes para o professor e aluno, de forma a contribuir
-          com a implementação da educação 4.0. A plataforma digital fornece uma
-          visão geral para o professor sobre o aprendizado dos seus alunos,
-          através de um dashboard. Enquanto que no ambiente do aluno são
-          fornecidos feedbacks quanto à assimilação do conteúdo e
-          funcionalidades que estimulam o aprendizado de forma personalizada.
-          Tudo isso em tempo real e de forma automatizada.{' '}
-        </Typography>
+        <Box
+          sx={{
+            paddingBottom: '25px'
+          }}
+        >
+          <Image
+            src="/logo_name_h.svg"
+            width={180}
+            height={30}
+            priority="true"
+          />
+        </Box>
+        <Box
+          sx={{
+            paddingBottom: '25px'
+          }}
+        >
+          <Typography variant="body1" color="#373737">
+            Dataviewer é uma ferramenta de análise de dados que apresenta
+            informações relevantes para o professor e aluno, de forma a
+            contribuir com a implementação da educação 4.0. A plataforma digital
+            fornece uma visão geral para o professor sobre o aprendizado dos
+            seus alunos, através de um dashboard. Enquanto que no ambiente do
+            aluno são fornecidos feedbacks quanto à assimilação do conteúdo e
+            funcionalidades que estimulam o aprendizado de forma personalizada.
+            Tudo isso em tempo real e de forma automatizada.{' '}
+          </Typography>
+        </Box>
         <Image src="/intro_dv.svg" width={652} height={444} />
       </Box>
       <Box
