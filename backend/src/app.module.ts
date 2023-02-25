@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://admin:mongo@localhost:27017', {
+    MongooseModule.forRoot(process.env.DATABASE_HOST, {
       authMechanism: 'DEFAULT',
       dbName: 'dataviewer',
    
