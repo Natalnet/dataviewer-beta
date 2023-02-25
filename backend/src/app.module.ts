@@ -4,16 +4,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://mongo:mongo@localhost:27017', {
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot('mongodb://admin:mongo@localhost:27017', {
       authMechanism: 'DEFAULT',
       dbName: 'dataviewer',
-      auth: {
-        username: 'mongo',
-        password: 'mongo',
-      },
+   
     }),
     UsersModule,
     AuthModule,
