@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import { setCookie, parseCookies } from "nookies"
 import Router from "next/router"
-import { http } from "@/utils/http"
+import { http } from "../utils/http"
 
 export const AuthContext = createContext({})
 
