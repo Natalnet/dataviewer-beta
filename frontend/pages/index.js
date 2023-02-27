@@ -29,9 +29,10 @@ export default function Home() {
       try {
          setLoading(true)
          await signIn(email, password)
-      } catch {
+      } catch (error) {
          setAlertMessage("Falha ao realizar login!")
          setOpenAlert(true)
+         console.log(error)
       }
       setLoading(false)
    }
