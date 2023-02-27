@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
    async function signIn(email, password) {
       //TODO: realizar tratamento de erros
-      const { data } = await http.post("/auth/signin", { email, password })
+      const { data } = await http.post("/auth/login", { email, password })
 
       console.log("Dados do Usuário: ")
       console.log(data)

@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { AuthContext } from "../contexts/AuthContext"
 
 import {
    Container,
@@ -21,6 +22,7 @@ export default function Home() {
    const [openAlert, setOpenAlert] = useState(false)
    const [loading, setLoading] = useState(false)
    const [alertMessage, setAlertMessage] = useState("")
+   const { signIn } = useContext(AuthContext)
 
    async function handleSubmit(e) {
       e.preventDefault()
