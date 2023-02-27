@@ -11,7 +11,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_HOST, {
       authMechanism: 'DEFAULT',
-      dbName: 'dataviewer',
+      dbName: 'dataviewert1',
    
     }),
     UsersModule,
