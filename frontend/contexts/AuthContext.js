@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
 
    useEffect(() => {
       console.log("Necessário recuperar as informações dos usuários!")
+      const { "nextautht1.token": userCookie } = parseCookies()
       /* TODOD
       const { "nextautht1.email": userCookie } = parseCookies()
       if (userCookie) {
@@ -28,8 +29,8 @@ export function AuthProvider({ children }) {
 
       setUser(data.user)
 
-      const token = data.access_token
-      setCookie(undefined, "nextautht1.token", token, {
+      const token = data.accessToken
+      setCookie(null, "nextautht1.token", token, {
          maxAge: 60 * 90 * 1, //130 min
       })
 

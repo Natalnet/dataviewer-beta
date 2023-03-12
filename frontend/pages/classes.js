@@ -11,3 +11,10 @@ export default function Classes() {
       </>
    )
 }
+
+export async function getServerSideProps(context) {
+   console.log("Server side: ", context.req.cookies)
+   return {
+      props: {},
+   }
+}
