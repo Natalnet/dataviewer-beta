@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import { setCookie, parseCookies } from "nookies"
 import Router from "next/router"
-import { http } from "../utils/http"
+import { api } from "../utils/http"
 
 export const AuthContext = createContext({})
 
@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
 
    async function signIn(email, password) {
       //TODO: realizar tratamento de erros
-      const { data } = await http.post("/auth/login", { email, password })
+      const { data } = await api.post("/auth/login", { email, password })
 
       console.log("Dados do Usuário: ")
       console.log(data)
