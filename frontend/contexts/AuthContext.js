@@ -12,12 +12,14 @@ export function AuthProvider({ children }) {
    useEffect(() => {
       console.log("Necessário recuperar as informações dos usuários!")
       const { "nextautht1.token": userCookie } = parseCookies()
-      /* TODOD
-      const { "nextautht1.email": userCookie } = parseCookies()
+
       if (userCookie) {
-         console.log("nextautht1.email " + userCookie)
-         setUser(userCookie)
-      }*/
+         console.log("userCookie " + userCookie)
+         api.get("/users/profile").then((response) => {
+            console.log("useEffect: ", response.data)
+            setUser(response.data)
+         })
+      }
    }, [])
 
    async function signIn(email, password) {

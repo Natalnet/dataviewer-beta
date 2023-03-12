@@ -8,7 +8,7 @@ export default function Classes() {
    return (
       <>
          <h1>Infos</h1>
-         <p>{user?.email} </p>
+         <p>{user?.userEmail} </p>
          <p>{user?.name}</p>
       </>
    )
@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
       }
    }
 
-   console.log("Server side token: ", token)
+   //console.log("Server side token: ", token)
    return {
       props: {},
    }
