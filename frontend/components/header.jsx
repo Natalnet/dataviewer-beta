@@ -1,4 +1,5 @@
 import { AuthContext } from "../contexts/AuthContext"
+import { useContext } from "react"
 import Image from 'next/image'
 import { Box, Typography } from '@mui/material'
 
@@ -14,8 +15,10 @@ export default function Header() {
       }}
     >
       <Image src="/logo_name_h.svg" width={160} height={26} priority="true" />
-      <Typography variant='h5'> Nome Usuário </Typography>
-      {user?.userEmail}
+      <div> 
+        <h3> Nome Usuário </h3>
+        <p> E-mail: {user?.userEmail} </p> 
+      </div>
     </Box>
   );
 }

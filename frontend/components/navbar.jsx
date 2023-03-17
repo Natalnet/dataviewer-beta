@@ -1,6 +1,7 @@
 
 import styles from '../styles/Home.module.css'
 import { AuthContext } from "../contexts/AuthContext"
+import { useContext } from "react"
 import { Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
 export default function Navbar() {
