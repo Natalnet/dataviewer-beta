@@ -9,7 +9,6 @@ import Link from 'next/link'
 import { Box, Typography } from '@mui/material'
 
 export default function Classes({ classes }) {
-  console.log('Front side: ' + classes[0].name)
   const { user } = useContext(AuthContext)
   return (
     <>
@@ -76,7 +75,7 @@ export async function getServerSideProps(context) {
       description: 'LoP Turma 04 2020.2'
     }
   ]
-  console.log('Server side: ' + classes[0].name)
+
   return {
     props: {
       classes
