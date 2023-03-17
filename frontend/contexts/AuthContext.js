@@ -22,6 +22,10 @@ export function AuthProvider({ children }) {
     }
   }, [])
 
+  function logout() {
+    //TODO: apagar o cookie / token
+  }
+
   async function signUp(email, password) {
     //TODO: é necessário gerar um link de validação do e-mail
     const { data } = await api.post('/users', { email, password })
@@ -49,7 +53,9 @@ export function AuthProvider({ children }) {
     Router.push('/classes')
   }
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signUp, user }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, signIn, signUp, logout, user }}
+    >
       {children}
     </AuthContext.Provider>
   )
