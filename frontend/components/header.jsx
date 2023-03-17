@@ -15,10 +15,10 @@ export default function Header() {
       }}
     >
       <Image src="/logo_name_h.svg" width={160} height={26} priority="true" />
-      <div> 
+      <Box> 
         <h3> Nome Usuário </h3>
         <p> E-mail: {user?.userEmail} </p> 
-      </div>
+      </Box> 
     </Box>
   );
 }
