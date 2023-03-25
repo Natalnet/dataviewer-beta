@@ -1,8 +1,13 @@
-import { Controller } from "@nestjs/common"
+import { Controller, Get } from "@nestjs/common"
 import { ClassesService } from "./classes.service"
 
-@Controller()
+@Controller('classes')
 export class ClassesController {
   constructor(private classesService: ClassesService){}
-  
+
+  @Get()
+  findTeacherClasses(){
+    return this.classesService.findTeacherClasses() 
+  }
+
 }
