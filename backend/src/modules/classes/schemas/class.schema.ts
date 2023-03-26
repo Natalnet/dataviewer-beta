@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type UserDocument = HydratedDocument<TClass>;
+export type ClassDocument = HydratedDocument<TClass>;
 
 
 @Schema()
 export class TClass { // Vou utilizar TClass para não confundir com a palavra reservada class 
-  @Prop() 
-  id: string;
+  @Prop({ required: true }) 
+  class_id: string;
 
   @Prop() 
   name: string; 

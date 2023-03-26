@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common"
+import { Controller, Get, Param } from "@nestjs/common"
 import { ClassesService } from "./classes.service"
 
 @Controller('classes')
@@ -8,6 +8,12 @@ export class ClassesController {
   @Get()
   findTeacherClasses(){
     return this.classesService.findTeacherClasses() 
+  }
+
+  @Get(':id') 
+  findById(@Param('id') id: string) {
+    console.log(id) 
+    return this.classesService.findOne(id) 
   }
 
 }

@@ -1,5 +1,5 @@
 export class ClassDto {
-  id: string;
+  class_id: string;
   name: string; 
   year: Number; 
   semester: Number; 
