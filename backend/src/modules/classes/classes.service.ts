@@ -7,7 +7,10 @@ import { TeacherClass, TeacherClassDocument } from "./schemas/teacherClass.schem
 
 @Injectable({})
 export class ClassesService {
-  constructor(@InjectModel(TClass.name) private readonly classModel: Model<ClassDocument>, @InjectModel(TeacherClass.name) private readonly teacherClassModel: Model<TeacherClassDocument> ) {}
+  constructor(
+    @InjectModel(TClass.name) private readonly classModel: Model<ClassDocument>, 
+    @InjectModel(TeacherClass.name) private readonly teacherClassModel: Model<TeacherClassDocument> 
+  ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {    
     const teacherClassData = await this.teacherClassModel.findOne( {email: userEmail} ).exec() 
