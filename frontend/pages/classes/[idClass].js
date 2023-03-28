@@ -41,16 +41,10 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
   )
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true
-  }
-}
-
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const { params } = context
   console.log(params.classId) // Adicionar a busca da turma por id
+  /*
   const response = await axios.get(
     `${process.env.API_URL}/api/tests/subject_submissions`
   )
@@ -70,7 +64,11 @@ export async function getStaticProps(context) {
     `${process.env.API_URL}/api/tests/stutents_progress`
   )
   const data4 = await response4.data
-
+*/
+  const data1 = []
+  const data2 = []
+  const data3 = []
+  const data4 = []
   return {
     props: {
       subjects: data1,
