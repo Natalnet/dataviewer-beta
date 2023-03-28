@@ -3,13 +3,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ClassDto } from "./dto/get-class.dto";
 import { ClassDocument, TClass } from "./schemas/class.schema";
+import { ListSubjectClass, ListSubjectClassDocument } from "./schemas/listsubjectclass.schema";
 import { TeacherClass, TeacherClassDocument } from "./schemas/teacherClass.schema";
 
 @Injectable({})
 export class ClassesService {
   constructor(
     @InjectModel(TClass.name) private readonly classModel: Model<ClassDocument>, 
-    @InjectModel(TeacherClass.name) private readonly teacherClassModel: Model<TeacherClassDocument> 
+    @InjectModel(TeacherClass.name) private readonly teacherClassModel: Model<TeacherClassDocument>,
+    @InjectModel(ListSubjectClass.name) private readonly listSubjectClass: Model<ListSubjectClassDocument>  
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {    

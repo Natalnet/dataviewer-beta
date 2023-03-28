@@ -20,4 +20,10 @@ export class ClassesController {
     return this.classesService.findOne(id) 
   }
 
+  @Get('listsubject/:id') 
+  findListSubject(@Param('id') id: string ) {
+    console.log(id) 
+    return 'ok!'
+  }
+
 }
