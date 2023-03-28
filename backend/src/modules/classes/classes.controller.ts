@@ -14,9 +14,9 @@ export class ClassesController {
     return this.classesService.findTeacherClasses(req.user.userEmail) 
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id') 
   findById(@Param('id') id: string) {
-    console.log(id) 
     return this.classesService.findOne(id) 
   }
 
