@@ -28,12 +28,12 @@ export class ClassesService {
   }
 
   async findListSubjectClass(id: string): Promise<ListSubjectClassDto[]> {
- 
+    // Realiza tratamento de exceção 
     const data  = await this.listSubjectClass.findOne( {class_id: id} ).exec() 
 
     return data['tags'].map((l) => ({      
       fullName: l.subject,
-      name: l.subject[0],   
+      name: l.subject,   
       acertos: l.qt_acertos,
       erros: l.qt_erros,
       restantes: l.qt_nao_fez, 
