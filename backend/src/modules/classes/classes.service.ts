@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common"
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ClassListDto } from "./dto/class-list.dto";
 import { ClassDto } from "./dto/get-class.dto";
+import { ListSubjectClassDto } from "./dto/get-list-subjects.dto";
 import { ClassDocument, TClass } from "./schemas/class.schema";
 import { ListSubjectClass, ListSubjectClassDocument } from "./schemas/listsubjectclass.schema";
 import { TeacherClass, TeacherClassDocument } from "./schemas/teacherClass.schema";
@@ -23,5 +25,19 @@ export class ClassesService {
 
   async findOne(id: string): Promise<ClassDto> {
     return this.classModel.findOne( {class_id: id} ).exec() 
+  }
+
+  async findListSubjectClass(id: string): Promise<ListSubjectClassDto[]> {
+ 
+    const data  = await this.listSubjectClass.findOne( {class_id: id} ).exec() 
+
+    return data['tags'].map((l) => ({      
+      fullName: l.subject,
+      name: l.subject[0],   
+      acertos: l.qt_acertos,
+      erros: l.qt_erros,
+      restantes: l.qt_nao_fez, 
+    }));
+
   }
 }

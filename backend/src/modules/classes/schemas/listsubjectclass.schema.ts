@@ -1,24 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
+
 export type ListSubjectClassDocument = HydratedDocument<ListSubjectClass>;
+
+class ListSubjet {  
+  subject: string;   
+  qt_acertos: number;   
+  qt_erros: number;   
+  qt_nao_fez: number; 
+
+}
 
 @Schema()
 export class ListSubjectClass { 
   @Prop() 
-  fullName: string; 
+  class_id: string; 
 
-  @Prop() 
-  name: string; 
-
-  @Prop() 
-  acertos: string; 
-
-  @Prop() 
-  erros: string; 
-
-  @Prop() 
-  restantes: string; 
+  @Prop()
+  tags: ListSubjet[]; 
 
 }
 

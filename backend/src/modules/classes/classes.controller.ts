@@ -22,8 +22,7 @@ export class ClassesController {
 
   @Get('listsubject/:id') 
   findListSubject(@Param('id') id: string ) {
-    console.log(id) 
-    return 'ok!'
+    return this.classesService.findListSubjectClass(id) 
   }
 
 }
