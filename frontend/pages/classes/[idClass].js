@@ -1,5 +1,5 @@
 import styles from '../../styles/Home.module.css'
-import axios from 'axios'
+import { getAPIClient } from '../../utils/axiosapi'
 
 import { useRouter } from 'next/router'
 
@@ -43,7 +43,12 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
 
 export async function getServerSideProps(context) {
   const { params } = context
-  console.log(params.classId) // Adicionar a busca da turma por id
+  const apiClient = getAPIClient(context)
+  // Adicionar a busca da turma por id
+
+  const { data } = await apiClient.get(`classes/listsubject/${params.idClass}`)
+  console.log(data)
+  const data1 = data
   /*
   const response = await axios.get(
     `${process.env.API_URL}/api/tests/subject_submissions`
@@ -65,7 +70,7 @@ export async function getServerSideProps(context) {
   )
   const data4 = await response4.data
 */
-  const data1 = []
+
   const data2 = []
   const data3 = []
   const data4 = []
