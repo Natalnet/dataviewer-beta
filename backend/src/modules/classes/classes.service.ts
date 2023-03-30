@@ -6,7 +6,7 @@ import { ClassDto } from "./dto/get-class.dto";
 import { ListSubjectClassDto } from "./dto/get-list-subjects.dto";
 import { ClassDocument, TClass } from "./schemas/class.schema";
 import { ListSubjectClass, ListSubjectClassDocument } from "./schemas/listsubjectclass.schema";
-import { TeacherClass, TeacherClassDocument } from "./schemas/teacherClass.schema";
+import { TeacherClass, TeacherClassDocument } from "./schemas/teacherclass.schema";
 
 @Injectable({})
 export class ClassesService {
