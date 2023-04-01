@@ -51,6 +51,10 @@ export async function getServerSideProps(context) {
 
   const lists = await apiClient.get(`classes/lists/${params.idClass}`)
 
+  const difficulties = await apiClient.get(
+    `classes/difficulties/${params.idClass}`
+  )
+
   /*
   const response = await axios.get(
     `${process.env.API_URL}/api/tests/subject_submissions`
@@ -73,12 +77,11 @@ export async function getServerSideProps(context) {
   const data4 = await response4.data
 */
 
-  const data2 = []
   const data4 = []
   return {
     props: {
       subjects: data1,
-      difficulties: data2,
+      difficulties: difficulties.data,
       listsSubs: lists.data,
       students: data4
     }
