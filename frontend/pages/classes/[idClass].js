@@ -46,9 +46,11 @@ export async function getServerSideProps(context) {
   const apiClient = getAPIClient(context)
   // Adicionar a busca da turma por id
 
-  const { data } = await apiClient.get(`classes/listsubject/${params.idClass}`)
-  console.log(data)
+  let { data } = await apiClient.get(`classes/listsubject/${params.idClass}`)
   const data1 = data
+
+  const lists = await apiClient.get(`classes/lists/${params.idClass}`)
+
   /*
   const response = await axios.get(
     `${process.env.API_URL}/api/tests/subject_submissions`
@@ -72,13 +74,12 @@ export async function getServerSideProps(context) {
 */
 
   const data2 = []
-  const data3 = []
   const data4 = []
   return {
     props: {
       subjects: data1,
       difficulties: data2,
-      listsSubs: data3,
+      listsSubs: lists.data,
       students: data4
     }
   }
