@@ -29,4 +29,9 @@ export class ClassesController {
   findLists(@Param('id') id: string ) {
     return this.classesService.findClassLists(id) 
   }
+
+  @Get('difficulties/:id') 
+  findDifficulties(@Param('id') id: string ) {
+    return this.classesService.findClassDifficulties(id) 
+  }
 }
