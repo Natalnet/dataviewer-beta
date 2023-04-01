@@ -25,4 +25,8 @@ export class ClassesController {
     return this.classesService.findListSubjectClass(id) 
   }
 
+  @Get('lists/:id') 
+  findLists(@Param('id') id: string ) {
+    return this.classesService.findClassLists(id) 
+  }
 }
