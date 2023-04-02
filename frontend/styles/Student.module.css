@@ -1,7 +1,7 @@
 .containerstudents {
   align-content: flex-start;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 
 .card {
@@ -9,7 +9,7 @@
   border-radius: 10px;
   overflow: hidden;
   margin-top: 5px;
-  width: 200px;
+  width: 230px;
   text-align: left;
 }
 
