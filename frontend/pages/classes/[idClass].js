@@ -5,7 +5,7 @@ import { getAPIClient } from '../../utils/axiosapi'
 
 import dynamic from 'next/dynamic'
 import StudentCards from '../../components/StudentCards'
-import RowCards from '../../components/TopSellingTable'
+
 import { useState } from 'react'
 
 const ClassChart = dynamic(() => import('../../components/PerformanceChart'), {
@@ -73,7 +73,6 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
         <h3>Estudantes da Turma</h3>
         <StudentCards students={students} />
       </div>
-      <RowCards />
     </div>
   )
 }
@@ -114,7 +113,23 @@ export async function getServerSideProps(context) {
   const data4 = await response4.data
 */
 
-  const data4 = []
+  const data4 = [
+    {
+      name: 'Davi da Rosa',
+      progress: '57',
+      id: 'kMyLWXKlNlYTYc'
+    },
+    {
+      name: 'Leandro Costela',
+      progress: '16',
+      id: 'dqYRuGPogQEuYz'
+    },
+    {
+      name: 'Miguel Viana',
+      progress: '24',
+      id: 'yNkQxXeTLeuoXR'
+    }
+  ]
   return {
     props: {
       subjects: data1,

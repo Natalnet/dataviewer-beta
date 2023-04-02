@@ -8,10 +8,8 @@ function StudentCards({ students }) {
     <div className={styles.containerstudents}>
       {students &&
         students.map(s => (
-          <Link href={`/student/${s.id}`} key={s.id}>
-            <a>
+          <Link href={`/student/${s.id}`} key={s.id} style={{textDecoration: 'none'}}>
               <StudentSmallCard name={s.name} progress={s.progress} />
-            </a>
           </Link>
         ))}
     </div>
