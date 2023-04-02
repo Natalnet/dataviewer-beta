@@ -1,42 +1,79 @@
+import { Box, Tabs, Tab } from '@mui/material'
+
 import styles from '../../styles/Home.module.css'
 import { getAPIClient } from '../../utils/axiosapi'
 
-import { useRouter } from 'next/router'
-
 import dynamic from 'next/dynamic'
 import StudentCards from '../../components/StudentCards'
+import RowCards from '../../components/TopSellingTable'
+import { useState } from 'react'
 
 const ClassChart = dynamic(() => import('../../components/PerformanceChart'), {
   ssr: false
 })
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  )
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`
+  }
+}
+
 function ClassDetails({ subjects, difficulties, listsSubs, students }) {
-  const router = useRouter()
-  const classId = router.query.classId
+  const [value, setValue] = useState(0)
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+    //.log('handle: ' + newValue)
+  }
+
   return (
     <div className={styles.maincontainer}>
       <div className={styles.maincard}>
-        <h2>Turma</h2>
-        <p> {classId} </p>
+        <h2>Gráfico de Desempenho</h2>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Por Listas" {...a11yProps(0)} />
+            <Tab label="Por Assuntos" {...a11yProps(1)} />
+            <Tab label="Por Dificuldades" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <ClassChart data={listsSubs} width={800} />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <ClassChart data={subjects} width={800} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <ClassChart data={difficulties} width={800} />
+        </TabPanel>
       </div>
-      <div className={styles.maincard}>
-        <h3>Gráfico de Desempenho por Listas</h3>
-        <ClassChart data={listsSubs} width={1000} />
-      </div>
-      <div className={styles.containercharts}>
-        <div className={styles.secondarycard}>
-          <h3> Gráfico de Desempenho por Assuntos </h3>
-          <ClassChart data={subjects} width={430} />
-        </div>
-        <div className={styles.secondarycard}>
-          <h3> Gráfico de Desempenho por Dificuldade </h3>
-          <ClassChart data={difficulties} width={500} />
-        </div>
-      </div>
+
       <div className={styles.maincard}>
         <h3>Estudantes da Turma</h3>
         <StudentCards students={students} />
       </div>
+      <RowCards />
     </div>
   )
 }

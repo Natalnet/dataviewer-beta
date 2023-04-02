@@ -5,7 +5,14 @@ import { getAPIClient } from '../../utils/axiosapi'
 import { parseCookies } from 'nookies'
 import Link from 'next/link'
 
-import { Box, Typography } from '@mui/material'
+import { Box, styled } from '@mui/material'
+import { H2 } from '../../components/Typography'
+
+const Title2 = styled('div')({
+  margin: '0 0 1rem 0',
+  fontSize: '1.5rem',
+  fontWeight: 700
+})
 
 export default function Classes({ classes }) {
   return (
@@ -16,16 +23,8 @@ export default function Classes({ classes }) {
         }}
       >
         <Box className={styles.maincard}>
-          <Typography
-            variant="h2"
-            sx={{
-              margin: '0 0 1rem 0',
-              fontSize: '1.5rem',
-              fontWeight: 700
-            }}
-          >
-            Turmas
-          </Typography>
+          <H2> Turmas </H2>
+
           <Box className={styles.containerclasses}>
             {classes.map(classe => (
               <Link href={`/classes/${classe.class_id}`} key={classe.id_class}>
