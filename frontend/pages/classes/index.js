@@ -1,7 +1,6 @@
 import ClassCard from '../../components/classCard'
 import styles from '../../styles/Home.module.css'
-import { AuthContext } from '../../contexts/AuthContext'
-import { useContext } from 'react'
+
 import { getAPIClient } from '../../utils/axiosapi'
 import { parseCookies } from 'nookies'
 import Link from 'next/link'
@@ -9,7 +8,6 @@ import Link from 'next/link'
 import { Box, Typography } from '@mui/material'
 
 export default function Classes({ classes }) {
-  const { user } = useContext(AuthContext)
   return (
     <>
       <Box
@@ -60,7 +58,7 @@ export async function getServerSideProps(context) {
 
   //console.log("Server side token: ", token)
   const { data } = await apiClient.get('classes')
-  console.log(data)
+
   const classes = data
   return {
     props: {
