@@ -1,12 +1,3 @@
-import axios from "axios"
-import { parseCookies } from "nookies"
+import { getAPIClient } from "./axiosapi"
 
-const { "nextautht1.token": token } = parseCookies()
-
-export const http = axios.create({
-   baseURL: "https://api-dataviewer-44gqlaax2a-uc.a.run.app",
-})
-
-if (token) {
-   http.defaults.headers["Authoriation"] = `Bearer ${token}`
-}
+export const api = getAPIClient()
