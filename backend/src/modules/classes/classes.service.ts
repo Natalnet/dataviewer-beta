@@ -1,8 +1,7 @@
 import { Injectable } from "@nestjs/common"
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ClassDifficultyDto } from "./dto/get-class-difficulty";
-import { ClassListDto } from "./dto/get-class-list.dto";
+import { ClassMetricsDto } from "./dto/get-class-metrics.dto";
 import { ClassDto } from "./dto/get-class.dto";
 import { ListSubjectClassDto } from "./dto/get-list-subjects.dto";
 import { ClassDocument, TClass } from "./schemas/class.schema";
@@ -46,7 +45,7 @@ export class ClassesService {
 
   }
 
-  async findClassLists(id: string): Promise<ClassListDto[]> {
+  async findClassLists(id: string): Promise<ClassMetricsDto[]> {
     // Realiza tratamento de exceção 
     const data  = await this.classListModel.findOne( {class_id: id} ).exec() 
 
@@ -62,7 +61,7 @@ export class ClassesService {
 
   }
 
-  async findClassDifficulties(id: string): Promise<ClassDifficultyDto[]> {
+  async findClassDifficulties(id: string): Promise<ClassMetricsDto[]> {
     const data  = await this.classDifficultyModel.findOne( {class_id: id} ).exec()  
     if (! data )
       return []; 
