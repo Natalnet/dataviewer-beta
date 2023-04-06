@@ -34,4 +34,9 @@ export class ClassesController {
   findDifficulties(@Param('id') id: string ) {
     return this.classesService.findClassDifficulties(id) 
   }
+
+  @Get('students/:id') 
+  findStudents(@Param('id') id: string ) {
+    return this.classesService.findClassStudents(id) 
+  }
 }

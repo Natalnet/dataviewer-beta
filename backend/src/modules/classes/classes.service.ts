@@ -7,6 +7,7 @@ import { ListSubjectClassDto } from "./dto/get-list-subjects.dto";
 import { ClassDocument, TClass } from "./schemas/class.schema";
 import { ClassDifficulty, ClassDifficultyDocument } from "./schemas/classdifficulty.schema";
 import { ClassListDocument, ClassList } from "./schemas/classlist.schema";
+import { ClassStudents, ClassStudentsDocument } from "./schemas/classstudents.schema";
 import { ListSubjectClass, ListSubjectClassDocument } from "./schemas/listsubjectclass.schema";
 import { TeacherClass, TeacherClassDocument } from "./schemas/teacherclass.schema";
 
@@ -17,7 +18,8 @@ export class ClassesService {
     @InjectModel(TeacherClass.name) private readonly teacherClassModel: Model<TeacherClassDocument>,
     @InjectModel(ListSubjectClass.name) private readonly listSubjectClass: Model<ListSubjectClassDocument>,
     @InjectModel(ClassList.name) private readonly classListModel: Model<ClassListDocument>, 
-    @InjectModel(ClassDifficulty.name) private readonly classDifficultyModel: Model<ClassDifficultyDocument>   
+    @InjectModel(ClassDifficulty.name) private readonly classDifficultyModel: Model<ClassDifficultyDocument>,
+    @InjectModel(ClassStudents.name) private readonly classStudentsModel: Model<ClassStudentsDocument>      
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {    
@@ -72,6 +74,12 @@ export class ClassesService {
       erros: d.qt_erros,
       restantes: d.qt_nao_fez, 
     })); 
+
+  }
+
+  async findClassStudents(id: string) {
+    const data = await this.classStudentsModel.findOne( {class_id: id} ).exec() 
+    console.log(data)  
 
   }
 }
