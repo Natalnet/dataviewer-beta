@@ -7,6 +7,7 @@ import { ClassDifficulty, ClassDifficultySchema } from './schemas/classdifficult
 import { ClassList, ClassListSchema } from './schemas/classlist.schema';
 import { ClassStudents, ClassStudentsSchema } from './schemas/classstudents.schema';
 import { ListSubjectClass, ListSubjectClassSchema } from './schemas/listsubjectclass.schema';
+import { Student, StudentSchema } from './schemas/student.schema';
 import { TeacherClass, TeacherClassSchema } from './schemas/teacherclass.schema';
 
 @Module({
@@ -18,6 +19,7 @@ import { TeacherClass, TeacherClassSchema } from './schemas/teacherclass.schema'
       { name: ClassList.name, schema: ClassListSchema},
       { name: ClassDifficulty.name, schema: ClassDifficultySchema},   
       { name: ClassStudents.name, schema: ClassStudentsSchema},  
+      { name: Student.name, schema: StudentSchema}, 
     ]),
   ],
   controllers: [ClassesController],

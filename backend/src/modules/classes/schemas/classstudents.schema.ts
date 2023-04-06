@@ -9,7 +9,7 @@ export class ClassStudents {
   class_id: string; 
 
   @Prop()
-  studentIds: string[];
+  students: string[];
 
 }
 

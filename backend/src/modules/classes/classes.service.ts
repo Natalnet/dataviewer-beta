@@ -4,11 +4,13 @@ import { Model } from 'mongoose';
 import { ClassMetricsDto } from "./dto/get-class-metrics.dto";
 import { ClassDto } from "./dto/get-class.dto";
 import { ListSubjectClassDto } from "./dto/get-list-subjects.dto";
+import { StudentDto } from "./dto/get-students.dto";
 import { ClassDocument, TClass } from "./schemas/class.schema";
 import { ClassDifficulty, ClassDifficultyDocument } from "./schemas/classdifficulty.schema";
 import { ClassListDocument, ClassList } from "./schemas/classlist.schema";
 import { ClassStudents, ClassStudentsDocument } from "./schemas/classstudents.schema";
 import { ListSubjectClass, ListSubjectClassDocument } from "./schemas/listsubjectclass.schema";
+import { Student, StudentDocument } from "./schemas/student.schema";
 import { TeacherClass, TeacherClassDocument } from "./schemas/teacherclass.schema";
 
 @Injectable({})
@@ -19,7 +21,8 @@ export class ClassesService {
     @InjectModel(ListSubjectClass.name) private readonly listSubjectClass: Model<ListSubjectClassDocument>,
     @InjectModel(ClassList.name) private readonly classListModel: Model<ClassListDocument>, 
     @InjectModel(ClassDifficulty.name) private readonly classDifficultyModel: Model<ClassDifficultyDocument>,
-    @InjectModel(ClassStudents.name) private readonly classStudentsModel: Model<ClassStudentsDocument>      
+    @InjectModel(ClassStudents.name) private readonly classStudentsModel: Model<ClassStudentsDocument>,
+    @InjectModel(Student.name) private readonly studentModel: Model<StudentDocument>      
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {    
@@ -77,9 +80,16 @@ export class ClassesService {
 
   }
 
-  async findClassStudents(id: string) {
-    const data = await this.classStudentsModel.findOne( {class_id: id} ).exec() 
-    console.log(data)  
+  async findClassStudents(classId: string): Promise<StudentDto[]> {
+    const data = await this.classStudentsModel.findOne( {class_id: classId} ).exec() 
+ 
+    const arrayStudentIds = data['students'].map( (s) => (s['student_id']) ) 
+  
+    const studentArray = await this.studentModel.find( {  id: {$in : arrayStudentIds } } ).exec() 
+    
+    return studentArray.map( (s) => ( {
+      id: s.id, name: s.name, email: s.email, percent: s.percent  
+    }))
 
   }
 }
