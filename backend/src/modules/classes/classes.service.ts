@@ -82,11 +82,8 @@ export class ClassesService {
 
   async findClassStudents(classId: string): Promise<StudentDto[]> {
     const data = await this.classStudentsModel.findOne( {class_id: classId} ).exec() 
- 
     const arrayStudentIds = data['students'].map( (s) => (s['student_id']) ) 
-  
     const studentArray = await this.studentModel.find( {  id: {$in : arrayStudentIds } } ).exec() 
-    
     return studentArray.map( (s) => ( {
       id: s.id, name: s.name, email: s.email, percent: s.percent  
     }))
