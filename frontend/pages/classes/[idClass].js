@@ -68,10 +68,13 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
           <ClassChart data={difficulties} width={800} />
         </TabPanel>
       </div>
-
       <div className={styles.maincard}>
         <h3>Estudantes da Turma</h3>
         <StudentCards students={students} />
+      </div>
+      <div className={styles.maincard}>
+        <h3>Ranking da Turma</h3>
+        <ClassRanking rows={students} />
       </div>
     </div>
   )
