@@ -7,13 +7,13 @@ export default class Example extends PureComponent {
 
         const modifiedData = data.map((item) => ({
             name: item.fullName,
-            percentage: Math.round((item.acertos / (item.acertos + item.erros)) * 100),
+            percentage: Math.round((item.acertos / (item.acertos + item.erros + item.restantes)) * 100),
         }));
-
+        console.log(modifiedData) 
         return (
-            <div style={{ width: 350, height: 300 }}>
+            <div style={{ width: 450, height: 350 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={modifiedData}>
+                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={modifiedData}>
                         <PolarGrid />
                         <PolarAngleAxis dataKey="name"
                             tick={{ fontSize: 12 }} // Define o tamanho da fonte dos nomes

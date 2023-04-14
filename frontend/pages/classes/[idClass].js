@@ -13,6 +13,7 @@ const ClassChart = dynamic(() => import('../../components/PerformanceChart'), {
 })
 
 import ClassRanking from '../../components/ClassRanking'
+import RadarGraph from '../../components/RadarGraph'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -73,7 +74,7 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
         </div>
         <div className={styles.secondarycard}>
           <h2>Ranking da Turma</h2>
-          <ClassRanking rows={students} />
+          <RadarGraph data={subjects} />
         </div>
       </div>
       <div className={styles.containercharts}>
