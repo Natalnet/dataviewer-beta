@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   getRoot(): string {
-    return String(process.env.NODE_ENV)
+    return String(process.env.NODE_ENV);
   }
 }

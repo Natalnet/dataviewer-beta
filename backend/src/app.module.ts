@@ -13,7 +13,6 @@ import { ClassesModule } from './modules/classes/classes.module';
     MongooseModule.forRoot(process.env.DATABASE_HOST, {
       authMechanism: 'DEFAULT',
       dbName: 'dataviewert1',
-   
     }),
     UsersModule,
     AuthModule,

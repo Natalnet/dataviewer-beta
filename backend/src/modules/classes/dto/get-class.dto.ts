@@ -1,7 +1,7 @@
 export class ClassDto {
   class_id: string;
-  name: string; 
-  year: Number; 
-  semester: Number; 
-  description: string; 
+  name: string;
+  year: number;
+  semester: number;
+  description: string;
 }
