@@ -9,7 +9,7 @@ export default class Example extends PureComponent {
             name: item.fullName,
             percentage: Math.round((item.acertos / (item.acertos + item.erros + item.restantes)) * 100),
         }));
-        console.log(modifiedData) 
+
         return (
             <div style={{ width: 450, height: 350 }}>
                 <ResponsiveContainer width="100%" height="100%">
