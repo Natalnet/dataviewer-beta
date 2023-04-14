@@ -105,6 +105,8 @@ export async function getServerSideProps(context) {
     `classes/difficulties/${params.idClass}`
   )
 
+  const students = await apiClient.get(`classes/students/${params.idClass}`)
+
   /*
   const response = await axios.get(
     `${process.env.API_URL}/api/tests/subject_submissions`
@@ -126,7 +128,7 @@ export async function getServerSideProps(context) {
   )
   const data4 = await response4.data
 */
-
+  console.log(students.data)
   const data4 = [
     {
       name: 'Davi da Rosa',
@@ -149,7 +151,7 @@ export async function getServerSideProps(context) {
       subjects: data1,
       difficulties: difficulties.data,
       listsSubs: lists.data,
-      students: data4
+      students: students.data
     }
   }
 }

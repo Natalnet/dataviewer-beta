@@ -109,7 +109,7 @@ export class ClassesService {
       id: s.id,
       name: s.name,
       email: s.email,
-      percent: s.percent,
+      progress: s.percent,
     }));
   }
 }
