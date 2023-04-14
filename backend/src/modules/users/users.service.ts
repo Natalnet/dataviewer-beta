@@ -12,7 +12,7 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    try { 
+    try {
       const createdUser = await new this.userModel({
         ...createUserDto,
         password: hashSync(createUserDto.password, 10),
@@ -25,15 +25,10 @@ export class UsersService {
       };
 
       return res;
+    } catch (error) {
+      //TODO: melhorar o tratamento de exceção
+      throw new ForbiddenException('Credentials Error!');
     }
-    catch (error) {
-      //console.log(error) 
-      //TODO: melhorar o tratamento de exceção 
-      throw new ForbiddenException('Credentials Error!') 
-
-    }
-  
-
   }
 
   async findAll(): Promise<UserDto[]> {

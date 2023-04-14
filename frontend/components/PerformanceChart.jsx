@@ -3,17 +3,18 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
+  ResponsiveContainer,
   Tooltip,
   Legend
 } from 'recharts'
 
 function PerformanceChart({ data, width }) {
-  console.log(data)
+ 
   return (
+    
     <BarChart
       width={width}
-      height={300}
+      height={400}
       data={data}
       margin={{
         top: 5,
@@ -22,15 +23,16 @@ function PerformanceChart({ data, width }) {
         bottom: 5
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
+       
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      <Legend />
-      <Bar dataKey="acertos" fill="#07DB47" />
-      <Bar dataKey="erros" fill="#DB2927" />
-      <Bar dataKey="restantes" fill="#124375" />
+      <Legend />      
+      <Bar dataKey="acertos" stackId="a" fill="#07DB47" />      
+      <Bar dataKey="restantes" stackId="a" fill="#124375" />
+      <Bar dataKey="erros"stackId="a" fill="#DB2927" />
     </BarChart>
+     
   )
 }
 

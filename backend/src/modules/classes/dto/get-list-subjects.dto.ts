@@ -1,7 +1,7 @@
 export class ListSubjectClassDto {
   fullName: string;
-  name: string; 
+  name: string;
   acertos: number;
-  erros: number; 
-  restantes: number;  
+  erros: number;
+  restantes: number;
 }
