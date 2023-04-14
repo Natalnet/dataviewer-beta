@@ -107,45 +107,6 @@ export async function getServerSideProps(context) {
 
   const students = await apiClient.get(`classes/students/${params.idClass}`)
 
-  /*
-  const response = await axios.get(
-    `${process.env.API_URL}/api/tests/subject_submissions`
-  )
-  const data1 = await response.data
-
-  const response2 = await axios.get(
-    `${process.env.API_URL}/api/tests/difficulty_subs`
-  )
-  const data2 = await response2.data
-
-  const response3 = await axios.get(
-    `${process.env.API_URL}/api/tests/lists_subs`
-  )
-  const data3 = await response3.data
-
-  const response4 = await axios.get(
-    `${process.env.API_URL}/api/tests/stutents_progress`
-  )
-  const data4 = await response4.data
-*/
-  console.log(students.data)
-  const data4 = [
-    {
-      name: 'Davi da Rosa',
-      progress: '57',
-      id: 'kMyLWXKlNlYTYc'
-    },
-    {
-      name: 'Leandro Costela',
-      progress: '16',
-      id: 'dqYRuGPogQEuYz'
-    },
-    {
-      name: 'Miguel Viana',
-      progress: '24',
-      id: 'yNkQxXeTLeuoXR'
-    }
-  ]
   return {
     props: {
       subjects: data1,
