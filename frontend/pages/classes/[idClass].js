@@ -12,6 +12,8 @@ const ClassChart = dynamic(() => import('../../components/PerformanceChart'), {
   ssr: false
 })
 
+import ClassRanking from '../../components/ClassRanking'
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props
 
@@ -45,36 +47,44 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
 
   return (
     <div className={styles.maincontainer}>
-      <div className={styles.maincard}>
-        <h2>Gráfico de Desempenho</h2>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Por Listas" {...a11yProps(0)} />
-            <Tab label="Por Assuntos" {...a11yProps(1)} />
-            <Tab label="Por Dificuldades" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <ClassChart data={listsSubs} width={800} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <ClassChart data={subjects} width={800} />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <ClassChart data={difficulties} width={800} />
-        </TabPanel>
+      <div className={styles.containercharts}>
+        <div className={styles.secondarycard}>
+          <h2>Desempenho</h2>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="Por Listas" {...a11yProps(0)} />
+              <Tab label="Por Assuntos" {...a11yProps(1)} />
+              <Tab label="Por Dificuldades" {...a11yProps(1)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <ClassChart data={listsSubs} width={800} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <ClassChart data={subjects} width={800} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <ClassChart data={difficulties} width={800} />
+          </TabPanel>
+        </div>
+        <div className={styles.secondarycard}>
+          <h2>Ranking da Turma</h2>
+          <ClassRanking rows={students} />
+        </div>
       </div>
-      <div className={styles.maincard}>
-        <h3>Estudantes da Turma</h3>
-        <StudentCards students={students} />
-      </div>
-      <div className={styles.maincard}>
-        <h3>Ranking da Turma</h3>
-        <ClassRanking rows={students} />
+      <div className={styles.containercharts}>
+        <div className={styles.secondarycard}>
+          <h2>Estudantes da Turma</h2>
+          <StudentCards students={students} />
+        </div>
+        <div className={styles.secondarycard}>
+          <h2>Ranking da Turma</h2>
+          <ClassRanking rows={students} />
+        </div>
       </div>
     </div>
   )
