@@ -30,8 +30,7 @@ export function AuthProvider({ children }) {
     //TODO: é necessário gerar um link de validação do e-mail
     const { data } = await api.post('/users', { email, password })
 
-    console.log('Dados de Cadastro do Usuário: ')
-    console.log(data)
+    setUser(data.user)
 
     Router.push('/')
   }
@@ -39,9 +38,6 @@ export function AuthProvider({ children }) {
   async function signIn(email, password) {
     //TODO: realizar tratamento de erros
     const { data } = await api.post('/auth/login', { email, password })
-
-    console.log('Dados do Usuário: ')
-    console.log(data)
 
     setUser(data.user)
 
