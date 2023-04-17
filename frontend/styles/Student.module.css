@@ -2,6 +2,9 @@
   align-content: flex-start;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  height: 400px;
+  width: 800px;
+  overflow-y: scroll;
 }
 
 .card {
