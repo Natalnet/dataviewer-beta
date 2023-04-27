@@ -73,7 +73,7 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
           </TabPanel>
         </div>
         <div className={styles.secondarycard}>
-          <h2>Desenpenho por assuntos</h2>
+          <h2>Desempenho por assuntos</h2>
           <RadarGraph data={subjects} />
         </div>
       </div>
