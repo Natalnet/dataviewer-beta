@@ -90,7 +90,7 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
                 <StudentCards students={students} />
               </div>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6} > 
               <div className={styles.secondarycard}>
                 <h2>Ranking da Turma</h2>
                 <ClassRanking rows={students} />
