@@ -1,4 +1,4 @@
-import { Box, Tabs, Tab } from '@mui/material'
+import { Box, Grid, Tabs, Tab } from '@mui/material'
 
 import styles from '../../styles/Home.module.css'
 import { getAPIClient } from '../../utils/axiosapi'
@@ -47,50 +47,62 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
   }
 
   return (
-    <div className={styles.maincontainer}>
-      <div className={styles.containercharts}>
-        <div className={styles.secondarycard}>
-          <h2>Desempenho</h2>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
-              <Tab label="Por Listas" {...a11yProps(0)} />
-              <Tab label="Por Assuntos" {...a11yProps(1)} />
-              <Tab label="Por Dificuldades" {...a11yProps(1)} />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <ClassChart data={listsSubs} width={800} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <ClassChart data={subjects} width={800} />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <ClassChart data={difficulties} width={800} />
-          </TabPanel>
+    <Box sx={{ flexGrow: 1 }}>
+      <div className={styles.maincontainer}>
+        <div className={styles.containercharts}>
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <div className={styles.secondarycard}>
+                <h2>Desempenho</h2>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="Por Listas" {...a11yProps(0)} />
+                  <Tab label="Por Assuntos" {...a11yProps(1)} />
+                  <Tab label="Por Dificuldades" {...a11yProps(1)} />
+                </Tabs>
+                <TabPanel value={value} index={0}>
+                  <ClassChart data={listsSubs} width={800} />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <ClassChart data={subjects} width={800} />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                  <ClassChart data={difficulties} width={800} />
+                </TabPanel>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <div className={styles.secondarycard}>
+                <h2>Desempenho por assuntos</h2>
+                <RadarGraph data={subjects} />
+              </div>
+            </Grid>
+          </Grid>
         </div>
-        <div className={styles.secondarycard}>
-          <h2>Desempenho por assuntos</h2>
-          <RadarGraph data={subjects} />
+        <div className={styles.containercharts}>
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Grid item xs={12} sm={6} md={6} lg={6}>
+              <div className={styles.secondarycard}>
+                <h2>Estudantes da Turma</h2>
+                <StudentCards students={students} />
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6} md={6} lg={6} > 
+              <div className={styles.secondarycard}>
+                <h2>Ranking da Turma</h2>
+                <ClassRanking rows={students} />
+              </div>
+            </Grid>
+          </Grid>
         </div>
       </div>
-      <div className={styles.containercharts}>
-        <div className={styles.secondarycard}>
-          <h2>Estudantes da Turma</h2>
-          <StudentCards students={students} />
-        </div>
-        <div className={styles.secondarycard}>
-          <h2>Ranking da Turma</h2>
-          <ClassRanking rows={students} />
-        </div>
-      </div>
-    </div>
+    </Box>
   )
 }
-
+  
 export async function getServerSideProps(context) {
   const { params } = context
   const apiClient = getAPIClient(context)
