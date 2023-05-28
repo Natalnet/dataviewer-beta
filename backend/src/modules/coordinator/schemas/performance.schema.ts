@@ -13,7 +13,7 @@ export class Performance {
   semester: Semester;
 
   @Prop({ required: true })
-  performanceRate: Performance;
+  performanceRate: number;
 }
 
 export const PerformanceSchema = SchemaFactory.createForClass(Performance);
