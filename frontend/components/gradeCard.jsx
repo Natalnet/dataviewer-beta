@@ -10,13 +10,11 @@ export default function GradeCard() {
         flexWrap: 'wrap',
         '& > :not(style)': {
           m: 1,
-          width: 528,
-          height: 128,
+          width: 539,
+          height: 211,
         },
       }}
     >
-      <Paper elevation={0} />
-      <Paper />
       <Paper elevation={3} />
     </Box>
   );
