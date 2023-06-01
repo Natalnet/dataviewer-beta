@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 import { api } from '../utils/http'
 
@@ -24,6 +24,13 @@ export function AuthProvider({ children }) {
 
   function logout() {
     //TODO: apagar o cookie / token
+
+    const { 'nextautht1.token': userCookie} = parseCookies()
+
+    if (userCookie) {
+      console.log("deleted cookie with success")
+      destroyCookie(userCookie);
+    } 
   }
 
   async function signUp(email, password) {
@@ -42,6 +49,7 @@ export function AuthProvider({ children }) {
     setUser(data.user)
 
     const token = data.accessToken
+
     setCookie(null, 'nextautht1.token', token, {
       maxAge: 60 * 90 * 1 //130 min
     })
