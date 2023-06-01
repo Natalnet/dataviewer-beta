@@ -5,11 +5,13 @@ export interface RequestWithUser extends Request {
 export interface RequestUserData {
   userId: string;
   userEmail: string;
+  userName: string;
 }
 
 export interface RequestWithLocalUser extends Request {
   user: {
     id: string;
     email: string;
+    name: string;
   };
 }
