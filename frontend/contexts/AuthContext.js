@@ -31,6 +31,8 @@ export function AuthProvider({ children }) {
       console.log("deleted cookie with success")
       destroyCookie(userCookie);
     } 
+
+    Router.push('/');
   }
 
   async function signUp(email, password) {
