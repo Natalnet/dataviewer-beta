@@ -12,7 +12,19 @@ function StudentListPage({ data }) {
         <Grid item xs={12} md={6}>
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <Paper style={{ height: '200px' }}>Card 2</Paper>
+              <Paper>
+                <Typography variant="h5">Unidade I</Typography>
+                <Typography variant="h6">Expressões Aritiméticas</Typography>
+                <Typography variant="body1"> Resolvida 10</Typography>
+                <Typography variant="body1"> Prática 10</Typography>
+                <Typography variant="body1"> Exercícios 10</Typography>
+                <Typography variant="h6">
+                  Estruturas de Decisão Aritiméticas
+                </Typography>
+                <Typography variant="body1"> Resolvida 10</Typography>
+                <Typography variant="body1"> Prática 10</Typography>
+                <Typography variant="body1"> Exercícios 10</Typography>
+              </Paper>
             </Grid>
             <Grid item>
               <Paper style={{ height: '200px' }}>Card 3</Paper>

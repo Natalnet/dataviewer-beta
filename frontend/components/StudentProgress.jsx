@@ -46,17 +46,7 @@ LinearProgressWithLabel.propTypes = {
 };
 
 export default function LinearWithValueLabel({ data }) {
-  const [progress, setProgress] = React.useState(0);
-  // React.useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= %100 ? 10 : prevProgress + 10
-  //     );
-  //   }, 800);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
+
   return (
     <Box
       sx={{
@@ -72,10 +62,10 @@ export default function LinearWithValueLabel({ data }) {
       {data.map((item) => {
         return (
           <div>
-            <h5>{item.fullName}</h5>
+            <Typography variant="subtitle1">{item.fullName}</Typography>
             <Box sx={{ width: "97%"}}>
               <LinearProgressWithLabel value={item.progress} />
-            </Box>{" "}
+            </Box> 
           </div>
         );
       })}
