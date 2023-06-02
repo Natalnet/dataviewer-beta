@@ -7,7 +7,7 @@ import LinearWithValueLabel from '../../../components/StudentProgress'
 function StudentListPage({ data }) {
   console.log(data)
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} md={6}>
           <Grid container direction="column" spacing={2}>
@@ -23,8 +23,7 @@ function StudentListPage({ data }) {
           </Grid>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Paper style={{ height: '100%', width: '600px' }}>
-            <Typography variant="h5">Progressão do Estudante</Typography>
+          <Paper style={{ height: '100%' }}>
             <LinearWithValueLabel data={data} />
           </Paper>
         </Grid>

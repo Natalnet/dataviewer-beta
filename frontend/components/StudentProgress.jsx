@@ -64,13 +64,16 @@ export default function LinearWithValueLabel({ data }) {
         height: "30vh",
         overflowX: "hidden",
         overflowY: "auto",
+        marginLeft: "25px",
+        marginTop: "10px" 
       }}
     >
+      <Typography variant="h5">Progressão do Estudante</Typography>
       {data.map((item) => {
         return (
           <div>
             <h5>{item.fullName}</h5>
-            <Box sx={{ width: "97%" }}>
+            <Box sx={{ width: "97%"}}>
               <LinearProgressWithLabel value={item.progress} />
             </Box>{" "}
           </div>
