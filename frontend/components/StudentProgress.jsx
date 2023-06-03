@@ -51,7 +51,7 @@ export default function LinearWithValueLabel({ data }) {
     <Box
       sx={{
         width: "200",
-        height: "30vh",
+  
         overflowX: "hidden",
         overflowY: "auto",
         marginLeft: "25px",
