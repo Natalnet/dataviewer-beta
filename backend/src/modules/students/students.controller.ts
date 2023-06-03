@@ -1,12 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { StudentsService } from './students.service';
 
 @Controller('students')
 export class StudentsController {
-  constructor() {}
+  constructor(private studentService: StudentsService) {}
 
   @Get('listgrades/:id')
   findListGradesById(@Param('id') id: string) {
-    console.log(id)
-    return 'oi'; 
+    return this.studentService.findStudentListGrades(id); 
   }
 }
