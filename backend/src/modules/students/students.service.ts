@@ -13,7 +13,9 @@ export class StudentsService {
   async findStudentListGrades(id: string): Promise<StudentListGradesDto[]> {
 
     const data = await this.studentListGradesModel.findOne({student_id: id}).exec();
-    console.log(data['lists'])  
+    if (!data) return [];
+    console.log(data['lists']) 
+
     return data['lists'].map((l) => ({
       fullName: l.description, 
       progress: l.percent,
