@@ -36,6 +36,7 @@ export class ClassesController {
 
   @Get('students/:id')
   findStudents(@Param('id') id: string) {
+    console.log(id)
     return this.classesService.findClassStudents(id);
   }
 }
