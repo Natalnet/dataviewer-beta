@@ -13,17 +13,19 @@ function StudentListPage({ data }) {
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <Paper>
-                <Typography variant="h5">Unidade I</Typography>
-                <Typography variant="h6">Expressões Aritiméticas</Typography>
-                <Typography variant="body1"> Resolvida 10</Typography>
-                <Typography variant="body1"> Prática 10</Typography>
-                <Typography variant="body1"> Exercícios 10</Typography>
-                <Typography variant="h6">
-                  Estruturas de Decisão Aritiméticas
-                </Typography>
-                <Typography variant="body1"> Resolvida 10</Typography>
-                <Typography variant="body1"> Prática 10</Typography>
-                <Typography variant="body1"> Exercícios 10</Typography>
+                <Box sx={{ marginTop: '10px', marginLeft: '20px' }}>
+                  <Typography variant="h5">Unidade I</Typography>
+                  <Typography variant="h6">Expressões Aritiméticas</Typography>
+                  <Typography variant="body1"> Resolvida 10</Typography>
+                  <Typography variant="body1"> Prática 10</Typography>
+                  <Typography variant="body1"> Exercícios 10</Typography>
+                  <Typography variant="h6">
+                    Estruturas de Decisão Aritiméticas
+                  </Typography>
+                  <Typography variant="body1"> Resolvida 10</Typography>
+                  <Typography variant="body1"> Prática 10</Typography>
+                  <Typography variant="body1"> Exercícios 10</Typography>
+                </Box>
               </Paper>
             </Grid>
             <Grid item>
