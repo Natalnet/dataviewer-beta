@@ -18,7 +18,7 @@ function StudentListPage({ data }) {
     return '-'
   }
 
-  // objeto de notas
+  // objeto de notas da unidade 1
   // u1 -> notas unidade 1
   // a -> Expressões Aritiméticas
   // d -> Estruturas de Decisão
@@ -43,6 +43,47 @@ function StudentListPage({ data }) {
       parseFloat(u1.de)) /
     6
   ).toFixed(1)
+  // objeto de notas da unidade 2
+  // u2 -> notas unidade 2
+  // r -> Repetição condicional
+  // c -> Repetição contada
+  // r -> Resolvida
+  // p -> Prática
+  // e -> Exercícios
+  const u2 = {
+    rr: findProgress(data, 'Repetição condicional', 'Resolvida'),
+    rp: findProgress(data, 'Repetição condicional', 'Prática'),
+    re: findProgress(data, 'Repetição condicional', 'Exercícios'),
+    cr: findProgress(data, 'Repetição contada', 'Resolvida'),
+    cp: findProgress(data, 'Repetição contada', 'Prática'),
+    ce: findProgress(data, 'Repetição contada', 'Exercícios'),
+    m: 0
+  }
+  u2.m = (
+    (parseFloat(u2.rr) +
+      parseFloat(u2.rp) +
+      parseFloat(u2.re) +
+      parseFloat(u2.cr) +
+      parseFloat(u2.cp) +
+      parseFloat(u2.ce)) /
+    6
+  ).toFixed(1)
+  // objeto de notas da unidade 3
+  // u2 -> notas unidade 3
+  // v -> Vetores
+  // r -> Resolvida
+  // p -> Prática
+  // e -> Exercícios
+  const u3 = {
+    vr: findProgress(data, 'Vetores', 'Resolvida'),
+    vp: findProgress(data, 'Vetores', 'Prática'),
+    ve: findProgress(data, 'Vetores', 'Exercícios'),
+    m: 0
+  }
+  u3.m = (
+    (parseFloat(u3.vr) + parseFloat(u3.vp) + parseFloat(u3.ve)) /
+    3
+  ).toFixed(1)
   console.log(u1)
   return (
     <div style={{ width: '100%' }}>
@@ -51,7 +92,7 @@ function StudentListPage({ data }) {
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <Paper>
-                <Box sx={{ marginTop: '10px', marginLeft: '20px' }}>
+                <Box sx={{ paddingTop: '10px', paddingLeft: '20px' }}>
                   <Typography variant="h5">Unidade I</Typography>
                   <Typography variant="h6">Expressões Aritiméticas</Typography>
                   <Typography variant="body1"> Resolvida {u1.ar}</Typography>
@@ -66,10 +107,45 @@ function StudentListPage({ data }) {
               </Paper>
             </Grid>
             <Grid item>
-              <Paper style={{ height: '200px' }}>Card 3</Paper>
+              <Paper>
+                <Box
+                  sx={{
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    paddingLeft: '20px'
+                  }}
+                >
+                  <Typography variant="h5">Unidade II</Typography>
+                  <Typography variant="h6">Repetição condicional</Typography>
+                  <Typography variant="body1"> Resolvida {u2.rr}</Typography>
+                  <Typography variant="body1"> Prática {u2.rp}</Typography>
+                  <Typography variant="body1"> Exercícios {u2.re}</Typography>
+                  <Typography variant="h6">Repetição contada</Typography>
+                  <Typography variant="body1"> Resolvida {u2.cr}</Typography>
+                  <Typography variant="body1"> Prática {u2.cp}</Typography>
+                  <Typography variant="body1"> Exercícios {u2.ce}</Typography>
+                  <Typography variant="h6"> Média {u2.m}</Typography>
+                </Box>
+              </Paper>
             </Grid>
             <Grid item>
-              <Paper style={{ height: '200px' }}>Card 4</Paper>
+              <Paper style={{ height: '200px' }}>
+                <Box
+                  sx={{
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    paddingLeft: '20px'
+                  }}
+                >
+                  <Typography variant="h5">Unidade III</Typography>
+                  <Typography variant="h6">Vetores</Typography>
+                  <Typography variant="body1"> Resolvida {u3.vr}</Typography>
+                  <Typography variant="body1"> Prática {u3.vp}</Typography>
+                  <Typography variant="body1"> Exercícios {u3.ve}</Typography>
+
+                  <Typography variant="h6"> Média {u3.m}</Typography>
+                </Box>
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
