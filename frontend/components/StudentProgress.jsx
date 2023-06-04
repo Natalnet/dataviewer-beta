@@ -51,11 +51,8 @@ export default function LinearWithValueLabel({ data }) {
     <Box
       sx={{
         width: "200",
-  
         overflowX: "hidden",
-        overflowY: "auto",
-        marginLeft: "25px",
-        marginTop: "10px" 
+        overflowY: "auto"
       }}
     >
       <Typography variant="h5">Progressão do Estudante</Typography>

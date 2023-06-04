@@ -142,7 +142,6 @@ function StudentListPage({ data }) {
                   <Typography variant="body1"> Resolvida {u3.vr}</Typography>
                   <Typography variant="body1"> Prática {u3.vp}</Typography>
                   <Typography variant="body1"> Exercícios {u3.ve}</Typography>
-
                   <Typography variant="h6"> Média {u3.m}</Typography>
                 </Box>
               </Paper>
@@ -151,7 +150,15 @@ function StudentListPage({ data }) {
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper style={{ height: '100%' }}>
-            <LinearWithValueLabel data={data} />
+            <Box
+              sx={{
+                paddingTop: '10px',
+                paddingBottom: '10px',
+                paddingLeft: '20px'
+              }}
+            >
+              <LinearWithValueLabel data={data} />
+            </Box>
           </Paper>
         </Grid>
       </Grid>
