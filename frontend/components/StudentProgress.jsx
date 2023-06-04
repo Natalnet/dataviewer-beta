@@ -46,33 +46,23 @@ LinearProgressWithLabel.propTypes = {
 };
 
 export default function LinearWithValueLabel({ data }) {
-  const [progress, setProgress] = React.useState(0);
-  // React.useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress((prevProgress) =>
-  //       prevProgress >= %100 ? 10 : prevProgress + 10
-  //     );
-  //   }, 800);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
+
   return (
     <Box
       sx={{
         width: "200",
-        height: "30vh",
         overflowX: "hidden",
-        overflowY: "auto",
+        overflowY: "auto"
       }}
     >
+      <Typography variant="h5">Progressão do Estudante</Typography>
       {data.map((item) => {
         return (
-          <div>
-            <h5>{item.fullName}</h5>
-            <Box sx={{ width: "97%" }}>
+          <div key={item.fullName}>
+            <Typography variant="subtitle1">{item.fullName}</Typography>
+            <Box sx={{ width: "97%"}}>
               <LinearProgressWithLabel value={item.progress} />
-            </Box>{" "}
+            </Box> 
           </div>
         );
       })}
