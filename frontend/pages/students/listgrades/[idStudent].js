@@ -85,6 +85,8 @@ function StudentListPage({ data }) {
     3
   ).toFixed(1)
   console.log(u1)
+  // Esta organização do grid permite que as divisões se ajustem automaticamente em duas
+  //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas
   return (
     <div style={{ width: '100%' }}>
       <Grid container spacing={2} justifyContent="center">
