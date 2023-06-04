@@ -86,7 +86,8 @@ function StudentListPage({ data }) {
   ).toFixed(1)
   console.log(u1)
   // Esta organização do grid permite que as divisões se ajustem automaticamente em duas
-  //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas
+  //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas.
+  // Inclusão na segunda coluna do componente de progresso nas listas de um estudante
   return (
     <div style={{ width: '100%' }}>
       <Grid container spacing={2} justifyContent="center">
