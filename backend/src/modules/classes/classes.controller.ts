@@ -19,21 +19,25 @@ export class ClassesController {
     return this.classesService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('listsubject/:id')
   findListSubject(@Param('id') id: string) {
     return this.classesService.findListSubjectClass(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('lists/:id')
   findLists(@Param('id') id: string) {
     return this.classesService.findClassLists(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('difficulties/:id')
   findDifficulties(@Param('id') id: string) {
     return this.classesService.findClassDifficulties(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('students/:id')
   findStudents(@Param('id') id: string) {
     return this.classesService.findClassStudents(id);
