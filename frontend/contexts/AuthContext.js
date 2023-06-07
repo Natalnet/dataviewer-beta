@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
 
     if (userCookie) {
       console.log('userCookie ' + userCookie)
+      
       api.get('/users/profile').then(response => {
         console.log('useEffect: ', response.data)
         setUser(response.data)
@@ -27,8 +28,11 @@ export function AuthProvider({ children }) {
 
     const { 'nextautht1.token': userCookie} = parseCookies()
 
+    if (!userCookie) {
+      return;
+    }
+
     if (userCookie) {
-      console.log("deleted cookie with success")
       destroyCookie(userCookie);
     } 
 
