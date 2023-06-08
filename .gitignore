@@ -1,0 +1,4 @@
+*lock.json
+.DS_Store
+.vscode/
+.env

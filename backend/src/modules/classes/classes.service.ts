@@ -59,7 +59,7 @@ export class ClassesService {
   async findListSubjectClass(id: string): Promise<ListSubjectClassDto[]> {
     // Realiza tratamento de exceção
     const data = await this.listSubjectClass.findOne({ class_id: id }).exec();
-
+    if (!data) return [];
     return data['tags'].map((l) => ({
       fullName: l.subject,
       name: l.subject,
@@ -101,6 +101,7 @@ export class ClassesService {
     const data = await this.classStudentsModel
       .findOne({ class_id: classId })
       .exec();
+    if (!data) return [];
     const arrayStudentIds = data['students'].map((s) => s['student_id']);
     const studentArray = await this.studentModel
       .find({ id: { $in: arrayStudentIds } })

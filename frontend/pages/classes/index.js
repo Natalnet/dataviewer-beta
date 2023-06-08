@@ -27,7 +27,7 @@ export default function Classes({ classes }) {
 
           <Box className={styles.containerclasses}>
             {classes.map(classe => (
-              <Link href={`/classes/${classe.class_id}`} key={classe.id_class}>
+              <Link href={`/classes/${classe.class_id}`} key={classe._id}>
                 <ClassCard
                   title={classe.name}
                   year={classe.year}
