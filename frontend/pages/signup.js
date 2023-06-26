@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Container, Box, Typography, TextField, Button } from '@mui/material'
 
 export default function Signup() {
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -22,9 +23,10 @@ export default function Signup() {
     try {
       setLoading(true)
 
-      const signUpResponse = await signUp(email, password)
+      const signUpResponse = await signUp(name, email, password)
 
       console.log(signUpResponse)
+      
     } catch {
       setAlertMessage('Falha ao criar uma conta!')
       setOpenAlert(true)
@@ -58,6 +60,18 @@ export default function Signup() {
           </Alert>
         )}
         <form className="form" onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            label="Nome"
+            type="name"
+            size="small"
+            required
+            fullWidth
+            sx={{
+              my: 1
+            }}
+            onChange={e => setName(e.target.value)}
+          />
           <TextField
             variant="outlined"
             label="Email"

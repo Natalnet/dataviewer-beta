@@ -15,6 +15,7 @@ export function AuthProvider({ children }) {
 
     if (userCookie) {
       console.log('userCookie ' + userCookie)
+      
       api.get('/users/profile').then(response => {
         console.log('useEffect: ', response.data)
         setUser(response.data)
@@ -27,17 +28,20 @@ export function AuthProvider({ children }) {
 
     const { 'nextautht1.token': userCookie} = parseCookies()
 
+    if (!userCookie) {
+      return;
+    }
+
     if (userCookie) {
-      console.log("deleted cookie with success")
       destroyCookie(userCookie);
     } 
 
     Router.push('/');
   }
 
-  async function signUp(email, password) {
+  async function signUp(name, email, password) {
     //TODO: é necessário gerar um link de validação do e-mail
-    const { data } = await api.post('/users', { email, password })
+    const { data } = await api.post('/users', { name, email, password })
 
     setUser(data.user)
 
