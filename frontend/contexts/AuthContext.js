@@ -39,9 +39,9 @@ export function AuthProvider({ children }) {
     Router.push('/');
   }
 
-  async function signUp(email, password) {
+  async function signUp(name, email, password) {
     //TODO: é necessário gerar um link de validação do e-mail
-    const { data } = await api.post('/users', { email, password })
+    const { data } = await api.post('/users', { name, email, password })
 
     setUser(data.user)
 

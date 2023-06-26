@@ -3,5 +3,4 @@ export class StudentDto {
   name: string; 
   email: string;
   progress: number;   
-  
 }
