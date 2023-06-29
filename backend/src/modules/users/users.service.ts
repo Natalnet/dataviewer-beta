@@ -22,6 +22,7 @@ export class UsersService {
         id: createdUser.id,
         email: createdUser.email,
         name: createdUser.name,
+        emailConfirmed: createdUser.emailConfirmed
       };
 
       return res;
@@ -38,6 +39,7 @@ export class UsersService {
       id: user.id,
       email: user.email,
       name: user.name,
+      emailConfirmed: user.emailConfirmed
     }));
   }
 
@@ -47,6 +49,7 @@ export class UsersService {
       email: user.email,
       name: user.name,
       id: user.id,
+      emailConfirmed: user.emailConfirmed
     };
   }
 
@@ -66,6 +69,7 @@ export class UsersService {
       id: updatedUser.id,
       email: updatedUser.email,
       name: updatedUser.name,
+      emailConfirmed: updatedUser.emailConfirmed
     };
   }
 
