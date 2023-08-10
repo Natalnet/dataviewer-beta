@@ -6,6 +6,7 @@ import LinearWithValueLabel from '../../../../components/StudentProgress'
 import { getAPIClient } from '../../../../utils/axiosapi'
 import GradeAndLabel from '../../../../components/GradeAndLabel'
 import GradeAverage from '../../../../components/GradeAvarage'
+import GradeGroup from '../../../../components/GradeGroup'
 
 function StudentListPage({ data }) {
   function findProgress(dt, listName, listKind) {
@@ -97,30 +98,31 @@ function StudentListPage({ data }) {
           <Grid container direction="column" spacing={2}>
             <Grid item>
               <Paper>
-                <Box sx={{ paddingTop: '10px', paddingLeft: '20px' }}>
+                <Box
+                  sx={{
+                    paddingTop: '10px',
+                    paddingLeft: '20px'
+                  }}
+                >
                   <Typography variant="h5">Unidade I</Typography>
-                  <Typography variant="h6">Expressões Aritiméticas</Typography>
-
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      paddingLeft: '20px',
-                      alignItems: 'baseline',
-                      gap: '3vh',
-                      marginTop: '15px',
-                      marginLeft: '25px'
-                    }}
-                  >
-                    <GradeAndLabel grade={u1.ar} label="Resolvida" />
-                    <GradeAndLabel grade={u1.ap} label="Prática" />
-                    <GradeAndLabel grade={u1.ae} label="Exercícios" />
-                    <GradeAverage grade={u1.m} label="Média U1" />
-                  </Box>
-                  <Typography variant="h6">Estruturas de Decisão</Typography>
-                  <Typography variant="body1"> Resolvida {u1.dr}</Typography>
-                  <Typography variant="body1"> Prática {u1.dp}</Typography>
-                  <Typography variant="body1"> Exercícios {u1.de}</Typography>
-                  <Typography variant="h6"> Média {u1.m}</Typography>
+                  <GradeGroup
+                    title="Expressões Aritiméticas"
+                    grades={[
+                      { v: u1.ar, l: 'Resolvida' },
+                      { v: u1.ap, l: 'Prática' },
+                      { v: u1.ae, l: 'Exercícios' }
+                    ]}
+                  />
+                  <GradeGroup
+                    title="Estruturas de Decisão"
+                    grades={[
+                      { v: u1.dr, l: 'Resolvida' },
+                      { v: u1.dp, l: 'Prática' },
+                      { v: u1.de, l: 'Exercícios' }
+                    ]}
+                    average={u1.m}
+                    averageLabel={'Média U1'}
+                  />
                 </Box>
               </Paper>
             </Grid>
