@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ClassesModule } from './modules/classes/classes.module';
 import { CoordinatorModule } from './modules/coordinator/coordinator.module';
 import { StudentsModule } from './modules/students/students.module';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { StudentsModule } from './modules/students/students.module';
     ClassesModule,
     CoordinatorModule,
     StudentsModule,
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

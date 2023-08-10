@@ -95,7 +95,10 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
             <Grid item xs={12} sm={6} md={6} lg={6}>
               <div className={styles.secondarycard}>
                 <h2>Estudantes da Turma</h2>
-                <StudentCards students={students} />
+                <StudentCards
+                  students={students}
+                  pagePath="/classes/students/listgrades"
+                />
               </div>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6}>
