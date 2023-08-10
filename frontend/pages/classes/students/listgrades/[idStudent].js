@@ -131,20 +131,28 @@ function StudentListPage({ data }) {
                 <Box
                   sx={{
                     paddingTop: '10px',
-                    paddingBottom: '10px',
                     paddingLeft: '20px'
                   }}
                 >
                   <Typography variant="h5">Unidade II</Typography>
-                  <Typography variant="h6">Repetição condicional</Typography>
-                  <Typography variant="body1"> Resolvida {u2.rr}</Typography>
-                  <Typography variant="body1"> Prática {u2.rp}</Typography>
-                  <Typography variant="body1"> Exercícios {u2.re}</Typography>
-                  <Typography variant="h6">Repetição contada</Typography>
-                  <Typography variant="body1"> Resolvida {u2.cr}</Typography>
-                  <Typography variant="body1"> Prática {u2.cp}</Typography>
-                  <Typography variant="body1"> Exercícios {u2.ce}</Typography>
-                  <Typography variant="h6"> Média {u2.m}</Typography>
+                  <GradeGroup
+                    title="Repetição Condicional"
+                    grades={[
+                      { v: u2.rr, l: 'Resolvida' },
+                      { v: u2.rp, l: 'Prática' },
+                      { v: u2.re, l: 'Exercícios' }
+                    ]}
+                  />
+                  <GradeGroup
+                    title="Repetição Contada"
+                    grades={[
+                      { v: u2.cr, l: 'Resolvida' },
+                      { v: u2.cp, l: 'Prática' },
+                      { v: u2.ce, l: 'Exercícios' }
+                    ]}
+                    average={u2.m}
+                    averageLabel={'Média U2'}
+                  />
                 </Box>
               </Paper>
             </Grid>
@@ -158,11 +166,17 @@ function StudentListPage({ data }) {
                   }}
                 >
                   <Typography variant="h5">Unidade III</Typography>
-                  <Typography variant="h6">Vetores</Typography>
-                  <Typography variant="body1"> Resolvida {u3.vr}</Typography>
-                  <Typography variant="body1"> Prática {u3.vp}</Typography>
-                  <Typography variant="body1"> Exercícios {u3.ve}</Typography>
-                  <Typography variant="h6"> Média {u3.m}</Typography>
+
+                  <GradeGroup
+                    title="Vetores"
+                    grades={[
+                      { v: u3.vr, l: 'Resolvida' },
+                      { v: u3.vp, l: 'Prática' },
+                      { v: u3.ve, l: 'Exercícios' }
+                    ]}
+                    average={u3.m}
+                    averageLabel={'Média U3'}
+                  />
                 </Box>
               </Paper>
             </Grid>
