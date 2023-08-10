@@ -4,6 +4,7 @@ import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 import LinearWithValueLabel from '../../../../components/StudentProgress'
 import { getAPIClient } from '../../../../utils/axiosapi'
+import GradeAndLabel from '../../../../components/GradeAndLabel'
 
 function StudentListPage({ data }) {
   function findProgress(dt, listName, listKind) {
@@ -101,6 +102,20 @@ function StudentListPage({ data }) {
                   <Typography variant="body1"> Resolvida {u1.ar}</Typography>
                   <Typography variant="body1"> Prática {u1.ap}</Typography>
                   <Typography variant="body1"> Exercícios {u1.ae}</Typography>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      paddingLeft: '20px',
+                      alignItems: 'baseline',
+                      gap: '3vh',
+                      marginTop: '15px',
+                      marginLeft: '25px'
+                    }}
+                  >
+                    <GradeAndLabel grade={u1.ar} label="Resolvida" />
+                    <GradeAndLabel grade={u1.ap} label="Prática" />
+                    <GradeAndLabel grade={u1.ae} label="Exercícios" />
+                  </Box>
                   <Typography variant="h6">Estruturas de Decisão</Typography>
                   <Typography variant="body1"> Resolvida {u1.dr}</Typography>
                   <Typography variant="body1"> Prática {u1.dp}</Typography>
