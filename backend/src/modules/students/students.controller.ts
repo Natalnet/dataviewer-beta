@@ -11,4 +11,9 @@ export class StudentsController {
   findListGradesById(@Param('id') id: string) {
     return this.studentService.findStudentListGrades(id); 
   }
+
+  @Get('examgrades/:mat')
+  findExamGradesByMat(@Param('mat') mat: string) {
+    return this.studentService.findExamGrades(mat); 
+  }
 }
