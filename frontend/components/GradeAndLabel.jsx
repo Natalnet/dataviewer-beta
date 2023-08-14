@@ -29,16 +29,16 @@ export default function GradeAndLabel({ grade, label }) {
   return (
     <>
       <Box className={classes.grade}>
-        <div>
+        <Box>
           <Typography variant="h4" color={colorSelected}>
             {parseFloat(grade).toFixed(1)}
           </Typography>
-        </div>
-        <div>
+        </Box>
+        <Box>
           <Typography variant="body1" color={grey[400]} fontWeight="bold">
             {label}
           </Typography>
-        </div>
+        </Box>
       </Box>
     </>
   )
