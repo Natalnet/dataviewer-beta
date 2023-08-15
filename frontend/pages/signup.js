@@ -3,7 +3,17 @@ import Image from 'next/image'
 import { AuthContext } from '../contexts/AuthContext'
 
 import Link from 'next/link'
-import { Container, Box, Typography, TextField, Button } from '@mui/material'
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  IconButton,
+  AlertTitle
+} from '@mui/material'
+import { Close } from '@mui/icons-material'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -18,7 +28,9 @@ export default function Signup() {
   async function handleSubmit(e) {
     e.preventDefault()
     if (password !== passwordConfirm) {
-      return setError('Senhas não conferem!')
+      setAlertMessage('Senhas não conferem!')
+      setOpenAlert(true)
+      return
     }
     try {
       setLoading(true)
@@ -26,7 +38,6 @@ export default function Signup() {
       const signUpResponse = await signUp(name, email, password)
 
       console.log(signUpResponse)
-      
     } catch {
       setAlertMessage('Falha ao criar uma conta!')
       setOpenAlert(true)
