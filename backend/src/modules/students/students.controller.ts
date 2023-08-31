@@ -17,6 +17,7 @@ export class StudentsController {
     return this.studentService.findExamGrades(mat);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('participations/:mat')
   findStudentParticipationsByMat(@Param('mat') mat: string) {
     return this.studentService.findParticipations(mat);
