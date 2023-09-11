@@ -3,4 +3,5 @@ export class UserDto {
   name: string;
   email: string;
   emailConfirmed: boolean;
+  profile: string;
 }
