@@ -12,21 +12,25 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
+    console.log('Creating user...');
     try {
       const createdUser = await new this.userModel({
         ...createUserDto,
         password: hashSync(createUserDto.password, 10),
+        profile: 'STUDENT',
       }).save();
 
       const res: UserDto = {
         id: createdUser.id,
         email: createdUser.email,
         name: createdUser.name,
-        emailConfirmed: createdUser.emailConfirmed
+        emailConfirmed: createdUser.emailConfirmed,
+        profile: createdUser.profile,
       };
 
       return res;
     } catch (error) {
+      console.log('Error: ', error);
       //TODO: melhorar o tratamento de exceção
       throw new ForbiddenException('Credentials Error!');
     }
@@ -39,7 +43,8 @@ export class UsersService {
       id: user.id,
       email: user.email,
       name: user.name,
-      emailConfirmed: user.emailConfirmed
+      emailConfirmed: user.emailConfirmed,
+      profile: user.profile,
     }));
   }
 
@@ -49,7 +54,8 @@ export class UsersService {
       email: user.email,
       name: user.name,
       id: user.id,
-      emailConfirmed: user.emailConfirmed
+      emailConfirmed: user.emailConfirmed,
+      profile: user.profile,
     };
   }
 
@@ -69,7 +75,8 @@ export class UsersService {
       id: updatedUser.id,
       email: updatedUser.email,
       name: updatedUser.name,
-      emailConfirmed: updatedUser.emailConfirmed
+      emailConfirmed: updatedUser.emailConfirmed,
+      profile: updatedUser.profile,
     };
   }
 

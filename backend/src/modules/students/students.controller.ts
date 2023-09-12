@@ -9,6 +9,18 @@ export class StudentsController {
   @UseGuards(JwtAuthGuard)
   @Get('listgrades/:id')
   findListGradesById(@Param('id') id: string) {
-    return this.studentService.findStudentListGrades(id); 
+    return this.studentService.findStudentListGrades(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('examgrades/:mat')
+  findExamGradesByMat(@Param('mat') mat: string) {
+    return this.studentService.findExamGrades(mat);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('participations/:mat')
+  findStudentParticipationsByMat(@Param('mat') mat: string) {
+    return this.studentService.findParticipations(mat);
   }
 }

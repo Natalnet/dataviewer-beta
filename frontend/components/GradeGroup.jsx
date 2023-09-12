@@ -8,7 +8,7 @@ import GradeAndLabel from './GradeAndLabel'
 const useStyles = makeStyles(theme => ({
   grades: {
     display: 'flex',
-    paddingLeft: '20px',
+    paddingLeft: '15px',
     alignItems: 'baseline',
     gap: '3vh',
     marginTop: '10px',
@@ -24,7 +24,10 @@ export default function GradeGroup({ title, grades, average, averageLabel }) {
       <Box sx={{ marginTop: '15px' }}>
         <Typography variant="h6">{title}</Typography>
         <Box className={classes.grades}>
-          {grades && grades.map(g => <GradeAndLabel grade={g.v} label={g.l} />)}
+          {grades &&
+            grades.map((g, index) => (
+              <GradeAndLabel grade={g.v} label={g.l} key={index} />
+            ))}
           {average && <GradeAverage grade={average} label={averageLabel} />}
         </Box>
       </Box>

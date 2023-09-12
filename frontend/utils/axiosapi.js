@@ -5,10 +5,10 @@ export function getAPIClient(context) {
   const { 'nextautht1.token': token } = parseCookies(context)
 
   const api = axios.create({
-    baseURL: process.env.API_URL
-    //baseURL: 'https://api-dataviewer-44gqlaax2a-vp.a.run.app'
+    //baseURL: process.env.API_URL
+    //baseURL: 'https://api-dataviewer-44gqlaax2a-wn.a.run.app'
     //baseURL: 'https://api-dataviewer-cao3vrugwa-wm.a.run.app'
-    //baseURL: 'http://localhost:3333'
+    baseURL: 'http://localhost:3333'
   })
 
   if (token) {

@@ -10,13 +10,10 @@ export function AuthProvider({ children }) {
   const isAuthenticated = false
 
   useEffect(() => {
-    console.log('Necessário recuperar as informações dos usuários!')
     const { 'nextautht1.token': userCookie } = parseCookies()
 
     if (userCookie) {
-      console.log('userCookie ' + userCookie)
-      
-      api.get('/users/profile').then(response => {
+      api.get('/users/info').then(response => {
         console.log('useEffect: ', response.data)
         setUser(response.data)
       })
@@ -26,17 +23,17 @@ export function AuthProvider({ children }) {
   function logout() {
     //TODO: apagar o cookie / token
 
-    const { 'nextautht1.token': userCookie} = parseCookies()
+    const { 'nextautht1.token': userCookie } = parseCookies()
 
     if (!userCookie) {
-      return;
+      return
     }
 
     if (userCookie) {
-      destroyCookie(userCookie);
-    } 
+      destroyCookie(null, 'nextautht1.token')
+    }
 
-    Router.push('/');
+    Router.push('/')
   }
 
   async function signUp(name, email, password) {

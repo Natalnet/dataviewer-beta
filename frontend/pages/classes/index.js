@@ -55,7 +55,6 @@ export async function getServerSideProps(context) {
     }
   }
 
-  //console.log("Server side token: ", token)
   const { data } = await apiClient.get('classes')
 
   const classes = data
