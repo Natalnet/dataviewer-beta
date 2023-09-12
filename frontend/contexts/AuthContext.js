@@ -14,7 +14,6 @@ export function AuthProvider({ children }) {
 
     if (userCookie) {
       api.get('/users/info').then(response => {
-        console.log('useEffect: ', response.data)
         setUser(response.data)
       })
     }

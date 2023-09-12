@@ -19,7 +19,6 @@ export default function Navbar() {
     logout()
   }
 
-  console.log(router.pathname.localeCompare('/classes'))
   return (
     <Box>
       <List className={styles.ul}>

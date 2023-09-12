@@ -8,7 +8,6 @@ import { getAPIClient } from '../../utils/axiosapi'
 import GradeGroup from '../../components/GradeGroup'
 
 function StudentListPage({ data }) {
-  console.log(data)
   // Esta organização do grid permite que as divisões se ajustem automaticamente em duas
   //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas.
 
@@ -239,7 +238,6 @@ export async function getServerSideProps(context) {
       'Faltou realizar os testes, melhorar a indentação e as explicações sobre o algoritmo desenvolvido firam incompletas. '
   }
 
-  console.log(data)
   return {
     props: {
       data

@@ -32,7 +32,7 @@ export default function Home() {
     } catch (error) {
       setAlertMessage('Falha ao realizar login!')
       setOpenAlert(true)
-      console.log(error)
+      //console.log(error)
     }
     setLoading(false)
   }

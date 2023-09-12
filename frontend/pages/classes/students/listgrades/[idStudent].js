@@ -87,7 +87,7 @@ function StudentListPage({ data }) {
     (parseFloat(u3.vr) + parseFloat(u3.vp) + parseFloat(u3.ve)) /
     3
   ).toFixed(1)
-  console.log(u1)
+
   // Esta organização do grid permite que as divisões se ajustem automaticamente em duas
   //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas.
   // Inclusão na segunda coluna do componente de progresso nas listas de um estudante
@@ -205,7 +205,7 @@ export async function getServerSideProps(context) {
   const apiClient = getAPIClient(context)
 
   let { data } = await apiClient.get(`students/listgrades/${params.idStudent}`)
-  console.log(data)
+
   return {
     props: {
       data
