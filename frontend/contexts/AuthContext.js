@@ -10,7 +10,6 @@ export function AuthProvider({ children }) {
   const isAuthenticated = false
 
   useEffect(() => {
-    console.log('Necessário recuperar as informações dos usuários!')
     const { 'nextautht1.token': userCookie } = parseCookies()
 
     if (userCookie) {
@@ -31,7 +30,7 @@ export function AuthProvider({ children }) {
     }
 
     if (userCookie) {
-      destroyCookie(userCookie)
+      destroyCookie(null, 'nextautht1.token')
     }
 
     Router.push('/')

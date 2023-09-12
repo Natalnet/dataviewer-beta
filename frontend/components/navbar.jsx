@@ -1,14 +1,20 @@
-
 import styles from '../styles/Home.module.css'
-import { AuthContext } from "../contexts/AuthContext"
-import { useContext } from "react"
-import { Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { AuthContext } from '../contexts/AuthContext'
+import { useContext } from 'react'
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText
+} from '@mui/material'
 
 export default function Navbar() {
   const { logout } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   function handleAnchorLogoutClick() {
-    logout();
+    logout()
   }
 
   return (
@@ -31,5 +37,5 @@ export default function Navbar() {
         </ListItem>
       </List>
     </Box>
-  );
+  )
 }
