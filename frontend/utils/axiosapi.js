@@ -10,7 +10,7 @@ export function getAPIClient(context) {
     //baseURL: 'https://api-dataviewer-cao3vrugwa-wm.a.run.app'
     //baseURL: 'http://localhost:3333'
   })
-  console.log(process.env.NEXT_PUBLIC_API_URL)
+
   if (token) {
     api.defaults.headers['Authorization'] = `Bearer ${token}`
   }

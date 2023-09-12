@@ -5,6 +5,8 @@ import Grid from '@mui/material/Grid'
 import LinearWithValueLabel from '../../../components/StudentProgress'
 import { getAPIClient } from '../../../utils/axiosapi'
 
+import GradeGroup from '../../../components/GradeGroup'
+
 function StudentListPage({ data }) {
   function findProgress(dt, listName, listKind) {
     const element = dt.find(
@@ -91,73 +93,104 @@ function StudentListPage({ data }) {
   return (
     <div style={{ width: '100%' }}>
       <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} sx={{ paddingRight: '30px' }}>
           <Grid container direction="column" spacing={2}>
             <Grid item>
-              <Paper>
-                <Box sx={{ paddingTop: '10px', paddingLeft: '20px' }}>
+              <Paper elevation={9}>
+                <Box
+                  sx={{
+                    paddingTop: '20px',
+                    paddingLeft: '20px',
+                    paddingBottom: '20px'
+                  }}
+                >
                   <Typography variant="h5">Unidade I</Typography>
-                  <Typography variant="h6">Expressões Aritiméticas</Typography>
-                  <Typography variant="body1"> Resolvida {u1.ar}</Typography>
-                  <Typography variant="body1"> Prática {u1.ap}</Typography>
-                  <Typography variant="body1"> Exercícios {u1.ae}</Typography>
-                  <Typography variant="h6">Estruturas de Decisão</Typography>
-                  <Typography variant="body1"> Resolvida {u1.dr}</Typography>
-                  <Typography variant="body1"> Prática {u1.dp}</Typography>
-                  <Typography variant="body1"> Exercícios {u1.de}</Typography>
-                  <Typography variant="h6"> Média {u1.m}</Typography>
+                  <GradeGroup
+                    title="Expressões Aritiméticas"
+                    grades={[
+                      { v: u1.ar, l: 'Resolvida' },
+                      { v: u1.ap, l: 'Prática' },
+                      { v: u1.ae, l: 'Exercícios' }
+                    ]}
+                  />
+                  <GradeGroup
+                    title="Estruturas de Decisão"
+                    grades={[
+                      { v: u1.dr, l: 'Resolvida' },
+                      { v: u1.dp, l: 'Prática' },
+                      { v: u1.de, l: 'Exercícios' }
+                    ]}
+                    average={u1.m}
+                    averageLabel={'Média U1'}
+                  />
                 </Box>
               </Paper>
             </Grid>
             <Grid item>
-              <Paper>
+              <Paper elevation={9}>
                 <Box
                   sx={{
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    paddingLeft: '20px'
+                    paddingTop: '20px',
+                    paddingLeft: '20px',
+                    paddingBottom: '20px'
                   }}
                 >
                   <Typography variant="h5">Unidade II</Typography>
-                  <Typography variant="h6">Repetição condicional</Typography>
-                  <Typography variant="body1"> Resolvida {u2.rr}</Typography>
-                  <Typography variant="body1"> Prática {u2.rp}</Typography>
-                  <Typography variant="body1"> Exercícios {u2.re}</Typography>
-                  <Typography variant="h6">Repetição contada</Typography>
-                  <Typography variant="body1"> Resolvida {u2.cr}</Typography>
-                  <Typography variant="body1"> Prática {u2.cp}</Typography>
-                  <Typography variant="body1"> Exercícios {u2.ce}</Typography>
-                  <Typography variant="h6"> Média {u2.m}</Typography>
+                  <GradeGroup
+                    title="Repetição Condicional"
+                    grades={[
+                      { v: u2.rr, l: 'Resolvida' },
+                      { v: u2.rp, l: 'Prática' },
+                      { v: u2.re, l: 'Exercícios' }
+                    ]}
+                  />
+                  <GradeGroup
+                    title="Repetição Contada"
+                    grades={[
+                      { v: u2.cr, l: 'Resolvida' },
+                      { v: u2.cp, l: 'Prática' },
+                      { v: u2.ce, l: 'Exercícios' }
+                    ]}
+                    average={u2.m}
+                    averageLabel={'Média U2'}
+                  />
                 </Box>
               </Paper>
             </Grid>
             <Grid item>
-              <Paper style={{ height: '200px' }}>
+              <Paper style={{ height: '220px' }} elevation={9}>
                 <Box
                   sx={{
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
+                    paddingTop: '20px',
+                    paddingBottom: '20px',
                     paddingLeft: '20px'
                   }}
                 >
                   <Typography variant="h5">Unidade III</Typography>
-                  <Typography variant="h6">Vetores</Typography>
-                  <Typography variant="body1"> Resolvida {u3.vr}</Typography>
-                  <Typography variant="body1"> Prática {u3.vp}</Typography>
-                  <Typography variant="body1"> Exercícios {u3.ve}</Typography>
-                  <Typography variant="h6"> Média {u3.m}</Typography>
+
+                  <GradeGroup
+                    title="Vetores"
+                    grades={[
+                      { v: u3.vr, l: 'Resolvida' },
+                      { v: u3.vp, l: 'Prática' },
+                      { v: u3.ve, l: 'Exercícios' }
+                    ]}
+                    average={u3.m}
+                    averageLabel={'Média U3'}
+                  />
                 </Box>
               </Paper>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper style={{ height: '100%' }}>
+        <Grid item xs={12} md={6} sx={{ paddingRight: '30px' }}>
+          <Paper style={{ height: '100%' }} elevation={9}>
             <Box
               sx={{
-                paddingTop: '10px',
-                paddingBottom: '10px',
-                paddingLeft: '20px'
+                paddingTop: '20px',
+                paddingBottom: '20px',
+                paddingLeft: '40px',
+                paddingRight: '20px'
               }}
             >
               <LinearWithValueLabel data={data} />

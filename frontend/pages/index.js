@@ -18,12 +18,6 @@ import { Close } from '@mui/icons-material/'
 
 import { makeStyles } from '@mui/styles'
 
-const loginStyles = makeStyles(theme => ({
-  customContainer: {
-    backgroundColor: '#e3ecfe'
-  }
-}))
-
 export default function Home() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -31,7 +25,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const { signIn } = useContext(AuthContext)
-  const classes = loginStyles()
 
   async function handleSubmit(e) {
     e.preventDefault()
