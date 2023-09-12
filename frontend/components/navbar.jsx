@@ -1,5 +1,6 @@
 import styles from '../styles/Home.module.css'
 import { AuthContext } from '../contexts/AuthContext'
+import { useRouter } from 'next/router'
 import { useContext } from 'react'
 import {
   Box,
@@ -11,23 +12,49 @@ import {
 
 export default function Navbar() {
   const { logout } = useContext(AuthContext)
+  const router = useRouter()
   const { user } = useContext(AuthContext)
 
   function handleAnchorLogoutClick() {
     logout()
   }
 
+  console.log(router.pathname.localeCompare('/classes'))
   return (
     <Box>
       <List className={styles.ul}>
         <ListItem className={styles.li} disablePadding>
-          <ListItemButton component="a" href="/">
-            <ListItemText primary="Dashboard" />
+          <ListItemButton
+            component="a"
+            href="/classes/dashboard"
+            sx={{
+              backgroundColor:
+                router.pathname.includes('/dashboard') && '#248df4'
+            }}
+          >
+            <ListItemText
+              primary="Dashboard"
+              sx={{
+                color: router.pathname.includes('/dashboard') && 'white'
+              }}
+            />
           </ListItemButton>
         </ListItem>
         <ListItem className={styles.li} disablePadding>
-          <ListItemButton component="a" href="/classes">
-            <ListItemText primary="Turmas" />
+          <ListItemButton
+            component="a"
+            href="/classes"
+            sx={{
+              backgroundColor:
+                router.pathname.localeCompare('/classes') == 0 && '#248df4'
+            }}
+          >
+            <ListItemText
+              primary="Turmas"
+              sx={{
+                color: router.pathname.localeCompare('/classes') == 0 && 'white'
+              }}
+            />
           </ListItemButton>
         </ListItem>
         <ListItem className={styles.li} disablePadding>

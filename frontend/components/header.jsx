@@ -17,7 +17,7 @@ export default function Header() {
       <Image src="/logo_name_h.svg" width={160} height={26} priority="true" />
       <Box>
         <h3> {user?.name} </h3>
-        <p> E-mail: {user?.email} </p>
+        <p> {user?.email} </p>
       </Box>
     </Box>
   )
