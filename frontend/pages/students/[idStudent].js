@@ -4,6 +4,7 @@ import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 
 import { getAPIClient } from '../../utils/axiosapi'
+import { parseCookies } from 'nookies'
 
 import GradeGroup from '../../components/GradeGroup'
 
@@ -221,6 +222,10 @@ function StudentListPage({ data }) {
 export async function getServerSideProps(context) {
   const { params } = context
   const apiClient = getAPIClient(context)
+
+  const { ['nextautht1.email']: userEmail } = parseCookies(context)
+
+  console.log(userEmail)
 
   //let { data } = await apiClient.get(`students/listgrades/${params.idStudent}`)
 

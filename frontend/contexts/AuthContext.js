@@ -30,6 +30,7 @@ export function AuthProvider({ children }) {
 
     if (userCookie) {
       destroyCookie(null, 'nextautht1.token')
+      destroyCookie(null, 'nextautht1.email')
     }
 
     Router.push('/')
@@ -54,6 +55,10 @@ export function AuthProvider({ children }) {
     const token = data.accessToken
 
     setCookie(null, 'nextautht1.token', token, {
+      maxAge: 60 * 90 * 1 //130 min
+    })
+
+    setCookie(null, 'nextautht1.email', email, {
       maxAge: 60 * 90 * 1 //130 min
     })
 

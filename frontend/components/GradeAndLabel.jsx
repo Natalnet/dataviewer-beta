@@ -32,7 +32,7 @@ export default function GradeAndLabel({ grade, label }) {
           </Typography>
         </Box>
         <Box>
-          <Typography variant="body1" color={grey[400]} fontWeight="bold">
+          <Typography variant="body2" color={grey[400]} fontWeight="bold">
             {label}
           </Typography>
         </Box>

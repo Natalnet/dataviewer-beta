@@ -1,15 +1,10 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
- 
 
 import GradeAverage from './GradeAvarage'
 import GradeAndLabel from './GradeAndLabel'
 
- 
-
 export default function GradeGroup({ title, grades, average, averageLabel }) {
- 
-
   return (
     <>
       <Box sx={{ marginTop: '15px' }}>
