@@ -31,7 +31,6 @@ export class AuthService {
     const payload = { email: user.email, sub: user.id };
     //const user = await this.userModel.findOne({ email }).exec();
     const userData = await this.usersService.findOneByEmail(user.email);
-    console.log(userData);
 
     return {
       accessToken: this.jwtService.sign(payload),
