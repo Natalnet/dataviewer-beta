@@ -39,11 +39,7 @@ export function AuthProvider({ children }) {
     //TODO: é necessário gerar um link de validação do e-mail
     const { data } = await api.post('/users', { name, email, password })
 
-    //setUser(data.user)
-
-    api.get('/users/info').then(response => {
-      setUser(response.data)
-    })
+    setUser(data.user)
 
     Router.push('/')
   }
@@ -52,11 +48,8 @@ export function AuthProvider({ children }) {
     //TODO: realizar tratamento de erros
     const { data } = await api.post('/auth/login', { email, password })
 
-    //setUser(data.user)
-
-    api.get('/users/info').then(response => {
-      setUser(response.data)
-    })
+    setUser(data.user)
+    console.log('Front: ' + data.user.name)
 
     const token = data.accessToken
 
