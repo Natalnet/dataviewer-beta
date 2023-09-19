@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material'
 
 export default function Header() {
   const { user } = useContext(AuthContext)
+
   return (
     <Box
       sx={{
@@ -14,10 +15,17 @@ export default function Header() {
         alignItems: 'center'
       }}
     >
-      <Image src="/logo_name_h.svg" width={160} height={26} priority="true" />
+      <Image
+        src="/logo_name_h.svg"
+        width={160}
+        height={26}
+        priority="true"
+        alt="DataViewer Image"
+      />
       <Box>
         <h3> {user?.name} </h3>
         <p> {user?.email} </p>
+        <p> {user?.profile} </p>
       </Box>
     </Box>
   )
