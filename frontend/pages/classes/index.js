@@ -26,7 +26,7 @@ export default function Classes({ classes }) {
           <H2> Turmas </H2>
 
           <Box className={styles.containerclasses}>
-            {classes.map(classe => (
+            {classes && classes.map(classe => (
               <Link href={`/classes/${classe.class_id}`} key={classe._id}>
                 <ClassCard
                   title={classe.name}

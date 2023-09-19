@@ -47,9 +47,13 @@ export class ClassesService {
     const teacherClassData = await this.teacherClassModel
       .findOne({ email: userEmail })
       .exec();
-    const classIds = teacherClassData['classes'];
+    console.log(teacherClassData);
+    if (teacherClassData != null) {
+      const classIds = teacherClassData['classes'];
 
-    return this.classModel.find({ class_id: { $in: classIds } }).exec();
+      return this.classModel.find({ class_id: { $in: classIds } }).exec();
+    }
+    return null;
   }
 
   async findOne(id: string): Promise<ClassDto> {

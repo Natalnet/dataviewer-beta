@@ -61,8 +61,11 @@ export function AuthProvider({ children }) {
     setCookie(null, 'nextautht1.email', email, {
       maxAge: 60 * 90 * 1 //130 min
     })
-
-    Router.push('/classes')
+    console.log(data.user.profile)
+    if ( data.user.profile == "PROFESSOR")
+      Router.push('/classes')
+    else 
+      Router.push('/students')
   }
   return (
     <AuthContext.Provider
