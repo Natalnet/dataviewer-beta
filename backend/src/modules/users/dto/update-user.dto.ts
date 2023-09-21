@@ -1,4 +1,9 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
+import { PartialType } from '@nestjs/mapped-types'; // permite a atualização de parte dos atributos
 
-export class UpdateUserDto extends PartialType(CreateUserDto) {}
+export class TempUpUserDto {
+  name: string;
+  avatar: string;
+  registrationNumber: string;
+}
+
+export class UpdateUserDto extends PartialType(TempUpUserDto) {}

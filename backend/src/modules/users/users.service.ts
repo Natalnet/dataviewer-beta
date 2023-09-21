@@ -18,6 +18,7 @@ export class UsersService {
         ...createUserDto,
         password: hashSync(createUserDto.password, 10),
         profile: 'STUDENT',
+        avatar: '',
       }).save();
 
       const res: UserDto = {
@@ -26,6 +27,8 @@ export class UsersService {
         name: createdUser.name,
         emailConfirmed: createdUser.emailConfirmed,
         profile: createdUser.profile,
+        avatar: createdUser.avatar,
+        registrationNumber: createdUser.registrationNumber,
       };
 
       return res;
@@ -45,6 +48,8 @@ export class UsersService {
       name: user.name,
       emailConfirmed: user.emailConfirmed,
       profile: user.profile,
+      avatar: user.avatar,
+      registrationNumber: user.registrationNumber,
     }));
   }
 
@@ -56,6 +61,8 @@ export class UsersService {
       id: user.id,
       emailConfirmed: user.emailConfirmed,
       profile: user.profile,
+      avatar: user.avatar,
+      registrationNumber: user.registrationNumber,
     };
   }
 
@@ -64,7 +71,10 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UpdateUserDto> {
     const updatedUser = await this.userModel
       .findByIdAndUpdate(id, {
         $set: updateUserDto,
@@ -72,11 +82,9 @@ export class UsersService {
       .exec();
 
     return {
-      id: updatedUser.id,
-      email: updatedUser.email,
       name: updatedUser.name,
-      emailConfirmed: updatedUser.emailConfirmed,
-      profile: updatedUser.profile,
+      avatar: updatedUser.avatar,
+      registrationNumber: updatedUser.registrationNumber,
     };
   }
 
