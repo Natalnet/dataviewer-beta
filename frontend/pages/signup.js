@@ -36,8 +36,6 @@ export default function Signup() {
       setLoading(true)
 
       const signUpResponse = await signUp(name, email, password)
-
-      console.log(signUpResponse)
     } catch {
       setAlertMessage('Falha ao criar uma conta!')
       setOpenAlert(true)

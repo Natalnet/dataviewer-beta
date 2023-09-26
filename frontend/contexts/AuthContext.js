@@ -14,7 +14,6 @@ export function AuthProvider({ children }) {
 
     if (userCookie) {
       api.get('/users/info').then(response => {
-        console.log('useEffect: ', response.data)
         setUser(response.data)
       })
     }
@@ -31,9 +30,20 @@ export function AuthProvider({ children }) {
 
     if (userCookie) {
       destroyCookie(null, 'nextautht1.token')
+      destroyCookie(null, 'nextautht1.email')
     }
 
     Router.push('/')
+  }
+
+  async function updateUser(name, registrationNumber, avatar) {
+    let x = {
+      name: 'string(name)',
+      avatar: `${avatar}`,
+      registrationNumber: 'string(registrationNumber)'
+    }
+    console.log(x)
+    const { data } = await api.patch('/users/update-account', {name, registrationNumber, avatar})
   }
 
   async function signUp(name, email, password) {
@@ -50,6 +60,7 @@ export function AuthProvider({ children }) {
     const { data } = await api.post('/auth/login', { email, password })
 
     setUser(data.user)
+    console.log('Front: ' + data.user)
 
     const token = data.accessToken
 
@@ -57,11 +68,16 @@ export function AuthProvider({ children }) {
       maxAge: 60 * 90 * 1 //130 min
     })
 
-    Router.push('/classes')
+    setCookie(null, 'nextautht1.email', email, {
+      maxAge: 60 * 90 * 1 //130 min
+    })
+    console.log(data.user.profile)
+    if (data.user.profile == 'PROFESSOR') Router.push('/classes')
+    else Router.push('/students')
   }
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signUp, logout, user }}
+      value={{ isAuthenticated, signIn, signUp, logout, user, updateUser }}
     >
       {children}
     </AuthContext.Provider>

@@ -4,11 +4,11 @@ import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
 
 import { getAPIClient } from '../../utils/axiosapi'
+import { parseCookies } from 'nookies'
 
 import GradeGroup from '../../components/GradeGroup'
 
 function StudentListPage({ data }) {
-  console.log(data)
   // Esta organização do grid permite que as divisões se ajustem automaticamente em duas
   //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas.
 
@@ -223,6 +223,10 @@ export async function getServerSideProps(context) {
   const { params } = context
   const apiClient = getAPIClient(context)
 
+  const { ['nextautht1.email']: userEmail } = parseCookies(context)
+
+  console.log(userEmail)
+
   //let { data } = await apiClient.get(`students/listgrades/${params.idStudent}`)
 
   let data = {
@@ -239,7 +243,6 @@ export async function getServerSideProps(context) {
       'Faltou realizar os testes, melhorar a indentação e as explicações sobre o algoritmo desenvolvido firam incompletas. '
   }
 
-  console.log(data)
   return {
     props: {
       data

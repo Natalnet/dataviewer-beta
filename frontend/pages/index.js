@@ -16,6 +16,8 @@ import {
 
 import { Close } from '@mui/icons-material/'
 
+import { makeStyles } from '@mui/styles'
+
 export default function Home() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -32,7 +34,7 @@ export default function Home() {
     } catch (error) {
       setAlertMessage('Falha ao realizar login!')
       setOpenAlert(true)
-      console.log(error)
+      //console.log(error)
     }
     setLoading(false)
   }
@@ -62,6 +64,7 @@ export default function Home() {
             width={180}
             height={30}
             priority="true"
+            alt="DataViewer Image Logo"
           />
         </Box>
         <Box
@@ -80,7 +83,13 @@ export default function Home() {
             Tudo isso em tempo real e de forma automatizada.{' '}
           </Typography>
         </Box>
-        <Image src="/intro_dv.svg" width={652} height={444} />
+        <Image
+          src="/intro_dv.svg"
+          width={652}
+          height={444}
+          priority="true"
+          alt="DataViewer Image"
+        />
       </Box>
       <Box
         sx={{
@@ -98,7 +107,13 @@ export default function Home() {
           marginBottom: 'auto'
         }}
       >
-        <Image src="/dataviewer_full.svg" width={200} height={115} />
+        <Image
+          src="/dataviewer_full.svg"
+          width={200}
+          height={115}
+          priority="true"
+          alt="DataViewer Image"
+        />
         {openAlert && (
           <Alert
             severity="error"

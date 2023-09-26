@@ -8,7 +8,7 @@ export class User {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true, unique: true, readOnly: true })
   email: string;
 
   @Prop({ required: true })
@@ -17,8 +17,14 @@ export class User {
   @Prop({ required: false })
   emailConfirmed: boolean;
 
-  @Prop({ required: true })
+  @Prop({ required: true, readOnly: true })
   profile: string;
+
+  @Prop({ required: false })
+  avatar: string;
+
+  @Prop({ required: false })
+  registrationNumber: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

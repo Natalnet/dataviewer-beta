@@ -97,7 +97,7 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
                 <h2>Estudantes da Turma</h2>
                 <StudentCards
                   students={students}
-                  pagePath="/classes/students/listgrades"
+                  pagePath="/students/listgrades"
                 />
               </div>
             </Grid>

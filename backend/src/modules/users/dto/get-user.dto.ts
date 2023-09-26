@@ -4,4 +4,6 @@ export class UserDto {
   email: string;
   emailConfirmed: boolean;
   profile: string;
+  avatar: string;
+  registrationNumber: string; 
 }
