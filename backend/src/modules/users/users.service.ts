@@ -71,10 +71,8 @@ export class UsersService {
     return user;
   }
 
-  async update(
-    id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<UpdateUserDto> {
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    console.log(id);
     const updatedUser = await this.userModel
       .findByIdAndUpdate(id, {
         $set: updateUserDto,
@@ -82,9 +80,7 @@ export class UsersService {
       .exec();
 
     return {
-      name: updatedUser.name,
-      avatar: updatedUser.avatar,
-      registrationNumber: updatedUser.registrationNumber,
+      result: 'ok',
     };
   }
 

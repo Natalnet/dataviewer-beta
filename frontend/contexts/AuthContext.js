@@ -36,6 +36,15 @@ export function AuthProvider({ children }) {
     Router.push('/')
   }
 
+  async function updateUser(name, registrationNumber, avatar) {
+    const x = {
+      name: 'Oriva Teste x',
+      avatar: 'avatar x',
+      registrationNumber: 'x'
+    }
+    const { data } = await api.patch('/users/update-account', x)
+  }
+
   async function signUp(name, email, password) {
     //TODO: é necessário gerar um link de validação do e-mail
     const { data } = await api.post('/users', { name, email, password })
@@ -50,7 +59,7 @@ export function AuthProvider({ children }) {
     const { data } = await api.post('/auth/login', { email, password })
 
     setUser(data.user)
-    console.log('Front: ' + data.user.name)
+    console.log('Front: ' + data.user)
 
     const token = data.accessToken
 
@@ -62,14 +71,12 @@ export function AuthProvider({ children }) {
       maxAge: 60 * 90 * 1 //130 min
     })
     console.log(data.user.profile)
-    if ( data.user.profile == "PROFESSOR")
-      Router.push('/classes')
-    else 
-      Router.push('/students')
+    if (data.user.profile == 'PROFESSOR') Router.push('/classes')
+    else Router.push('/students')
   }
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signUp, logout, user }}
+      value={{ isAuthenticated, signIn, signUp, logout, user, updateUser }}
     >
       {children}
     </AuthContext.Provider>
