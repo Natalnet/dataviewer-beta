@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {
   Container,
@@ -18,18 +18,30 @@ export default function EditForm({ info, updateData }) {
   const [registrationNumber, setRegistrationNumber] = useState('')
   const [avatar, setAvatarGitub] = useState('')
   const [openAlert, setOpenAlert] = useState(false)
+  const [alertSeverity, setAlertSeverity] = useState('success')
   const [alertMessage, setAlertMessage] = useState('')
+  const [alertTitle, setAlertTitle] = useState('')
 
   async function handleSubmit(e) {
     e.preventDefault()
+    setAlertTitle('Sucesso')
+    setAlertMessage('Dados atualizados com sucesso!!!')
+    setAlertSeverity('success')
+    setOpenAlert(true)
     try {
-      await updateData({name, registrationNumber, avatar})
+      await updateData({ name, registrationNumber, avatar })
     } catch (error) {
       setAlertMessage('Falha ao atualizar os dados!')
-      setOpenAlert(true)
-      //console.log(error)
+      setAlertTitle('Erro')
+      setAlertSeverity('error')
     }
   }
+
+  useEffect( () => {
+    setName(info?.name)
+    setRegistrationNumber(info?.registrationNumber)
+    setAvatarGitub(info?.avatar) 
+  }, [])
 
   return (
     <Container
@@ -110,15 +122,10 @@ export default function EditForm({ info, updateData }) {
               variant="contained"
               type="submit"
               sx={{
-                bgcolor: '#273b73',
-                width: '150px',
-                color: '#efefef',
-                '&:hover': {
-                  bgcolor: '#4163bf'
-                }
+                width: '150px'
               }}
             >
-              Entrar
+              Atualizar
             </Button>
           </Box>
         </form>
@@ -126,7 +133,7 @@ export default function EditForm({ info, updateData }) {
       <Box sx={{ width: '500px', margin: '0 auto', marginTop: '50px' }}>
         {openAlert && (
           <Alert
-            severity="error"
+            severity={alertSeverity}
             variant="filled"
             action={
               <IconButton size="small" onClick={() => setOpenAlert(false)}>
@@ -134,7 +141,7 @@ export default function EditForm({ info, updateData }) {
               </IconButton>
             }
           >
-            <AlertTitle>Erro na atualização</AlertTitle>
+            <AlertTitle>{alertTitle}</AlertTitle>
             {alertMessage}
           </Alert>
         )}

@@ -9,9 +9,7 @@ import { useContext } from 'react'
 export default function EditUser({ info }) {
   const { updateUser } = useContext(AuthContext)
   async function updateInfo(dataToUp) {
-    const name = 'Teste N'
-    const avatar = 'Teste A'
-    const registrationNumber = 'Teste R'
+ 
     console.log(dataToUp)
     await updateUser(dataToUp.name,dataToUp.registrationNumber,dataToUp.avatar)
   }
