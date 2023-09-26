@@ -23,7 +23,7 @@ export default function EditForm({ info, updateData }) {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      await updateData({ name, registrationNumber, avatar })
+      await updateData({name, registrationNumber, avatar})
     } catch (error) {
       setAlertMessage('Falha ao atualizar os dados!')
       setOpenAlert(true)

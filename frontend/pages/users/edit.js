@@ -13,7 +13,7 @@ export default function EditUser({ info }) {
     const avatar = 'Teste A'
     const registrationNumber = 'Teste R'
     console.log(dataToUp)
-    await updateUser(dataToUp)
+    await updateUser(dataToUp.name,dataToUp.registrationNumber,dataToUp.avatar)
   }
 
   return (
