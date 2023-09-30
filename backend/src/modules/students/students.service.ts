@@ -30,8 +30,19 @@ export class StudentsService {
       .findOne({ student_id: id })
       .exec();
     if (!data) return [];
-    console.log(data['lists']);
+    
+    return data['lists'].map((l) => ({
+      fullName: l.description,
+      progress: l.percent,
+    }));
+  }
 
+  async findStudentListGradesByMat(mat: string): Promise<StudentListGradesDto[]> {
+    const data = await this.studentListGradesModel
+      .findOne({ reg_num: mat })
+      .exec();
+    if (!data) return [];
+    
     return data['lists'].map((l) => ({
       fullName: l.description,
       progress: l.percent,
