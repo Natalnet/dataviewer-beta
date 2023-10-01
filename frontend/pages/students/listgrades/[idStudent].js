@@ -91,7 +91,7 @@ function StudentListPage({ data }) {
   //colunas e quando a tela é muito curta seja ajustado para uma coluna apenas.
   // Inclusão na segunda coluna do componente de progresso nas listas de um estudante
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '90%' }}>
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} md={6} sx={{ paddingRight: '30px' }}>
           <Grid container direction="column" spacing={2}>

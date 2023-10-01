@@ -43,7 +43,11 @@ export function AuthProvider({ children }) {
       registrationNumber: 'string(registrationNumber)'
     }
     console.log(x)
-    const { data } = await api.patch('/users/update-account', {name, registrationNumber, avatar})
+    const { data } = await api.patch('/users/update-account', {
+      name,
+      registrationNumber,
+      avatar
+    })
   }
 
   async function signUp(name, email, password) {
@@ -60,17 +64,25 @@ export function AuthProvider({ children }) {
     const { data } = await api.post('/auth/login', { email, password })
 
     setUser(data.user)
-    console.log('Front: ' + data.user)
+    console.log('Front: ' + data.user.mat)
 
     const token = data.accessToken
+    const registrationNumber = data.user.mat
+
+    const cookieTime = 60 * 90 * 1 //130 min
 
     setCookie(null, 'nextautht1.token', token, {
-      maxAge: 60 * 90 * 1 //130 min
+      maxAge: cookieTime
     })
 
     setCookie(null, 'nextautht1.email', email, {
-      maxAge: 60 * 90 * 1 //130 min
+      maxAge: cookieTime
     })
+
+    setCookie(null, 'nextautht1.mat', registrationNumber, {
+      maxAge: cookieTime
+    })
+
     console.log(data.user.profile)
     if (data.user.profile == 'PROFESSOR') Router.push('/classes')
     else Router.push('/students')

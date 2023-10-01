@@ -223,9 +223,9 @@ export async function getServerSideProps(context) {
   const { params } = context
   const apiClient = getAPIClient(context)
 
-  const { ['nextautht1.email']: userEmail } = parseCookies(context)
+  const { ['nextautht1.mat']: regNumber } = parseCookies(context)
 
-  console.log(userEmail)
+  console.log(regNumber)
 
   //let { data } = await apiClient.get(`students/listgrades/${params.idStudent}`)
 
