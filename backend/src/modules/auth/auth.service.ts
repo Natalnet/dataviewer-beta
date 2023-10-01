@@ -38,6 +38,7 @@ export class AuthService {
         profile: userData.profile,
         name: userData.name,
         email: userData.email,
+        mat: userData.registrationNumber,
       },
     };
   }

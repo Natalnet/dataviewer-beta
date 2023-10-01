@@ -12,7 +12,7 @@ export class StudentsController {
     return this.studentService.findStudentListGrades(id);
   }
 
-  
+  @UseGuards(JwtAuthGuard)
   @Get('listgradesbymat/:mat')
   findListGradesByMat(@Param('mat') mat: string) {
     return this.studentService.findStudentListGradesByMat(mat); 
