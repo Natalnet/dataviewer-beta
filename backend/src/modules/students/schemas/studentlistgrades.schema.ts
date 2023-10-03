@@ -15,6 +15,15 @@ export class StudentListGrades {
   reg_num: string;
 
   @Prop()
+  meanU1: string;
+
+  @Prop()
+  meanU2: string;
+
+  @Prop()
+  meanU3: string;
+
+  @Prop()
   lists: StudentList[];
 }
 

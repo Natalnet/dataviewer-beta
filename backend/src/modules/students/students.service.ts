@@ -13,6 +13,7 @@ import {
   StudentParticipationDocument,
 } from './schemas/studentparticipation.schema';
 import { StudentParticipationsDto } from './dto/get-student-participations.dto';
+import { StudentListUnitGradesDto } from './dto/get-student-list-unit-grades.dto';
 
 @Injectable()
 export class StudentsService {
@@ -30,23 +31,41 @@ export class StudentsService {
       .findOne({ student_id: id })
       .exec();
     if (!data) return [];
-    
+
     return data['lists'].map((l) => ({
       fullName: l.description,
       progress: l.percent,
     }));
   }
 
-  async findStudentListGradesByMat(mat: string): Promise<StudentListGradesDto[]> {
+  async findStudentListGradesByMat(
+    mat: string,
+  ): Promise<StudentListGradesDto[]> {
     const data = await this.studentListGradesModel
       .findOne({ reg_num: mat })
       .exec();
     if (!data) return [];
-    
+    console.log(data);
     return data['lists'].map((l) => ({
       fullName: l.description,
       progress: l.percent,
     }));
+  }
+
+  async findStudentListUnitGrades(
+    mat: string,
+  ): Promise<StudentListUnitGradesDto> {
+    const data = await this.studentListGradesModel
+      .findOne({ reg_num: mat })
+      .exec();
+    if (!data) return null;
+    console.log(data);
+
+    return {
+      meanU1: data.meanU1,
+      meanU2: data.meanU2,
+      meanU3: data.meanU3,
+    };
   }
 
   async findExamGrades(mat: string): Promise<ExamGradesDto> {
@@ -68,7 +87,7 @@ export class StudentsService {
     const data = await this.stdudentParticipationModel
       .findOne({ matricula: mat })
       .exec();
-    console.log(data);
+
     if (!data) return null;
 
     return {

@@ -15,7 +15,12 @@ export class StudentsController {
   @UseGuards(JwtAuthGuard)
   @Get('listgradesbymat/:mat')
   findListGradesByMat(@Param('mat') mat: string) {
-    return this.studentService.findStudentListGradesByMat(mat); 
+    return this.studentService.findStudentListGradesByMat(mat);
+  }
+
+  @Get('listunitgrades/:mat')
+  findListUnitGrades(@Param('mat') mat: string) {
+    return this.studentService.findStudentListUnitGrades(mat);
   }
 
   @UseGuards(JwtAuthGuard)
