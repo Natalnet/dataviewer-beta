@@ -45,7 +45,7 @@ export class StudentsService {
       .findOne({ reg_num: mat })
       .exec();
     if (!data) return [];
-    console.log(data);
+
     return data['lists'].map((l) => ({
       fullName: l.description,
       progress: l.percent,
@@ -59,7 +59,6 @@ export class StudentsService {
       .findOne({ reg_num: mat })
       .exec();
     if (!data) return null;
-    console.log(data);
 
     return {
       meanU1: data.meanU1,
