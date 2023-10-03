@@ -13,8 +13,6 @@ export async function getServerSideProps(context) {
 
   const { ['nextautht1.mat']: mat } = parseCookies(context)
 
-  console.log('Mat: ' + mat)
-
   if (!token) {
     return {
       redirect: {

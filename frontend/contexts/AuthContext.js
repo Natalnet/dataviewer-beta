@@ -31,6 +31,7 @@ export function AuthProvider({ children }) {
     if (userCookie) {
       destroyCookie(null, 'nextautht1.token')
       destroyCookie(null, 'nextautht1.email')
+      destroyCookie(null, 'nextautht1.mat')
     }
 
     Router.push('/')
