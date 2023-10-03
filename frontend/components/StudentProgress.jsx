@@ -62,7 +62,7 @@ export default function LinearWithValueLabel({ data }) {
           <div key={item.fullName}>
             <Typography variant="subtitle1">{item.fullName}</Typography>
             <Box sx={{ width: '97%', paddingTop: '6px' }}>
-              <LinearProgressWithLabel value={item.progress} />
+              <LinearProgressWithLabel value={parseFloat(item.progress)} />
             </Box>
           </div>
         )
