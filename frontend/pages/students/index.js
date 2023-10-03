@@ -32,15 +32,15 @@ export async function getServerSideProps(context) {
   let res = await apiClient.get(`students/participations/${regNumber}`)
   let participations = res.data
 
-  res = await apiClient.get(`students/listgradesbymat/${regNumber}`)
+  res = await apiClient.get(`students/listunitgrades/${regNumber}`)
   let listgrades = res.data
-  //console.log(listgrades)
+  console.log(listgrades)
 
   data = {
     grades: { u1: 0, u2: 0, u3: 0, average: 0 },
-    unit1: { participation: 0, lists: 0, exam: 9.8, average: 0 },
-    unit2: { participation: 0, lists: 8.7, exam: 0, average: 0 },
-    unit3: { participation: 0, lists: 6.7, exam: 0, average: 0 },
+    unit1: { participation: 0, lists: listgrades?.meanU1, exam: 0, average: 0 },
+    unit2: { participation: 0, lists: listgrades?.meanU2, exam: 0, average: 0 },
+    unit3: { participation: 0, lists: listgrades?.meanU3, exam: 0, average: 0 },
     participation1: { presence: 0, activities: 0, average: 0 },
     participation2: { presence: 0, activities: 0, average: 0 },
     participation3: { presence: 0, activities: 0, average: 0 },
