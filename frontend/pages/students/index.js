@@ -11,7 +11,6 @@ function StudentGradesMainPage({ data }) {
 }
 
 export async function getServerSideProps(context) {
-  const { params } = context
   const apiClient = getAPIClient(context)
 
   const { ['nextautht1.token']: token } = parseCookies(context)
@@ -34,15 +33,18 @@ export async function getServerSideProps(context) {
   let participations = res.data
 
   res = await apiClient.get(`students/listgradesbymat/${regNumber}`)
-  let listgrades = res.data 
-  console.log(listgrades) 
-
-  
+  let listgrades = res.data
+  console.log(listgrades)
 
   data = {
     grades: { u1: 7.9, u2: 8.7, u3: 9.8, average: 0.0 },
-    unit1: { participation: 10.0, lists: 8.7, exam: 9.8, average: parseFloat(0) },
-    unit2: { participation: 5.0, lists: 8.7, exam: 9.8, average:0 },
+    unit1: {
+      participation: 10.0,
+      lists: 8.7,
+      exam: 9.8,
+      average: parseFloat(0)
+    },
+    unit2: { participation: 5.0, lists: 8.7, exam: 9.8, average: 0 },
     unit3: { participation: 10.0, lists: 6.7, exam: 4.8, average: 8 },
     participation1: { presence: 10, activities: 10, average: 0 },
     participation2: { presence: 10, activities: 0, average: 0 },
