@@ -12,7 +12,9 @@ export default function Header() {
         p: 1,
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: '20px',
+        marginRight: '8vw'
       }}
     >
       <Image
@@ -25,7 +27,6 @@ export default function Header() {
       <Box>
         <h3> {user?.name} </h3>
         <p> {user?.email} </p>
-        <p> {user?.profile} </p>
       </Box>
     </Box>
   )

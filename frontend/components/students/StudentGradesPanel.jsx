@@ -47,7 +47,7 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Unidade I"
                   grades={[
-                    { v: data.unit1.participation, l: 'Presença' },
+                    { v: data.unit1.participation, l: 'Participação' },
                     { v: data.unit1.lists, l: 'Listas' },
                     { v: data.unit1.exam, l: 'Prova' }
                   ]}
@@ -69,7 +69,7 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Unidade II"
                   grades={[
-                    { v: data.unit2.participation, l: 'Presença' },
+                    { v: data.unit2.participation, l: 'Participação' },
                     { v: data.unit2.lists, l: 'Listas' },
                     { v: data.unit2.exam, l: 'Prova' }
                   ]}
@@ -91,7 +91,7 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Unidade III"
                   grades={[
-                    { v: data.unit3.participation, l: 'Presença' },
+                    { v: data.unit3.participation, l: 'Participação' },
                     { v: data.unit3.lists, l: 'Listas' },
                     { v: data.unit3.exam, l: 'Prova' }
                   ]}
