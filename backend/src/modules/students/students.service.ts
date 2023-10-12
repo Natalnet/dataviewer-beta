@@ -90,12 +90,12 @@ export class StudentsService {
     if (!data) return null;
 
     return {
-      presence1: parseFloat(data.pres1),
-      activities1: parseFloat(data.ativs1),
-      presence2: parseFloat(data.pres2),
-      activities2: parseFloat(data.ativs2),
-      presence3: parseFloat(data.pres3),
-      activities3: parseFloat(data.ativs3),
+      presence1: parseFloat(data.presenca1),
+      activities1: parseFloat(data.atividade1),
+      presence2: parseFloat(data.presenca2),
+      activities2: parseFloat(data.atividade2),
+      presence3: parseFloat(data.presenca3),
+      activities3: parseFloat(data.atividade3),
     };
   }
 }

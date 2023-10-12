@@ -7,22 +7,22 @@ export class StudentParticipation {
   matricula: string;
 
   @Prop()
-  pres1: string;
+  presenca1: string;
 
   @Prop()
-  ativs1: string;
+  atividade1: string;
 
   @Prop()
-  pres2: string;
+  presenca2: string;
 
   @Prop()
-  ativs2: string;
+  atividade2: string;
 
   @Prop()
-  pres3: string;
+  presenca3: string;
 
   @Prop()
-  ativs3: string;
+  atividade3: string;
 }
 
 export type StudentParticipationDocument =
