@@ -12,11 +12,12 @@ export default function GradeGroup({ title, grades, average, averageLabel }) {
         <Box
           sx={{
             display: 'flex',
-            paddingLeft: '15px',
             alignItems: 'baseline',
-            gap: '3vh',
+            marginBottom: '10px',
             marginTop: '10px',
-            marginLeft: '25px'
+            marginLeft: '25px',
+            marginRight: '25px',
+            justifyContent: 'space-between'
           }}
         >
           {grades &&

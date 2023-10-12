@@ -104,14 +104,16 @@ function StudentListPanel({ data }) {
                   }}
                 >
                   <Typography variant="h5">Unidade I</Typography>
-                  <GradeGroup
-                    title="Expressões Aritiméticas"
-                    grades={[
-                      { v: u1.ar, l: 'Resolvida' },
-                      { v: u1.ap, l: 'Prática' },
-                      { v: u1.ae, l: 'Exercícios' }
-                    ]}
-                  />
+                  <Box sx={{ marginRight: '23%' }}>
+                    <GradeGroup
+                      title="Expressões Aritiméticas"
+                      grades={[
+                        { v: u1.ar, l: 'Resolvida' },
+                        { v: u1.ap, l: 'Prática' },
+                        { v: u1.ae, l: 'Exercícios' }
+                      ]}
+                    />
+                  </Box>
                   <GradeGroup
                     title="Estruturas de Decisão"
                     grades={[
@@ -135,14 +137,16 @@ function StudentListPanel({ data }) {
                   }}
                 >
                   <Typography variant="h5">Unidade II</Typography>
-                  <GradeGroup
-                    title="Repetição Condicional"
-                    grades={[
-                      { v: u2.rr, l: 'Resolvida' },
-                      { v: u2.rp, l: 'Prática' },
-                      { v: u2.re, l: 'Exercícios' }
-                    ]}
-                  />
+                  <Box sx={{ marginRight: '23%' }}>
+                    <GradeGroup
+                      title="Repetição Condicional"
+                      grades={[
+                        { v: u2.rr, l: 'Resolvida' },
+                        { v: u2.rp, l: 'Prática' },
+                        { v: u2.re, l: 'Exercícios' }
+                      ]}
+                    />
+                  </Box>
                   <GradeGroup
                     title="Repetição Contada"
                     grades={[

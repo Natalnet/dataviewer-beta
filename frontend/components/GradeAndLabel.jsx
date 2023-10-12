@@ -21,8 +21,9 @@ export default function GradeAndLabel({ grade, label }) {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          paddingRight: '3vh',
+
           borderRight: `1px solid ${grey[200]}`,
+          flexGrow: 1,
           alignItems: 'center'
         }}
       >
@@ -32,7 +33,7 @@ export default function GradeAndLabel({ grade, label }) {
           </Typography>
         </Box>
         <Box>
-          <Typography variant="body2" color={grey[400]} fontWeight="bold">
+          <Typography variant="body2" color={grey[400]} fontWeight="light">
             {label}
           </Typography>
         </Box>
