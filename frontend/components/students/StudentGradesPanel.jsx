@@ -19,7 +19,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -41,7 +41,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -63,7 +63,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -85,7 +85,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -111,7 +111,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -132,7 +132,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -153,7 +153,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <GradeGroup
@@ -174,7 +174,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <Typography variant="h6"> Comentário - Prova 01 </Typography>
@@ -188,7 +188,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <Typography variant="h6"> Comentário - Prova 02 </Typography>
@@ -202,7 +202,7 @@ export default function StudentGradesPanel({ data }) {
                 sx={{
                   paddingTop: '10px',
                   paddingLeft: '20px',
-                  height: '160px'
+                  minHeight: '160px'
                 }}
               >
                 <Typography variant="h6"> Comentário - Prova 03 </Typography>

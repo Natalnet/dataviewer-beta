@@ -13,10 +13,10 @@ export default function GradeGroup({ title, grades, average, averageLabel }) {
           sx={{
             display: 'flex',
             alignItems: 'baseline',
-            marginBottom: '10px',
-            marginTop: '10px',
-            marginLeft: '25px',
-            marginRight: '25px',
+            paddingBottom: '10px',
+            paddingTop: '10px',
+            paddingLeft: '25px',
+            paddingRight: '25px',
             justifyContent: 'space-between'
           }}
         >
