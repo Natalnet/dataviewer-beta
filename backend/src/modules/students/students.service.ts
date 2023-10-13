@@ -13,6 +13,7 @@ import {
   StudentParticipationDocument,
 } from './schemas/studentparticipation.schema';
 import { StudentParticipationsDto } from './dto/get-student-participations.dto';
+import { StudentListUnitGradesDto } from './dto/get-student-list-unit-grades.dto';
 
 @Injectable()
 export class StudentsService {
@@ -30,12 +31,40 @@ export class StudentsService {
       .findOne({ student_id: id })
       .exec();
     if (!data) return [];
-    console.log(data['lists']);
 
     return data['lists'].map((l) => ({
       fullName: l.description,
       progress: l.percent,
     }));
+  }
+
+  async findStudentListGradesByMat(
+    mat: string,
+  ): Promise<StudentListGradesDto[]> {
+    const data = await this.studentListGradesModel
+      .findOne({ reg_num: mat })
+      .exec();
+    if (!data) return [];
+
+    return data['lists'].map((l) => ({
+      fullName: l.description,
+      progress: l.percent,
+    }));
+  }
+
+  async findStudentListUnitGrades(
+    mat: string,
+  ): Promise<StudentListUnitGradesDto> {
+    const data = await this.studentListGradesModel
+      .findOne({ reg_num: mat })
+      .exec();
+    if (!data) return null;
+
+    return {
+      meanU1: data.meanU1,
+      meanU2: data.meanU2,
+      meanU3: data.meanU3,
+    };
   }
 
   async findExamGrades(mat: string): Promise<ExamGradesDto> {
@@ -57,16 +86,16 @@ export class StudentsService {
     const data = await this.stdudentParticipationModel
       .findOne({ matricula: mat })
       .exec();
-    console.log(data);
+
     if (!data) return null;
 
     return {
-      presence1: parseFloat(data.pres1),
-      activities1: parseFloat(data.ativs1),
-      presence2: parseFloat(data.pres2),
-      activities2: parseFloat(data.ativs2),
-      presence3: parseFloat(data.pres3),
-      activities3: parseFloat(data.ativs3),
+      presence1: parseFloat(data.presenca1),
+      activities1: parseFloat(data.atividade1),
+      presence2: parseFloat(data.presenca2),
+      activities2: parseFloat(data.atividade2),
+      presence3: parseFloat(data.presenca3),
+      activities3: parseFloat(data.atividade3),
     };
   }
 }

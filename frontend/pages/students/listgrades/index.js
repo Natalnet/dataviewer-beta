@@ -1,16 +1,17 @@
-import StudentListPanel from '../../../components/students/StudentListPanel'
 import { getAPIClient } from '../../../utils/axiosapi'
 import { parseCookies } from 'nookies'
+import StudentListPanel from '../../../components/students/StudentListPanel'
 
-function StudentListPage({ data }) {
+function StudentListGradesPage({ data }) {
   return <StudentListPanel data={data} />
 }
 
 export async function getServerSideProps(context) {
-  const { params } = context
   const apiClient = getAPIClient(context)
 
   const { ['nextautht1.token']: token } = parseCookies(context)
+
+  const { ['nextautht1.mat']: mat } = parseCookies(context)
 
   if (!token) {
     return {
@@ -21,7 +22,7 @@ export async function getServerSideProps(context) {
     }
   }
 
-  let { data } = await apiClient.get(`students/listgrades/${params.idStudent}`)
+  let { data } = await apiClient.get(`students/listgradesbymat/${mat}`)
 
   return {
     props: {
@@ -30,4 +31,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default StudentListPage
+export default StudentListGradesPage

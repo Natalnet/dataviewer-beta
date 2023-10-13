@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 
 import { Close } from '@mui/icons-material/'
+import Link from 'next/link'
 
 export default function EditForm({ info, updateData }) {
   const [name, setName] = useState('')
@@ -21,6 +22,11 @@ export default function EditForm({ info, updateData }) {
   const [alertSeverity, setAlertSeverity] = useState('success')
   const [alertMessage, setAlertMessage] = useState('')
   const [alertTitle, setAlertTitle] = useState('')
+
+  function onCancel(e) {
+    e.preventDefault()
+    console.log('Cancel!!')
+  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -37,10 +43,10 @@ export default function EditForm({ info, updateData }) {
     }
   }
 
-  useEffect( () => {
+  useEffect(() => {
     setName(info?.name)
     setRegistrationNumber(info?.registrationNumber)
-    setAvatarGitub(info?.avatar) 
+    setAvatarGitub(info?.avatar)
   }, [])
 
   return (
@@ -114,9 +120,11 @@ export default function EditForm({ info, updateData }) {
               justifyContent: 'space-between'
             }}
           >
-            <Button variant="outlined" sx={{ width: '150px' }}>
-              Cancelar
-            </Button>
+            <Link href="/students">
+              <Button variant="outlined" sx={{ width: '150px' }}>
+                Cancelar
+              </Button>
+            </Link>
 
             <Button
               variant="contained"

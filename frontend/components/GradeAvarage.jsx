@@ -10,7 +10,7 @@ export default function GradeAverage({ grade, label }) {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          paddingRight: '3vh',
+          flexGrow: 1,
           alignItems: 'center'
         }}
       >
@@ -20,7 +20,7 @@ export default function GradeAverage({ grade, label }) {
           </Typography>
         </div>
         <div>
-          <Typography variant="body1" color={grey[400]} fontWeight="bold">
+          <Typography variant="body1" color={grey[400]}>
             {label}
           </Typography>
         </div>

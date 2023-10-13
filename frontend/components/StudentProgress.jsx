@@ -22,7 +22,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 function LinearProgressWithLabel(props) {
   const colors = () =>
-    props.value <= 30 ? 'error' : props.value <= 70 ? 'warning' : 'success'
+    parseFloat(props.value) <= 30 ? 'error' : parseFloat(props.value) <= 70 ? 'warning' : 'success'
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ width: '100%', mr: 1 }}>
@@ -34,7 +34,7 @@ function LinearProgressWithLabel(props) {
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="body2" color="text.secondary">{`${Math.round(
-          props.value
+          parseFloat(props.value)
         )}%`}</Typography>
       </Box>
     </Box>
@@ -62,7 +62,7 @@ export default function LinearWithValueLabel({ data }) {
           <div key={item.fullName}>
             <Typography variant="subtitle1">{item.fullName}</Typography>
             <Box sx={{ width: '97%', paddingTop: '6px' }}>
-              <LinearProgressWithLabel value={item.progress} />
+              <LinearProgressWithLabel value={parseFloat(item.progress)} />
             </Box>
           </div>
         )

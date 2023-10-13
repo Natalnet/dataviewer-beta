@@ -72,7 +72,6 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    console.log(id);
     const updatedUser = await this.userModel
       .findByIdAndUpdate(id, {
         $set: updateUserDto,
