@@ -56,8 +56,6 @@ export function AuthProvider({ children }) {
     const { data } = await api.post('/users', { name, email, password })
 
     setUser(data.user)
-
-    Router.push('/')
   }
 
   async function signIn(email, password) {
