@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import Image from 'next/image'
 import { AuthContext } from '../contexts/AuthContext'
-import Router from 'next/router'
+
 
 import Link from 'next/link'
 import {
@@ -21,10 +21,7 @@ import {
   DialogActions
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
+import DialogTransitionPage from '../components/messages/DialogTransitionPage'
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -36,11 +33,6 @@ export default function Signup() {
   const [alertMessage, setAlertMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const { signUp } = useContext(AuthContext)
-
-  const handleDialogClose = () => {
-    setOpenDialog(false)
-    Router.push('/')
-  }
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -162,24 +154,11 @@ export default function Signup() {
         <Box className="smalltext">
           Já tem conta? <Link href="/">Faça Login.</Link>
         </Box>
-
-        <Dialog
-          open={openDialog}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleDialogClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{'Usuário cadastrado com sucesso!'}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              Clique em 'Ok' para acessar a tela de Login.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDialogClose}>Ok</Button>
-          </DialogActions>
-        </Dialog>
+        <DialogTransitionPage
+          title={'Usuário cadastrado com sucesso!'}
+          content={"Clique em 'Ok' para acessar a tela de Login."}
+          openStatus={openDialog}
+        />
       </Box>
     </Container>
   )
