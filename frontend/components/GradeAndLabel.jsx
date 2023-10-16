@@ -15,13 +15,16 @@ export default function GradeAndLabel({ grade, label }) {
   } else {
     colorSelected = colorLow
   }
+  console.log(grade)
+  if (grade == null) {
+    grade = 0
+  }
   return (
     <>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-
           borderRight: `1px solid ${grey[200]}`,
           flexGrow: 1,
           alignItems: 'center'
