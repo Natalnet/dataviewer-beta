@@ -15,10 +15,7 @@ export default function GradeAndLabel({ grade, label }) {
   } else {
     colorSelected = colorLow
   }
-  console.log(grade)
-  if (grade == null) {
-    grade = 0
-  }
+
   return (
     <>
       <Box
@@ -32,7 +29,9 @@ export default function GradeAndLabel({ grade, label }) {
       >
         <Box>
           <Typography variant="h4" color={colorSelected}>
-            {parseFloat(grade).toFixed(1)}
+            {parseFloat(grade).toFixed(1) != 'NaN'
+              ? parseFloat(grade).toFixed(1)
+              : '-'}
           </Typography>
         </Box>
         <Box>

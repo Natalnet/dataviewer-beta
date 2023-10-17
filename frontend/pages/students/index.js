@@ -5,7 +5,7 @@ import { parseCookies } from 'nookies'
 function StudentGradesMainPage({ data }) {
   return (
     <>
-      oi // <StudentGradesPanel data={data} />
+      <StudentGradesPanel data={data} />
     </>
   )
 }
@@ -36,12 +36,18 @@ export async function getServerSideProps(context) {
     let ptps = res.data
     res = await apiClient.get(`students/listunitgrades/${regNumber}`)
     let listgrades = res.data
-    console.log(listgrades?.meanU1 + ' < - listgrades')
-    const av1Participation = (ptps?.presence1 + ptps?.activities1) / 2
-    const av2Participation = (ptps?.presence2 + ptps?.activities2) / 2
-    const av3Participation = (ptps?.presence3 + ptps?.activities3) / 2
+
+    const av1Participation =
+      (parseFloat(ptps?.presence1) + parseFloat(ptps?.activities1)) / 2
+    const av2Participation =
+      (parseFloat(ptps?.presence2) + parseFloat(ptps?.activities2)) / 2
+    const av3Participation =
+      (parseFloat(ptps?.presence3) + parseFloat(ptps?.activities3)) / 2
     const avU1 =
-      (av1Participation + listgrades?.meanU1 * 4 + examGrades?.grade1 * 5) / 10
+      (av1Participation +
+        parseFloat(listgrades?.meanU1) * 4 +
+        examGrades?.grade1 * 5) /
+      10
     const avU2 =
       (av2Participation + listgrades?.meanU2 * 4 + examGrades?.grade2 * 5) / 10
     const avU3 =
@@ -52,7 +58,7 @@ export async function getServerSideProps(context) {
       grades: { u1: avU1, u2: avU2, u3: avU3, average: finalAverage },
       unit1: {
         participation: av1Participation,
-        lists: 'listgrades?.meanU1',
+        lists: listgrades?.meanU1,
         exam: examGrades?.grade1,
         average: avU1
       },
