@@ -58,7 +58,12 @@ export class StudentsService {
     const data = await this.studentListGradesModel
       .findOne({ reg_num: mat })
       .exec();
-    if (!data) return null;
+    if (!data)
+      return {
+        meanU1: '-',
+        meanU2: '-',
+        meanU3: '-',
+      };
 
     return {
       meanU1: data.meanU1,
@@ -70,7 +75,15 @@ export class StudentsService {
   async findExamGrades(mat: string): Promise<ExamGradesDto> {
     const data = await this.examGradesModel.findOne({ matricula: mat }).exec();
 
-    if (!data) return null;
+    if (!data)
+      return {
+        grade1: 0,
+        comment1: '-',
+        grade2: 0,
+        comment2: '-',
+        grade3: 0,
+        comment3: '-',
+      };
 
     return {
       grade1: parseFloat(data.nota1),
@@ -87,7 +100,15 @@ export class StudentsService {
       .findOne({ matricula: mat })
       .exec();
 
-    if (!data) return null;
+    if (!data)
+      return {
+        presence1: 0,
+        activities1: 0,
+        presence2: 0,
+        activities2: 0,
+        presence3: 0,
+        activities3: 0,
+      };
 
     return {
       presence1: parseFloat(data.presenca1),

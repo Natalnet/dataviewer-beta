@@ -2,23 +2,15 @@ import React, { useState, useContext } from 'react'
 import Image from 'next/image'
 import { AuthContext } from '../contexts/AuthContext'
 
-
 import Link from 'next/link'
 import {
   Container,
   Box,
-  Typography,
   TextField,
   Button,
   Alert,
   IconButton,
-  AlertTitle,
-  Dialog,
-  DialogTitle,
-  Slide,
-  DialogContent,
-  DialogContentText,
-  DialogActions
+  AlertTitle
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import DialogTransitionPage from '../components/messages/DialogTransitionPage'
@@ -26,6 +18,7 @@ import DialogTransitionPage from '../components/messages/DialogTransitionPage'
 export default function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [regNumber, setRegNumber] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [openAlert, setOpenAlert] = useState(false)
@@ -44,7 +37,7 @@ export default function Signup() {
     try {
       setLoading(true)
 
-      const signUpResponse = await signUp(name, email, password)
+      const signUpResponse = await signUp(name, email, password, regNumber)
     } catch {
       setAlertMessage('Falha ao criar uma conta!')
       setOpenAlert(true)
@@ -107,6 +100,17 @@ export default function Signup() {
               my: 1
             }}
             onChange={e => setEmail(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            label="Matrícula"
+            type="matricula"
+            size="small"            
+            fullWidth
+            sx={{
+              my: 1
+            }}
+            onChange={e => setRegNumber(e.target.value)}
           />
           <TextField
             variant="outlined"
