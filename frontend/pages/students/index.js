@@ -46,12 +46,18 @@ export async function getServerSideProps(context) {
     const avU1 =
       (av1Participation +
         parseFloat(listgrades?.meanU1) * 4 +
-        examGrades?.grade1 * 5) /
+        parseFloat(examGrades?.grade1) * 5) /
       10
     const avU2 =
-      (av2Participation + listgrades?.meanU2 * 4 + examGrades?.grade2 * 5) / 10
+      (av2Participation +
+        parseFloat(listgrades?.meanU2) * 4 +
+        parseFloat(examGrades?.grade2) * 5) /
+      10
     const avU3 =
-      (av3Participation + listgrades?.meanU3 * 4 + examGrades?.grade3 * 5) / 10
+      (av3Participation +
+        parseFloat(listgrades?.meanU3) * 4 +
+        parseFloat(examGrades?.grade3) * 5) /
+      10
     const finalAverage = (avU1 + avU2 + avU3) / 3
 
     data = {
