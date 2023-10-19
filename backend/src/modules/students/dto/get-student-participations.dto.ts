@@ -1,8 +1,8 @@
 export class StudentParticipationsDto {
-  presence1: number;
-  activities1: number; 
-  presence2: number;
-  activities2: number; 
-  presence3: number;
-  activities3: number; 
+  presence1: string;
+  activities1: string; 
+  presence2: string;
+  activities2: string; 
+  presence3: string;
+  activities3: string; 
 }

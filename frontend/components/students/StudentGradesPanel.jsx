@@ -25,11 +25,11 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Notas"
                   grades={[
-                    { v: data.grades.u1, l: 'Unidade 01' },
-                    { v: data.grades.u2, l: 'Unidade 02' },
-                    { v: data.grades.u3, l: 'Unidade 03' }
+                    { v: data?.grades?.u1, l: 'Unidade 01' },
+                    { v: data?.grades?.u2, l: 'Unidade 02' },
+                    { v: data?.grades?.u3, l: 'Unidade 03' }
                   ]}
-                  average={`${data.grades.average}`}
+                  average={`${data?.grades?.average}`}
                   averageLabel={'Média Geral'}
                 />
               </Box>
@@ -47,11 +47,11 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Unidade I"
                   grades={[
-                    { v: data.unit1.participation, l: 'Participação' },
-                    { v: data.unit1.lists, l: 'Listas' },
-                    { v: data.unit1.exam, l: 'Prova' }
+                    { v: data?.unit1?.participation, l: 'Participação' },
+                    { v: data?.unit1?.lists, l: 'Listas' },
+                    { v: data?.unit1?.exam, l: 'Prova' }
                   ]}
-                  average={`${data.unit1.average}`}
+                  average={`${data?.unit1?.average}`}
                   averageLabel={'Média U2'}
                 />
               </Box>
@@ -69,11 +69,11 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Unidade II"
                   grades={[
-                    { v: data.unit2.participation, l: 'Participação' },
-                    { v: data.unit2.lists, l: 'Listas' },
-                    { v: data.unit2.exam, l: 'Prova' }
+                    { v: data.unit2?.participation, l: 'Participação' },
+                    { v: data.unit2?.lists, l: 'Listas' },
+                    { v: data.unit2?.exam, l: 'Prova' }
                   ]}
-                  average={`${data.unit2.average}`}
+                  average={`${data.unit2?.average}`}
                   averageLabel={'Média U2'}
                 />
               </Box>
@@ -91,11 +91,11 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Unidade III"
                   grades={[
-                    { v: data.unit3.participation, l: 'Participação' },
-                    { v: data.unit3.lists, l: 'Listas' },
-                    { v: data.unit3.exam, l: 'Prova' }
+                    { v: data.unit3?.participation, l: 'Participação' },
+                    { v: data.unit3?.lists, l: 'Listas' },
+                    { v: data.unit3?.exam, l: 'Prova' }
                   ]}
-                  average={`${data.unit3.average}`}
+                  average={`${data.unit3?.average}`}
                   averageLabel={'Média U3'}
                 />
               </Box>
@@ -117,10 +117,10 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Participação - Unidade I"
                   grades={[
-                    { v: data.participation1.presence, l: 'Presença' },
-                    { v: data.participation1.activities, l: 'Questões' }
+                    { v: data.participation1?.presence, l: 'Presença' },
+                    { v: data.participation1?.activities, l: 'Questões' }
                   ]}
-                  average={`${data.participation1.average}`}
+                  average={`${data.participation1?.average}`}
                   averageLabel={'Média'}
                 />
               </Box>
@@ -138,10 +138,10 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Participação - Unidade II"
                   grades={[
-                    { v: data.participation2.presence, l: 'Presença' },
-                    { v: data.participation2.activities, l: 'Questões' }
+                    { v: data.participation2?.presence, l: 'Presença' },
+                    { v: data.participation2?.activities, l: 'Questões' }
                   ]}
-                  average={`${data.participation2.average}`}
+                  average={`${data.participation2?.average}`}
                   averageLabel={'Média U2'}
                 />
               </Box>
@@ -159,10 +159,10 @@ export default function StudentGradesPanel({ data }) {
                 <GradeGroup
                   title="Participação - Unidade III"
                   grades={[
-                    { v: data.participation3.presence, l: 'Presença' },
-                    { v: data.participation3.activities, l: 'Questões' }
+                    { v: data.participation3?.presence, l: 'Presença' },
+                    { v: data.participation3?.activities, l: 'Questões' }
                   ]}
-                  average={`${data.participation3.average}`}
+                  average={`${data.participation3?.average}`}
                   averageLabel={'Média'}
                 />
               </Box>
@@ -178,7 +178,7 @@ export default function StudentGradesPanel({ data }) {
                 }}
               >
                 <Typography variant="h6"> Comentário - Prova 01 </Typography>
-                <Typography variant="body1"> {data.comments1} </Typography>
+                <Typography variant="body1"> {data?.comments1} </Typography>
               </Box>
             </Paper>
           </Grid>

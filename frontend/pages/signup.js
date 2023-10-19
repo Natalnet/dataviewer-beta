@@ -6,7 +6,6 @@ import Link from 'next/link'
 import {
   Container,
   Box,
-  Typography,
   TextField,
   Button,
   Alert,
@@ -14,13 +13,16 @@ import {
   AlertTitle
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
+import DialogTransitionPage from '../components/messages/DialogTransitionPage'
 
 export default function Signup() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [regNumber, setRegNumber] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [openAlert, setOpenAlert] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const { signUp } = useContext(AuthContext)
@@ -35,11 +37,12 @@ export default function Signup() {
     try {
       setLoading(true)
 
-      const signUpResponse = await signUp(name, email, password)
+      const signUpResponse = await signUp(name, email, password, regNumber)
     } catch {
       setAlertMessage('Falha ao criar uma conta!')
       setOpenAlert(true)
     }
+    setOpenDialog(true)
     setLoading(false)
   }
 
@@ -52,7 +55,12 @@ export default function Signup() {
       }}
     >
       <Box className="card">
-        <Image src="/dataviewer_full.svg" width={200} height={115} />
+        <Image
+          src="/dataviewer_full.svg"
+          width={200}
+          height={115}
+          alt="Logo do DataViewer"
+        />
         <h2>Cadastro</h2>
         {openAlert && (
           <Alert
@@ -92,6 +100,17 @@ export default function Signup() {
               my: 1
             }}
             onChange={e => setEmail(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            label="Matrícula"
+            type="matricula"
+            size="small"            
+            fullWidth
+            sx={{
+              my: 1
+            }}
+            onChange={e => setRegNumber(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -139,6 +158,11 @@ export default function Signup() {
         <Box className="smalltext">
           Já tem conta? <Link href="/">Faça Login.</Link>
         </Box>
+        <DialogTransitionPage
+          title={'Usuário cadastrado com sucesso!'}
+          content={"Clique em 'Ok' para acessar a tela de Login."}
+          openStatus={openDialog}
+        />
       </Box>
     </Container>
   )

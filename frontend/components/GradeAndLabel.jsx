@@ -15,13 +15,13 @@ export default function GradeAndLabel({ grade, label }) {
   } else {
     colorSelected = colorLow
   }
+
   return (
     <>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-
           borderRight: `1px solid ${grey[200]}`,
           flexGrow: 1,
           alignItems: 'center'
@@ -29,7 +29,9 @@ export default function GradeAndLabel({ grade, label }) {
       >
         <Box>
           <Typography variant="h4" color={colorSelected}>
-            {parseFloat(grade).toFixed(1)}
+            {parseFloat(grade).toFixed(1) != 'NaN'
+              ? parseFloat(grade).toFixed(1)
+              : '-'}
           </Typography>
         </Box>
         <Box>

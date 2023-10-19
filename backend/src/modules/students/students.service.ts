@@ -58,7 +58,12 @@ export class StudentsService {
     const data = await this.studentListGradesModel
       .findOne({ reg_num: mat })
       .exec();
-    if (!data) return null;
+    if (!data)
+      return {
+        meanU1: '-',
+        meanU2: '-',
+        meanU3: '-',
+      };
 
     return {
       meanU1: data.meanU1,
@@ -70,14 +75,22 @@ export class StudentsService {
   async findExamGrades(mat: string): Promise<ExamGradesDto> {
     const data = await this.examGradesModel.findOne({ matricula: mat }).exec();
 
-    if (!data) return null;
+    if (!data)
+      return {
+        grade1: '-',
+        comment1: '-',
+        grade2: '-',
+        comment2: '-',
+        grade3: '-',
+        comment3: '-',
+      };
 
     return {
-      grade1: parseFloat(data.nota1),
+      grade1: data.nota1,
       comment1: data.comentario1,
-      grade2: parseFloat(data.nota2),
+      grade2: data.nota2,
       comment2: data.comentario2,
-      grade3: Number(data.nota3),
+      grade3: data.nota3,
       comment3: data.comentario3,
     };
   }
@@ -87,15 +100,23 @@ export class StudentsService {
       .findOne({ matricula: mat })
       .exec();
 
-    if (!data) return null;
+    if (!data)
+      return {
+        presence1: '-',
+        activities1: '-',
+        presence2: '-',
+        activities2: '-',
+        presence3: '-',
+        activities3: '-',
+      };
 
     return {
-      presence1: parseFloat(data.presenca1),
-      activities1: parseFloat(data.atividade1),
-      presence2: parseFloat(data.presenca2),
-      activities2: parseFloat(data.atividade2),
-      presence3: parseFloat(data.presenca3),
-      activities3: parseFloat(data.atividade3),
+      presence1: data.presenca1,
+      activities1: data.atividade1,
+      presence2: data.presenca2,
+      activities2: data.atividade2,
+      presence3: data.presenca3,
+      activities3: data.atividade3,
     };
   }
 }

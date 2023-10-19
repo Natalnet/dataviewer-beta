@@ -51,13 +51,11 @@ export function AuthProvider({ children }) {
     })
   }
 
-  async function signUp(name, email, password) {
+  async function signUp(name, email, password, registrationNumber) {
     //TODO: é necessário gerar um link de validação do e-mail
-    const { data } = await api.post('/users', { name, email, password })
+    const { data } = await api.post('/users', { name, email, password, registrationNumber })
 
     setUser(data.user)
-
-    Router.push('/')
   }
 
   async function signIn(email, password) {

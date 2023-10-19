@@ -4,6 +4,8 @@ import { Box, Typography } from '@mui/material'
 import { green, grey } from '@mui/material/colors'
 
 export default function GradeAverage({ grade, label }) {
+  console.log(parseFloat(grade).toFixed(1))
+   
   return (
     <>
       <Box
@@ -16,7 +18,7 @@ export default function GradeAverage({ grade, label }) {
       >
         <div>
           <Typography variant="h3" color={green[400]}>
-            {parseFloat(grade).toFixed(1)}
+            {parseFloat(grade).toFixed(1) != 'NaN' ? parseFloat(grade).toFixed(1): '-'}
           </Typography>
         </div>
         <div>
