@@ -117,4 +117,13 @@ export class ClassesService {
       progress: s.percent,
     }));
   }
+
+  async findClassOverallPerformance(classCode: string) {
+    const data = await this.classStudentsModel
+      .findOne({ class_code: 'lop2023_2t01' })
+      .exec();
+    console.log(classCode)
+    console.log(data) 
+    return data 
+  }
 }

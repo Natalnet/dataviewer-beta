@@ -11,6 +11,12 @@ export class ClassStudents {
   @Prop()
   students: string[];
 
+  @Prop()
+  reg_students: string[];
+
+  @Prop()
+  class_code: string; 
+
 }
 
 export const ClassStudentsSchema = SchemaFactory.createForClass(ClassStudents); 

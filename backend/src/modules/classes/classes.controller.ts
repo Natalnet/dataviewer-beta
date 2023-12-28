@@ -42,4 +42,10 @@ export class ClassesController {
   findStudents(@Param('id') id: string) {
     return this.classesService.findClassStudents(id);
   }
+
+  @Get('overallperformance/:class_code')
+  findStudentsOverallPerformance(@Param('class_code') code:string) {
+
+    return this.classesService.findClassOverallPerformance(code);
+  }
 }
