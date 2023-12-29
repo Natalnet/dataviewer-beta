@@ -24,6 +24,7 @@ import {
   TeacherClass,
   TeacherClassDocument,
 } from './schemas/teacherclass.schema';
+import { ExamGrades, ExamGradesDocument } from '../students/schemas/examgrades.schema';
 
 @Injectable({})
 export class ClassesService {
@@ -41,6 +42,8 @@ export class ClassesService {
     private readonly classStudentsModel: Model<ClassStudentsDocument>,
     @InjectModel(Student.name)
     private readonly studentModel: Model<StudentDocument>,
+    @InjectModel(ExamGrades.name)
+    private readonly examGradesModel: Model<ExamGradesDocument>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -122,8 +125,21 @@ export class ClassesService {
     const data = await this.classStudentsModel
       .findOne({ class_code: 'lop2023_2t01' })
       .exec();
+    if (!data) return [];
     console.log(classCode)
-    console.log(data) 
-    return data 
+    console.log(data.reg_students) 
+    //return this.classModel.find({ class_id: { $in: classIds } }).exec();
+    const grades = await this.examGradesModel.find({matricula: { $in: data.reg_students } } ).exec(); 
+    console.log(grades)
+    const overallPerformance = {}
+    for (const g of grades){
+      overallPerformance[String(g.matricula)] = {}
+      overallPerformance[String(g.matricula)].grade1 = g.nota1;
+      overallPerformance[String(g.matricula)].grade2 = g.nota2;
+      overallPerformance[String(g.matricula)].grade3 = g.nota3;  
+
+    }
+
+    return overallPerformance 
   }
 }
