@@ -22,7 +22,10 @@ import {
   TeacherClassSchema,
 } from './schemas/teacherclass.schema';
 import { ExamGrades, ExamGradesSchema } from '../students/schemas/examgrades.schema';
-
+import {
+  StudentListGrades,
+  StudentListGradesSchema,
+} from '../students/schemas/studentlistgrades.schema';
 
 @Module({
   imports: [
@@ -35,6 +38,7 @@ import { ExamGrades, ExamGradesSchema } from '../students/schemas/examgrades.sch
       { name: ClassStudents.name, schema: ClassStudentsSchema },
       { name: Student.name, schema: StudentSchema },
       { name: ExamGrades.name, schema: ExamGradesSchema },
+      { name: StudentListGrades.name, schema: StudentListGradesSchema}, 
     ]),
   ],
   controllers: [ClassesController],

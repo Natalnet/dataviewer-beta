@@ -25,6 +25,7 @@ import {
   TeacherClassDocument,
 } from './schemas/teacherclass.schema';
 import { ExamGrades, ExamGradesDocument } from '../students/schemas/examgrades.schema';
+import { StudentListGrades, StudentListGradesDocument } from '../students/schemas/studentlistgrades.schema';
 
 @Injectable({})
 export class ClassesService {
@@ -44,6 +45,8 @@ export class ClassesService {
     private readonly studentModel: Model<StudentDocument>,
     @InjectModel(ExamGrades.name)
     private readonly examGradesModel: Model<ExamGradesDocument>,
+    @InjectModel(StudentListGrades.name)
+    private readonly studentListGradesModel: Model<StudentListGradesDocument>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -130,13 +133,22 @@ export class ClassesService {
     console.log(data.reg_students) 
     //return this.classModel.find({ class_id: { $in: classIds } }).exec();
     const grades = await this.examGradesModel.find({matricula: { $in: data.reg_students } } ).exec(); 
-    console.log(grades)
+    const lists = await this.studentListGradesModel
+    .find({ reg_num: { $in: data.reg_students } })
+    .exec();
+    
     const overallPerformance = {}
     for (const g of grades){
       overallPerformance[String(g.matricula)] = {}
       overallPerformance[String(g.matricula)].grade1 = g.nota1;
       overallPerformance[String(g.matricula)].grade2 = g.nota2;
       overallPerformance[String(g.matricula)].grade3 = g.nota3;  
+
+    }
+    for (const l of lists) {
+      overallPerformance[String(l.reg_num)].list1 = l.meanU1
+      overallPerformance[String(l.reg_num)].list2 = l.meanU2
+      overallPerformance[String(l.reg_num)].list3 = l.meanU3
 
     }
 
