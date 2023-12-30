@@ -5,8 +5,9 @@ import { parseCookies } from "nookies"
 
 import { Box } from "@mui/material"
 import { H2 } from "../../components/Typography"
+import AssessmentTable from "../../components/classes/AssessmentTable"
 
-export default function Classes({ classes }) {
+export default function Classes({ assessments }) {
   return (
     <>
       <Box
@@ -16,6 +17,7 @@ export default function Classes({ classes }) {
       >
         <Box className={styles.maincard}>
           <H2> Avaliações </H2>
+          <AssessmentTable rows={assessments} />
         </Box>
       </Box>
     </>
@@ -35,12 +37,64 @@ export async function getServerSideProps(context) {
     }
   }
 
-  //const { data } = await apiClient.get('classes/overallperformance/lop2023_2t01')
-
-  const classes = {}
+  const { data } = await apiClient.get(
+    "classes/overallperformance/lop2023_2t01"
+  )
+  function formatNum(n) {
+    return parseFloat(n).toFixed(1)
+  }
+  function convertNum(n) {
+    return n == "nan" || n == "NaN" || n == undefined ? 0 : parseFloat(n)
+  }
+  //console.log(data)
+  const assessments = []
+  for (const d in data) {
+    if (d == "20200071144") {
+      console.log(data[d].presence1 + " " + data[d].list1)
+      console.log(
+        (convertNum(data[d].presence1) +
+          convertNum(data[d].list1) * 4 +
+          convertNum(data[d].grade1) * 5) /
+          10
+      )
+      console.log(convertNum(data[d].list1))
+    }
+    const average1 =
+      (convertNum(data[d].presence1) +
+        convertNum(data[d].list1) * 4 +
+        convertNum(data[d].grade1) * 5) /
+      10
+    const average2 =
+      (convertNum(data[d].presence2) +
+        convertNum(data[d].list2) * 4 +
+        convertNum(data[d].grade2) * 5) /
+      10
+    const average3 =
+      (convertNum(data[d].presence3) +
+        convertNum(data[d].list3) * 4 +
+        convertNum(data[d].grade3) * 5) /
+      10
+    assessments.push({
+      reg: d,
+      p1: formatNum(data[d].presence1),
+      l1: formatNum(data[d].list1),
+      g1: formatNum(data[d].grade1),
+      m1: formatNum(average1),
+      p2: formatNum(data[d].presence2),
+      l2: formatNum(data[d].list2),
+      g2: formatNum(data[d].grade2),
+      m2: formatNum(average2),
+      p3: formatNum(data[d].presence3),
+      l3: formatNum(data[d].list3),
+      g3: formatNum(data[d].grade3),
+      m3: formatNum(average3),
+      average: formatNum((average1 + average2 + average3) / 3),
+    })
+  }
+  //console.log(assessments)
   return {
     props: {
-      classes,
+      assessments,
     },
   }
 }
