@@ -46,19 +46,9 @@ export async function getServerSideProps(context) {
   function convertNum(n) {
     return n == "nan" || n == "NaN" || n == undefined ? 0 : parseFloat(n)
   }
-  //console.log(data)
+
   const assessments = []
   for (const d in data) {
-    if (d == "20200071144") {
-      console.log(data[d].presence1 + " " + data[d].list1)
-      console.log(
-        (convertNum(data[d].presence1) +
-          convertNum(data[d].list1) * 4 +
-          convertNum(data[d].grade1) * 5) /
-          10
-      )
-      console.log(convertNum(data[d].list1))
-    }
     const average1 =
       (convertNum(data[d].presence1) +
         convertNum(data[d].list1) * 4 +
