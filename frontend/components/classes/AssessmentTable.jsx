@@ -82,15 +82,21 @@ export default function AssessmentTable({ rows }) {
               <TableCell align="right">{row.p1}</TableCell>
               <TableCell align="right">{row.l1}</TableCell>
               <TableCell align="right">{row.g1}</TableCell>
-              <TableCell align="right">{row.m1}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {row.m1}
+              </TableCell>
               <TableCell align="right">{row.p2}</TableCell>
               <TableCell align="right">{row.l2}</TableCell>
               <TableCell align="right">{row.g2}</TableCell>
-              <TableCell align="right">{row.m2}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {row.m2}
+              </TableCell>
               <TableCell align="right">{row.p3}</TableCell>
               <TableCell align="right">{row.l3}</TableCell>
               <TableCell align="right">{row.g3}</TableCell>
-              <TableCell align="right">{row.m3}</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                {row.m3}
+              </TableCell>
               <TableCell align="right">{row.average}</TableCell>
             </TableRow>
           ))}
