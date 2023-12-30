@@ -24,6 +24,18 @@ import {
   TeacherClass,
   TeacherClassDocument,
 } from './schemas/teacherclass.schema';
+import {
+  ExamGrades,
+  ExamGradesDocument,
+} from '../students/schemas/examgrades.schema';
+import {
+  StudentListGrades,
+  StudentListGradesDocument,
+} from '../students/schemas/studentlistgrades.schema';
+import {
+  StudentParticipation,
+  StudentParticipationDocument,
+} from '../students/schemas/studentparticipation.schema';
 
 @Injectable({})
 export class ClassesService {
@@ -41,6 +53,12 @@ export class ClassesService {
     private readonly classStudentsModel: Model<ClassStudentsDocument>,
     @InjectModel(Student.name)
     private readonly studentModel: Model<StudentDocument>,
+    @InjectModel(ExamGrades.name)
+    private readonly examGradesModel: Model<ExamGradesDocument>,
+    @InjectModel(StudentListGrades.name)
+    private readonly studentListGradesModel: Model<StudentListGradesDocument>,
+    @InjectModel(StudentParticipation.name)
+    private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -122,8 +140,46 @@ export class ClassesService {
     const data = await this.classStudentsModel
       .findOne({ class_code: 'lop2023_2t01' })
       .exec();
-    console.log(classCode)
-    console.log(data) 
-    return data 
+    if (!data) return [];
+
+    //return this.classModel.find({ class_id: { $in: classIds } }).exec();
+    const grades = await this.examGradesModel
+      .find({ matricula: { $in: data.reg_students } })
+      .exec();
+    const lists = await this.studentListGradesModel
+      .find({ reg_num: { $in: data.reg_students } })
+      .exec();
+    const participations = await this.stdudentParticipationModel
+      .find({ matricula: { $in: data.reg_students } })
+      .exec();
+
+    const overallPerformance = {};
+    for (const g of grades) {
+      overallPerformance[String(g.matricula)] = {};
+      overallPerformance[String(g.matricula)].grade1 = g.nota1;
+      overallPerformance[String(g.matricula)].grade2 = g.nota2;
+      overallPerformance[String(g.matricula)].grade3 = g.nota3;
+    }
+    for (const l of lists) {
+      overallPerformance[String(l.reg_num)].list1 = l.meanU1;
+      overallPerformance[String(l.reg_num)].list2 = l.meanU2;
+      overallPerformance[String(l.reg_num)].list3 = l.meanU3;
+    }
+    for (const p of participations) {
+      overallPerformance[String(p.matricula)].presence1 = (
+        (parseFloat(p.presenca1) + parseFloat(p.atividade1)) /
+        2
+      ).toFixed(2);
+      overallPerformance[String(p.matricula)].presence2 = (
+        (parseFloat(p.presenca2) + parseFloat(p.atividade2)) /
+        2
+      ).toFixed(2);
+      overallPerformance[String(p.matricula)].presence3 = (
+        (parseFloat(p.presenca3) + parseFloat(p.atividade3)) /
+        2
+      ).toFixed(2);
+    }
+
+    return overallPerformance;
   }
 }

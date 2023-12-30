@@ -43,9 +43,9 @@ export class ClassesController {
     return this.classesService.findClassStudents(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('overallperformance/:class_code')
-  findStudentsOverallPerformance(@Param('class_code') code:string) {
-
+  findStudentsOverallPerformance(@Param('class_code') code: string) {
     return this.classesService.findClassOverallPerformance(code);
   }
 }

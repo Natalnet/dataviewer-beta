@@ -1,14 +1,14 @@
-import styles from '../../styles/Home.module.css'
-import { AuthContext } from '../../contexts/AuthContext'
-import { useRouter } from 'next/router'
-import { useContext } from 'react'
+import styles from "../../styles/Home.module.css"
+import { AuthContext } from "../../contexts/AuthContext"
+import { useRouter } from "next/router"
+import { useContext } from "react"
 import {
   Box,
   List,
   ListItem,
   ListItemButton,
-  ListItemText
-} from '@mui/material'
+  ListItemText,
+} from "@mui/material"
 
 export default function MenuProfessor() {
   const { logout } = useContext(AuthContext)
@@ -27,13 +27,13 @@ export default function MenuProfessor() {
             href="/classes/dashboard"
             sx={{
               backgroundColor:
-                router.pathname.includes('/dashboard') && '#248df4'
+                router.pathname.includes("/dashboard") && "#248df4",
             }}
           >
             <ListItemText
               primary="Dashboard"
               sx={{
-                color: router.pathname.includes('/dashboard') && 'white'
+                color: router.pathname.includes("/dashboard") && "white",
               }}
             />
           </ListItemButton>
@@ -44,13 +44,34 @@ export default function MenuProfessor() {
             href="/classes"
             sx={{
               backgroundColor:
-                router.pathname.localeCompare('/classes') == 0 && '#248df4'
+                router.pathname.localeCompare("/classes") == 0 && "#248df4",
             }}
           >
             <ListItemText
               primary="Turmas"
               sx={{
-                color: router.pathname.localeCompare('/classes') == 0 && 'white'
+                color:
+                  router.pathname.localeCompare("/classes") == 0 && "white",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem className={styles.li} disablePadding>
+          <ListItemButton
+            component="a"
+            href="/classes/assessments"
+            sx={{
+              backgroundColor:
+                router.pathname.localeCompare("/classes/assessments") == 0 &&
+                "#248df4",
+            }}
+          >
+            <ListItemText
+              primary="Avaliações"
+              sx={{
+                color:
+                  router.pathname.localeCompare("/classes/assessments") == 0 &&
+                  "white",
               }}
             />
           </ListItemButton>
