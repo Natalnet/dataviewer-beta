@@ -40,11 +40,20 @@ export async function getServerSideProps(context) {
   const { data } = await apiClient.get(
     "classes/overallperformance/lop2023_2t01"
   )
+
+  const studentNames = await apiClient.get("classes/studantnames/lop2023_2t01")
+
   function formatNum(n) {
     return parseFloat(n).toFixed(1)
   }
   function convertNum(n) {
     return n == "nan" || n == "NaN" || n == undefined ? 0 : parseFloat(n)
+  }
+
+  for (const d of studentNames.data) {
+    console.log(d.regNum)
+    data[d.regNum].name = d.name
+    data[d.regNum].subClass = d.subClass
   }
 
   const assessments = []
@@ -66,6 +75,8 @@ export async function getServerSideProps(context) {
       10
     assessments.push({
       reg: d,
+      name: data[d].name,
+      subClass: data[d].subClass,
       p1: formatNum(data[d].presence1),
       l1: formatNum(data[d].list1),
       g1: formatNum(data[d].grade1),
@@ -81,6 +92,7 @@ export async function getServerSideProps(context) {
       average: formatNum((average1 + average2 + average3) / 3),
     })
   }
+
   //console.log(assessments)
   return {
     props: {
