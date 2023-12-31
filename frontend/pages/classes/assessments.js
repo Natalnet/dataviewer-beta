@@ -27,6 +27,7 @@ export default function Classes({ assessments }) {
 export async function getServerSideProps(context) {
   const apiClient = getAPIClient(context)
   const { ["nextautht1.token"]: token } = parseCookies(context)
+  const { ["nextautht1.lastClassCode"]: lastClassCode } = parseCookies(context)
 
   if (!token) {
     return {
@@ -38,10 +39,12 @@ export async function getServerSideProps(context) {
   }
 
   const { data } = await apiClient.get(
-    "classes/overallperformance/lop2023_2t01"
+    `classes/overallperformance/${lastClassCode}`
   )
 
-  const studentNames = await apiClient.get("classes/studantnames/lop2023_2t01")
+  const studentNames = await apiClient.get(
+    `classes/studantnames/${lastClassCode}`
+  )
 
   function formatNum(n) {
     return parseFloat(n).toFixed(1)
@@ -51,7 +54,6 @@ export async function getServerSideProps(context) {
   }
 
   for (const d of studentNames.data) {
-    console.log(d.regNum)
     data[d.regNum].name = d.name
     data[d.regNum].subClass = d.subClass
   }

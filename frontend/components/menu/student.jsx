@@ -1,14 +1,14 @@
-import styles from '../../styles/Home.module.css'
-import { AuthContext } from '../../contexts/AuthContext'
-import { useRouter } from 'next/router'
-import { useContext } from 'react'
+import styles from "../../styles/Home.module.css"
+import { AuthContext } from "../../contexts/AuthContext"
+import { useRouter } from "next/router"
+import { useContext } from "react"
 import {
   Box,
   List,
   ListItem,
   ListItemButton,
-  ListItemText
-} from '@mui/material'
+  ListItemText,
+} from "@mui/material"
 
 export default function MenuStudent() {
   const { logout } = useContext(AuthContext)
@@ -17,7 +17,6 @@ export default function MenuStudent() {
   function handleAnchorLogoutClick() {
     logout()
   }
-  console.log(router.pathname)
 
   return (
     <Box>
@@ -28,14 +27,14 @@ export default function MenuStudent() {
             href="/students"
             sx={{
               backgroundColor:
-                router.pathname.localeCompare('/students') == 0 && '#248df4'
+                router.pathname.localeCompare("/students") == 0 && "#248df4",
             }}
           >
             <ListItemText
               primary="Notas"
               sx={{
                 color:
-                  router.pathname.localeCompare('/students') == 0 && 'white'
+                  router.pathname.localeCompare("/students") == 0 && "white",
               }}
             />
           </ListItemButton>
@@ -46,13 +45,13 @@ export default function MenuStudent() {
             href="/students/listgrades"
             sx={{
               backgroundColor:
-                router.pathname.includes('/listgrades') && '#248df4'
+                router.pathname.includes("/listgrades") && "#248df4",
             }}
           >
             <ListItemText
               primary="Listas"
               sx={{
-                color: router.pathname.includes('/listgrades') && 'white'
+                color: router.pathname.includes("/listgrades") && "white",
               }}
             />
           </ListItemButton>

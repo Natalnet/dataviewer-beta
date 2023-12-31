@@ -1,40 +1,44 @@
-import ClassCard from '../../components/classCard'
-import styles from '../../styles/Home.module.css'
+import ClassCard from "../../components/classCard"
+import styles from "../../styles/Home.module.css"
 
-import { getAPIClient } from '../../utils/axiosapi'
-import { parseCookies } from 'nookies'
-import Link from 'next/link'
+import { getAPIClient } from "../../utils/axiosapi"
+import { parseCookies, setCookie } from "nookies"
+import Link from "next/link"
 
-import { Box, styled } from '@mui/material'
-import { H2 } from '../../components/Typography'
+import { Box, styled } from "@mui/material"
+import { H2 } from "../../components/Typography"
 
-const Title2 = styled('div')({
-  margin: '0 0 1rem 0',
-  fontSize: '1.5rem',
-  fontWeight: 700
+const Title2 = styled("div")({
+  margin: "0 0 1rem 0",
+  fontSize: "1.5rem",
+  fontWeight: 700,
 })
 
-export default function Classes({ classes }) {
+export default function Classes({ classes, lastClassCode }) {
+  setCookie(null, "nextautht1.lastClassCode", lastClassCode, {
+    maxAge: 60 * 90 * 1,
+  })
   return (
     <>
       <Box
         sx={{
-          width: '100%'
+          width: "100%",
         }}
       >
         <Box className={styles.maincard}>
           <H2> Turmas </H2>
 
           <Box className={styles.containerclasses}>
-            {classes && classes.map(classe => (
-              <Link href={`/classes/${classe.class_id}`} key={classe._id}>
-                <ClassCard
-                  title={classe.name}
-                  year={classe.year}
-                  semester={classe.semester}
-                />
-              </Link>
-            ))}
+            {classes &&
+              classes.map((classe) => (
+                <Link href={`/classes/${classe.class_id}`} key={classe._id}>
+                  <ClassCard
+                    title={classe.name}
+                    year={classe.year}
+                    semester={classe.semester}
+                  />
+                </Link>
+              ))}
           </Box>
         </Box>
       </Box>
@@ -44,23 +48,26 @@ export default function Classes({ classes }) {
 
 export async function getServerSideProps(context) {
   const apiClient = getAPIClient(context)
-  const { ['nextautht1.token']: token } = parseCookies(context)
+  const { ["nextautht1.token"]: token } = parseCookies(context)
 
   if (!token) {
     return {
       redirect: {
-        destination: '/',
-        permanent: false
-      }
+        destination: "/",
+        permanent: false,
+      },
     }
   }
 
-  const { data } = await apiClient.get('classes')
+  const { data } = await apiClient.get("classes")
+  const lastClass = await apiClient.get("classes/teacher/last")
 
   const classes = data
+  const lastClassCode = lastClass.data
   return {
     props: {
-      classes
-    }
+      classes,
+      lastClassCode,
+    },
   }
 }
