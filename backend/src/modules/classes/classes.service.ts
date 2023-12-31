@@ -66,13 +66,40 @@ export class ClassesService {
     const teacherClassData = await this.teacherClassModel
       .findOne({ email: userEmail })
       .exec();
-    console.log(teacherClassData);
+    //console.log(teacherClassData);
     if (teacherClassData != null) {
       const classIds = teacherClassData['classes'];
 
       return this.classModel.find({ class_id: { $in: classIds } }).exec();
     }
     return null;
+  }
+
+  async findTeacherLastClasses(userEmail: string): Promise<string> {
+    const teacherClassData = await this.teacherClassModel
+      .findOne({ email: userEmail })
+      .exec();
+    console.log(teacherClassData);
+    if (teacherClassData != null) {
+      const classIds = teacherClassData['classes'];
+
+      const teacherClasses = await this.classModel
+        .find({ class_id: { $in: classIds } })
+        .exec();
+      // guarda o código da turma mais recente
+      let lastClassCode = '';
+      let lastYear = 0;
+      for (const t of teacherClasses) {
+        console.log(t);
+        let actualYear = Number(t.year) + Number(t.semester);
+        if (actualYear > lastYear) {
+          lastClassCode = t.class_code;
+          lastYear = actualYear;
+        }
+      }
+      return lastClassCode;
+    }
+    return '';
   }
 
   async findOne(id: string): Promise<ClassDto> {

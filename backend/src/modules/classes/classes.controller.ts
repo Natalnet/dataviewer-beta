@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
 import { ClassesService } from './classes.service';
 import { RequestWithUser } from 'src/types/Requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -9,7 +9,8 @@ export class ClassesController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findTeacherClasses(@Request() req: RequestWithUser) {
+  findTeacherClasses(@Req() req: RequestWithUser) {
+    console.log(req.user.userEmail);
     return this.classesService.findTeacherClasses(req.user.userEmail);
   }
 
@@ -49,8 +50,16 @@ export class ClassesController {
     return this.classesService.findClassOverallPerformance(code);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('studantnames/:class_code')
   findStudentNames(@Param('class_code') classCode: string) {
     return this.classesService.findClassStudentNames(classCode);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('teacher/last')
+  findLastClass(@Req() req: RequestWithUser) {
+    //console.log(req);
+    return this.classesService.findTeacherLastClasses(req.user.userEmail);
   }
 }

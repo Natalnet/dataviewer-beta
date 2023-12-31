@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from 'react'
-import { setCookie, parseCookies, destroyCookie } from 'nookies'
-import Router from 'next/router'
-import { api } from '../utils/http'
+import { createContext, useEffect, useState } from "react"
+import { setCookie, parseCookies, destroyCookie } from "nookies"
+import Router from "next/router"
+import { api } from "../utils/http"
 
 export const AuthContext = createContext({})
 
@@ -10,10 +10,10 @@ export function AuthProvider({ children }) {
   const isAuthenticated = false
 
   useEffect(() => {
-    const { 'nextautht1.token': userCookie } = parseCookies()
+    const { "nextautht1.token": userCookie } = parseCookies()
 
     if (userCookie) {
-      api.get('/users/info').then(response => {
+      api.get("/users/info").then((response) => {
         setUser(response.data)
       })
     }
@@ -22,69 +22,74 @@ export function AuthProvider({ children }) {
   function logout() {
     //TODO: apagar o cookie / token
 
-    const { 'nextautht1.token': userCookie } = parseCookies()
+    const { "nextautht1.token": userCookie } = parseCookies()
 
     if (!userCookie) {
       return
     }
 
     if (userCookie) {
-      destroyCookie(null, 'nextautht1.token')
-      destroyCookie(null, 'nextautht1.email')
-      destroyCookie(null, 'nextautht1.mat')
+      destroyCookie(null, "nextautht1.token")
+      destroyCookie(null, "nextautht1.email")
+      destroyCookie(null, "nextautht1.mat")
     }
 
-    Router.push('/')
+    Router.push("/")
   }
 
   async function updateUser(name, registrationNumber, avatar) {
     let x = {
-      name: 'string(name)',
+      name: "string(name)",
       avatar: `${avatar}`,
-      registrationNumber: 'string(registrationNumber)'
+      registrationNumber: "string(registrationNumber)",
     }
     console.log(x)
-    const { data } = await api.patch('/users/update-account', {
+    const { data } = await api.patch("/users/update-account", {
       name,
       registrationNumber,
-      avatar
+      avatar,
     })
   }
 
   async function signUp(name, email, password, registrationNumber) {
     //TODO: é necessário gerar um link de validação do e-mail
-    const { data } = await api.post('/users', { name, email, password, registrationNumber })
+    const { data } = await api.post("/users", {
+      name,
+      email,
+      password,
+      registrationNumber,
+    })
 
     setUser(data.user)
   }
 
   async function signIn(email, password) {
     //TODO: realizar tratamento de erros
-    const { data } = await api.post('/auth/login', { email, password })
+    const { data } = await api.post("/auth/login", { email, password })
 
     setUser(data.user)
-    console.log('Front: ' + data.user.mat)
+    console.log("Front: " + data.user.mat)
 
     const token = data.accessToken
     const registrationNumber = data.user.mat
 
     const cookieTime = 60 * 90 * 1 //130 min
 
-    setCookie(null, 'nextautht1.token', token, {
-      maxAge: cookieTime
+    setCookie(null, "nextautht1.token", token, {
+      maxAge: cookieTime,
     })
 
-    setCookie(null, 'nextautht1.email', email, {
-      maxAge: cookieTime
+    setCookie(null, "nextautht1.email", email, {
+      maxAge: cookieTime,
     })
 
-    setCookie(null, 'nextautht1.mat', registrationNumber, {
-      maxAge: cookieTime
+    setCookie(null, "nextautht1.mat", registrationNumber, {
+      maxAge: cookieTime,
     })
 
     console.log(data.user.profile)
-    if (data.user.profile == 'PROFESSOR') Router.push('/classes')
-    else Router.push('/students')
+    if (data.user.profile == "PROFESSOR") Router.push("/classes")
+    else Router.push("/students")
   }
   return (
     <AuthContext.Provider
