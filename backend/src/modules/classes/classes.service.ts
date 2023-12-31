@@ -36,6 +36,7 @@ import {
   StudentParticipation,
   StudentParticipationDocument,
 } from '../students/schemas/studentparticipation.schema';
+import { StudentNamesDto } from './dto/get-class-student-names.dto';
 
 @Injectable({})
 export class ClassesService {
@@ -138,7 +139,7 @@ export class ClassesService {
 
   async findClassOverallPerformance(classCode: string) {
     const data = await this.classStudentsModel
-      .findOne({ class_code: 'lop2023_2t01' })
+      .findOne({ class_code: classCode })
       .exec();
     if (!data) return [];
 
@@ -181,5 +182,18 @@ export class ClassesService {
     }
 
     return overallPerformance;
+  }
+
+  async findClassStudentNames(classCode: string): Promise<StudentNamesDto[]> {
+    const data = await this.classStudentsModel
+      .findOne({ class_code: classCode })
+      .exec();
+    if (!data || !data.students) return [];
+
+    return data.students.map((s) => ({
+      name: s['name'],
+      regNum: s['reg_num'],
+      subClass: s['sub_class'],
+    }));
   }
 }

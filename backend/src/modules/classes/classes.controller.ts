@@ -48,4 +48,9 @@ export class ClassesController {
   findStudentsOverallPerformance(@Param('class_code') code: string) {
     return this.classesService.findClassOverallPerformance(code);
   }
+
+  @Get('studantnames/:class_code')
+  findStudentNames(@Param('class_code') classCode: string) {
+    return this.classesService.findClassStudentNames(classCode);
+  }
 }
