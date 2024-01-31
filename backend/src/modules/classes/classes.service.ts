@@ -36,6 +36,7 @@ import {
   StudentParticipation,
   StudentParticipationDocument,
 } from '../students/schemas/studentparticipation.schema';
+import { StudentNamesDto } from './dto/get-class-student-names.dto';
 
 @Injectable({})
 export class ClassesService {
@@ -65,13 +66,40 @@ export class ClassesService {
     const teacherClassData = await this.teacherClassModel
       .findOne({ email: userEmail })
       .exec();
-    console.log(teacherClassData);
+    //console.log(teacherClassData);
     if (teacherClassData != null) {
       const classIds = teacherClassData['classes'];
 
       return this.classModel.find({ class_id: { $in: classIds } }).exec();
     }
     return null;
+  }
+
+  async findTeacherLastClasses(userEmail: string): Promise<string> {
+    const teacherClassData = await this.teacherClassModel
+      .findOne({ email: userEmail })
+      .exec();
+    console.log(teacherClassData);
+    if (teacherClassData != null) {
+      const classIds = teacherClassData['classes'];
+
+      const teacherClasses = await this.classModel
+        .find({ class_id: { $in: classIds } })
+        .exec();
+      // guarda o código da turma mais recente
+      let lastClassCode = '';
+      let lastYear = 0;
+      for (const t of teacherClasses) {
+        console.log(t);
+        let actualYear = Number(t.year) + Number(t.semester);
+        if (actualYear > lastYear) {
+          lastClassCode = t.class_code;
+          lastYear = actualYear;
+        }
+      }
+      return lastClassCode;
+    }
+    return '';
   }
 
   async findOne(id: string): Promise<ClassDto> {
@@ -138,7 +166,7 @@ export class ClassesService {
 
   async findClassOverallPerformance(classCode: string) {
     const data = await this.classStudentsModel
-      .findOne({ class_code: 'lop2023_2t01' })
+      .findOne({ class_code: classCode })
       .exec();
     if (!data) return [];
 
@@ -181,5 +209,18 @@ export class ClassesService {
     }
 
     return overallPerformance;
+  }
+
+  async findClassStudentNames(classCode: string): Promise<StudentNamesDto[]> {
+    const data = await this.classStudentsModel
+      .findOne({ class_code: classCode })
+      .exec();
+    if (!data || !data.students) return [];
+
+    return data.students.map((s) => ({
+      name: s['name'],
+      regNum: s['reg_num'],
+      subClass: s['sub_class'],
+    }));
   }
 }

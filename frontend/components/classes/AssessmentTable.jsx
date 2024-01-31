@@ -27,7 +27,10 @@ export default function AssessmentTable({ rows }) {
         <TableHead>
           <TableRow>
             <TableCell>
-              <H4> Matrícula </H4>
+              <H4> Nome </H4>
+            </TableCell>
+            <TableCell align="right">
+              <H4>Sub Turma</H4>
             </TableCell>
             <TableCell align="right">
               <H4>P1</H4>
@@ -66,6 +69,9 @@ export default function AssessmentTable({ rows }) {
               <H4>M. U3</H4>
             </TableCell>
             <TableCell align="right">
+              <H4>Matrícula</H4>
+            </TableCell>
+            <TableCell align="right">
               <H4>Média Final</H4>
             </TableCell>
           </TableRow>
@@ -77,8 +83,9 @@ export default function AssessmentTable({ rows }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.reg}
+                {row.name}
               </TableCell>
+              <TableCell align="right">{row.subClass}</TableCell>
               <TableCell align="right">{row.p1}</TableCell>
               <TableCell align="right">{row.l1}</TableCell>
               <TableCell align="right">{row.g1}</TableCell>
@@ -97,6 +104,7 @@ export default function AssessmentTable({ rows }) {
               <TableCell align="right" sx={{ fontWeight: "bold" }}>
                 {row.m3}
               </TableCell>
+              <TableCell align="right">{row.reg}</TableCell>
               <TableCell align="right">{row.average}</TableCell>
             </TableRow>
           ))}

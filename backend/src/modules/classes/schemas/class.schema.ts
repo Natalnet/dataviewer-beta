@@ -10,6 +10,9 @@ export class TClass {
   class_id: string;
 
   @Prop()
+  class_code: string;
+
+  @Prop()
   name: string;
 
   @Prop()
