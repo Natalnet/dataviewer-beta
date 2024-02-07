@@ -79,7 +79,7 @@ export class ClassesService {
     const teacherClassData = await this.teacherClassModel
       .findOne({ email: userEmail })
       .exec();
-    console.log(teacherClassData);
+    //console.log(teacherClassData);
     if (teacherClassData != null) {
       const classIds = teacherClassData['classes'];
 
@@ -90,7 +90,7 @@ export class ClassesService {
       let lastClassCode = '';
       let lastYear = 0;
       for (const t of teacherClasses) {
-        console.log(t);
+        //console.log(t);
         let actualYear = Number(t.year) + Number(t.semester);
         if (actualYear > lastYear) {
           lastClassCode = t.class_code;
