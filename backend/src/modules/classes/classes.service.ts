@@ -37,6 +37,7 @@ import {
   StudentParticipationDocument,
 } from '../students/schemas/studentparticipation.schema';
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
+import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 
 @Injectable({})
 export class ClassesService {
@@ -60,6 +61,8 @@ export class ClassesService {
     private readonly studentListGradesModel: Model<StudentListGradesDocument>,
     @InjectModel(StudentParticipation.name)
     private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
+    @InjectModel(ClassClass.name)
+    private readonly classClassModel: Model<ClassClassDocument>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -221,6 +224,19 @@ export class ClassesService {
       name: s['name'],
       regNum: s['reg_num'],
       subClass: s['sub_class'],
+    }));
+  }
+
+  async findClassTitles(classCode: string): Promise<ClassClassDto[]> {
+    const data = await this.classClassModel
+      .findOne({ class_code: classCode })
+      .exec();
+
+    if (!data) return [];
+
+    return data.classTitles.map((c) => ({
+      date: c.date,
+      classTitle: c.classTitle,
     }));
   }
 }

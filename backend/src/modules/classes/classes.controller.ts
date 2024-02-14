@@ -63,9 +63,9 @@ export class ClassesController {
     return this.classesService.findTeacherLastClasses(req.user.userEmail);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('classes/:class_code')
   findClassTitles(@Param('class_code') classCode: string) {
-    return 'class titles';
-    //return this.classesService.findClassTitles(classCode);
+    return this.classesService.findClassTitles(classCode);
   }
 }
