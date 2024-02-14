@@ -25,8 +25,8 @@ export class StudentsController {
 
   @Get('frequency/:mat')
   findStudentFrequency(@Param('mat') mat: string) {
-    return 'frequency'
-    //return this.studentService.findStudentFrequency(mat);
+    //return 'frequency'
+    return this.studentService.findStudentFrequency(mat);
   }
 
   @UseGuards(JwtAuthGuard)

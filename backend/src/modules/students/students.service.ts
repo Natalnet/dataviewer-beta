@@ -14,6 +14,11 @@ import {
 } from './schemas/studentparticipation.schema';
 import { StudentParticipationsDto } from './dto/get-student-participations.dto';
 import { StudentListUnitGradesDto } from './dto/get-student-list-unit-grades.dto';
+import { StudentFrequencyDto } from './dto/get-student-frequency.dto';
+import {
+  StudentFrequency,
+  StudentFrequencyDocument,
+} from './schemas/studentfrequency.schema';
 
 @Injectable()
 export class StudentsService {
@@ -24,6 +29,8 @@ export class StudentsService {
     private readonly examGradesModel: Model<ExamGradesDocument>,
     @InjectModel(StudentParticipation.name)
     private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
+    @InjectModel(StudentFrequency.name)
+    private readonly studentFrequencyModel: Model<StudentFrequencyDocument>,
   ) {}
 
   async findStudentListGrades(id: string): Promise<StudentListGradesDto[]> {
@@ -117,6 +124,23 @@ export class StudentsService {
       activities2: data.atividade2,
       presence3: data.presenca3,
       activities3: data.atividade3,
+    };
+  }
+
+  async findStudentFrequency(mat: string): Promise<StudentFrequencyDto> {
+    const data = await this.studentFrequencyModel
+      .findOne({ regNum: mat })
+      .exec();
+
+    if (!data)
+      return {
+        regNum: '-',
+        classFreqs: ['-'],
+      };
+
+    return {
+      regNum: data.regNum,
+      classFreqs: data.classFreqs,
     };
   }
 }
