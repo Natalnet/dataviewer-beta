@@ -62,4 +62,10 @@ export class ClassesController {
     //console.log(req);
     return this.classesService.findTeacherLastClasses(req.user.userEmail);
   }
+
+  @Get('classes/:class_code')
+  findClassTitles(@Param('class_code') classCode: string) {
+    return 'class titles';
+    //return this.classesService.findClassTitles(classCode);
+  }
 }
