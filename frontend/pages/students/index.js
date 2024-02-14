@@ -27,9 +27,9 @@ export async function getServerSideProps(context) {
 
   let data = {}
   let res
-  console.log(regNumber)
+  //console.log(regNumber)
   if (regNumber != 'undefined') {
-    console.log('testestes')
+    //console.log('testestes')
     res = await apiClient.get(`students/examgrades/${regNumber}`)
     let examGrades = res.data
     res = await apiClient.get(`students/participations/${regNumber}`)
