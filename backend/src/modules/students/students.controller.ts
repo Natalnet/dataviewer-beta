@@ -23,6 +23,7 @@ export class StudentsController {
     return this.studentService.findStudentListUnitGrades(mat);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('frequency/:mat')
   findStudentFrequency(@Param('mat') mat: string) {
     //return 'frequency'
