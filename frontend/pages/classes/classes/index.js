@@ -3,6 +3,7 @@ import styles from "../../../styles/Home.module.css";
 import { H2 } from "../../../components/Typography";
 import { getAPIClient } from "../../../utils/axiosapi";
 import { parseCookies } from "nookies";
+import ClassClassTable from "../../../components/classes/ClassClassTable";
 
 function ClassClassesPage({ data }) {
   console.log(data);
@@ -15,6 +16,7 @@ function ClassClassesPage({ data }) {
       >
         <Box className={styles.maincard}>
           <H2> Cronograma de Aulas </H2>
+          <ClassClassTable rows={data} />
         </Box>
       </Box>
     </>
