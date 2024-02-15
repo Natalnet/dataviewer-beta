@@ -3,6 +3,7 @@ import styles from "../../../styles/Home.module.css";
 import { H2 } from "../../../components/Typography";
 import { getAPIClient } from "../../../utils/axiosapi";
 import { parseCookies } from "nookies";
+import StudentFrequencyTable from "../../../components/students/StudentFrequencyTable";
 
 function StudentFrequencyPage({ data }) {
   console.log(data);
@@ -15,6 +16,7 @@ function StudentFrequencyPage({ data }) {
       >
         <Box className={styles.maincard}>
           <H2> Frequência </H2>
+          <StudentFrequencyTable rows={data} />
         </Box>
       </Box>
     </>
@@ -62,7 +64,7 @@ export async function getServerSideProps(context) {
     //console.log(freqTable);
     for (let d in freqTable) {
       freqArray.push({
-        data: d,
+        date: d,
         title: freqTable[d].classTitle,
         presence: freqTable[d].presence,
       });
