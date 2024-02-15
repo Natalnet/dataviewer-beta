@@ -1,4 +1,4 @@
 export class StudentFrequencyDto {
-  regNum: string;
+  classCode: string;
   classFreqs: string[];
 }

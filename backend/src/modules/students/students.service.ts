@@ -134,12 +134,12 @@ export class StudentsService {
 
     if (!data)
       return {
-        regNum: '-',
+        classCode: '-',
         classFreqs: ['-'],
       };
 
     return {
-      regNum: data.regNum,
+      classCode: data.classCode,
       classFreqs: data.classFreqs,
     };
   }

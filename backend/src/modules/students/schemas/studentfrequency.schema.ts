@@ -7,6 +7,9 @@ export class StudentFrequency {
   regNum: string;
 
   @Prop()
+  classCode: string;
+
+  @Prop()
   classFreqs: string[];
 }
 
