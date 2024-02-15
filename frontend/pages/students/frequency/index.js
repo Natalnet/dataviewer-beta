@@ -37,6 +37,7 @@ export async function getServerSideProps(context) {
   const { ["nextautht1.mat"]: regNumber } = parseCookies(context);
 
   let freqTable = {};
+  let freqArray = [];
   let res;
   if (regNumber != "undefined") {
     console.log(regNumber);
@@ -59,8 +60,15 @@ export async function getServerSideProps(context) {
       freqTable[classFrequency.classFreqs[i]].presence = 2;
     }
     //console.log(freqTable);
+    for (let d in freqTable) {
+      freqArray.push({
+        data: d,
+        title: freqTable[d].classTitle,
+        presence: freqTable[d].presence,
+      });
+    }
   }
-  let data = freqTable;
+  let data = freqArray;
   return {
     props: { data },
   };
