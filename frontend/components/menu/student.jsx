@@ -57,6 +57,23 @@ export default function MenuStudent() {
           </ListItemButton>
         </ListItem>
         <ListItem className={styles.li} disablePadding>
+          <ListItemButton
+            component="a"
+            href="/students/frequency"
+            sx={{
+              backgroundColor:
+                router.pathname.includes("/frequency") && "#248df4",
+            }}
+          >
+            <ListItemText
+              primary="Frequência"
+              sx={{
+                color: router.pathname.includes("/frequency") && "white",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem className={styles.li} disablePadding>
           <ListItemButton component="a" onClick={handleAnchorLogoutClick}>
             <ListItemText primary="Sair" />
           </ListItemButton>

@@ -33,6 +33,7 @@ import {
   StudentParticipation,
   StudentParticipationSchema,
 } from '../students/schemas/studentparticipation.schema';
+import { ClassClass, ClassClassSchema } from './schemas/classclass.schema';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import {
       { name: ExamGrades.name, schema: ExamGradesSchema },
       { name: StudentListGrades.name, schema: StudentListGradesSchema },
       { name: StudentParticipation.name, schema: StudentParticipationSchema },
+      { name: ClassClass.name, schema: ClassClassSchema },
     ]),
   ],
   controllers: [ClassesController],

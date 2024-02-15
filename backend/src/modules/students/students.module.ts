@@ -11,6 +11,10 @@ import {
 } from './schemas/studentparticipation.schema';
 import { StudentsController } from './students.controller';
 import { StudentsService } from './students.service';
+import {
+  StudentFrequency,
+  StudentFrequencySchema,
+} from './schemas/studentfrequency.schema';
 
 @Module({
   imports: [
@@ -18,6 +22,7 @@ import { StudentsService } from './students.service';
       { name: StudentListGrades.name, schema: StudentListGradesSchema },
       { name: ExamGrades.name, schema: ExamGradesSchema },
       { name: StudentParticipation.name, schema: StudentParticipationSchema },
+      { name: StudentFrequency.name, schema: StudentFrequencySchema },
     ]),
   ],
   controllers: [StudentsController],
