@@ -71,7 +71,7 @@ export class ClassesController {
 
   @Get('frequency/:class_code')
   findClassFrequency(@Param('class_code') classCode: string) {
-    return 'Not implemented yet.';
-    //return this.classesService.findClassFrequency(classCode);
+    //return 'frequency not implemented yet';
+    return this.classesService.findClassFrequencies(classCode);
   }
 }
