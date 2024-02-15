@@ -4,7 +4,8 @@ import { H2 } from "../../../components/Typography";
 import { getAPIClient } from "../../../utils/axiosapi";
 import { parseCookies } from "nookies";
 
-function StudentFrequencyPage() {
+function StudentFrequencyPage({ data }) {
+  console.log(data);
   return (
     <>
       <Box
@@ -35,18 +36,33 @@ export async function getServerSideProps(context) {
 
   const { ["nextautht1.mat"]: regNumber } = parseCookies(context);
 
+  let freqTable = {};
   let res;
   if (regNumber != "undefined") {
     console.log(regNumber);
     res = await apiClient.get(`students/frequency/${regNumber}`);
     let classFrequency = res.data;
-    //res = await apiClient.get(`students/participations/${regNumber}`)
-    //let ptps = res.data
-    console.log(classFrequency);
+    let clcl;
+    if (classFrequency.classCode != null) {
+      res = await apiClient.get(`classes/classes/${classFrequency.classCode}`);
+      clcl = res.data;
+      //console.log(clcl);
+    }
+    //Criando um dicionário para guardar a frequência de cada aula de um aluno
+    for (let i = 0; i < clcl.length; i++) {
+      freqTable[clcl[i].date] = {};
+      freqTable[clcl[i].date].classTitle = clcl[i].classTitle;
+      freqTable[clcl[i].date].presence = 0;
+    }
+    //Preenchendo o dicionário com a frequência do aluno no dia que ele esteve presente
+    for (let i = 0; i < classFrequency.classFreqs.length; i++) {
+      freqTable[classFrequency.classFreqs[i]].presence = 2;
+    }
+    //console.log(freqTable);
   }
-
+  let data = freqTable;
   return {
-    props: {},
+    props: { data },
   };
 }
 
