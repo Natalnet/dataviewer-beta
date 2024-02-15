@@ -34,6 +34,10 @@ import {
   StudentParticipationSchema,
 } from '../students/schemas/studentparticipation.schema';
 import { ClassClass, ClassClassSchema } from './schemas/classclass.schema';
+import {
+  ClassFrequency,
+  ClassFrequencySchema,
+} from './schemas/classfrequency.schema';
 
 @Module({
   imports: [
@@ -49,6 +53,7 @@ import { ClassClass, ClassClassSchema } from './schemas/classclass.schema';
       { name: StudentListGrades.name, schema: StudentListGradesSchema },
       { name: StudentParticipation.name, schema: StudentParticipationSchema },
       { name: ClassClass.name, schema: ClassClassSchema },
+      { name: ClassFrequency.name, schema: ClassFrequencySchema },
     ]),
   ],
   controllers: [ClassesController],
