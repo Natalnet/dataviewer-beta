@@ -7,7 +7,6 @@ import ClassClassTable from "../../../components/classes/ClassClassTable";
 import ClassFrequencyTable from "../../../components/classes/ClassFrequenciesTable";
 
 function ClassClassesPage({ dataClasses, classFreqArray }) {
-  console.log(dataClasses);
   return (
     <>
       <Box

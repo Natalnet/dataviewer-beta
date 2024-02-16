@@ -77,6 +77,26 @@ export default function MenuProfessor() {
           </ListItemButton>
         </ListItem>
         <ListItem className={styles.li} disablePadding>
+          <ListItemButton
+            component="a"
+            href="/classes/classes"
+            sx={{
+              backgroundColor:
+                router.pathname.localeCompare("/classes/classes") == 0 &&
+                "#248df4",
+            }}
+          >
+            <ListItemText
+              primary="Aulas"
+              sx={{
+                color:
+                  router.pathname.localeCompare("/classes/classes") == 0 &&
+                  "white",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem className={styles.li} disablePadding>
           <ListItemButton component="a" onClick={handleAnchorLogoutClick}>
             <ListItemText primary="Sair" />
           </ListItemButton>
