@@ -68,4 +68,10 @@ export class ClassesController {
   findClassTitles(@Param('class_code') classCode: string) {
     return this.classesService.findClassTitles(classCode);
   }
+
+  @Get('frequency/:class_code')
+  findClassFrequency(@Param('class_code') classCode: string) {
+    //return 'frequency not implemented yet';
+    return this.classesService.findClassFrequencies(classCode);
+  }
 }

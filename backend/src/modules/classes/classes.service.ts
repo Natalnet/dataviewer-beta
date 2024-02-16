@@ -38,6 +38,7 @@ import {
 } from '../students/schemas/studentparticipation.schema';
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
+import { ClassFrequency } from './schemas/classfrequency.schema';
 
 @Injectable({})
 export class ClassesService {
@@ -63,6 +64,8 @@ export class ClassesService {
     private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
     @InjectModel(ClassClass.name)
     private readonly classClassModel: Model<ClassClassDocument>,
+    @InjectModel(ClassFrequency.name)
+    private readonly classFrequencyModel: Model<ClassFrequency>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -238,5 +241,18 @@ export class ClassesService {
       date: c.date,
       classTitle: c.classTitle,
     }));
+  }
+
+  async findClassFrequencies(classCode: string): Promise<ClassFrequencyDto> {
+    const data = await this.classFrequencyModel
+      .findOne({ classCode: classCode })
+      .exec();
+
+    if (!data) return null;
+
+    return {
+      classFreqs: data.classFreqs,
+      studentNumber: data.studentNumber,
+    };
   }
 }
