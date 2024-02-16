@@ -17,6 +17,7 @@ function ClassClassesPage({ data }) {
         <Box className={styles.maincard}>
           <H2> Cronograma de Aulas </H2>
           <ClassClassTable rows={data} />
+          <H2> Frequência Diária </H2>
         </Box>
       </Box>
     </>
