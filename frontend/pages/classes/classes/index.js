@@ -1,12 +1,20 @@
 import { Box, Grid, Paper } from "@mui/material";
-import styles from "../../../styles/Home.module.css";
+
 import { H2 } from "../../../components/Typography";
 import { getAPIClient } from "../../../utils/axiosapi";
 import { parseCookies } from "nookies";
 import ClassClassTable from "../../../components/classes/ClassClassTable";
 import ClassFrequencyTable from "../../../components/classes/ClassFrequenciesTable";
 
+import dynamic from "next/dynamic";
+
+const NoSSRClassFrequenciesChart = dynamic(
+  () => import("../../../components/classes/ClassFrequenciesChart"),
+  { ssr: false }
+);
+
 function ClassClassesPage({ dataClasses, classFreqArray }) {
+  //console.log(classFreqArray);
   return (
     <>
       <Box
@@ -39,6 +47,18 @@ function ClassClassesPage({ dataClasses, classFreqArray }) {
               </Box>
             </Paper>
           </Grid>
+          <Grid item xs={12} md={12}>
+            <Paper elevation={9}>
+              <Box
+                sx={{
+                  padding: "20px",
+                }}
+              >
+                <H2> Gráfico de Frequência Diária </H2>
+                <NoSSRClassFrequenciesChart data={classFreqArray} />
+              </Box>
+            </Paper>
+          </Grid>
         </Grid>
       </Box>
     </>
@@ -65,6 +85,7 @@ export async function getServerSideProps(context) {
 
   const dataFreqs = await apiClient.get(`classes/frequency/${lastClassCode}`);
   //console.log(dataFreqs.data.classFreqs);
+  const studentNumber = parseFloat(dataFreqs.data.studentNumber);
   let classFreqArray = [];
   if (dataFreqs.status === 200) {
     for (let i = 0; i < dataClasses.length; i++) {
@@ -75,6 +96,9 @@ export async function getServerSideProps(context) {
           : dataFreqs.data.classFreqs[dataClasses[i].date];
       row["date"] = dataClasses[i].date;
       row["classTitle"] = dataClasses[i].classTitle;
+      row["percentage"] = Math.floor(
+        (parseFloat(row["frequencies"]) / studentNumber) * 100
+      );
       classFreqArray.push(row);
       //console.log(row);
     }
