@@ -1,4 +1,3 @@
-import styles from "../../styles/Home.module.css"
 import { AuthContext } from "../../contexts/AuthContext"
 import { useRouter } from "next/router"
 import { useContext } from "react"
@@ -7,8 +6,13 @@ import {
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
 } from "@mui/material"
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined"
+import ChecklistRtlOutlinedIcon from "@mui/icons-material/ChecklistRtlOutlined"
+import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined"
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined"
 
 export default function MenuStudent() {
   const { logout } = useContext(AuthContext)
@@ -20,8 +24,8 @@ export default function MenuStudent() {
 
   return (
     <Box>
-      <List className={styles.ul}>
-        <ListItem className={styles.li} disablePadding>
+      <List sx={{ width: "200px" }}>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/students"
@@ -30,6 +34,14 @@ export default function MenuStudent() {
                 router.pathname.localeCompare("/students") == 0 && "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <DashboardOutlinedIcon
+                sx={{
+                  color:
+                    router.pathname.localeCompare("/students") == 0 && "white",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
               primary="Notas"
               sx={{
@@ -39,7 +51,7 @@ export default function MenuStudent() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/students/listgrades"
@@ -48,6 +60,13 @@ export default function MenuStudent() {
                 router.pathname.includes("/listgrades") && "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <ViewListOutlinedIcon
+                sx={{
+                  color: router.pathname.includes("/listgrades") && "white",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
               primary="Listas"
               sx={{
@@ -56,7 +75,7 @@ export default function MenuStudent() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/students/frequency"
@@ -65,6 +84,13 @@ export default function MenuStudent() {
                 router.pathname.includes("/frequency") && "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <ChecklistRtlOutlinedIcon
+                sx={{
+                  color: router.pathname.includes("/frequency") && "white",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
               primary="Frequência"
               sx={{
@@ -73,8 +99,11 @@ export default function MenuStudent() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton component="a" onClick={handleAnchorLogoutClick}>
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <LogoutOutlinedIcon />
+            </ListItemIcon>
             <ListItemText primary="Sair" />
           </ListItemButton>
         </ListItem>

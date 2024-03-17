@@ -1,47 +1,44 @@
 import ClassCard from "../../components/classCard"
-import styles from "../../styles/Home.module.css"
 
 import { getAPIClient } from "../../utils/axiosapi"
 import { parseCookies, setCookie } from "nookies"
 import Link from "next/link"
 
-import { Box, styled } from "@mui/material"
-import { H2 } from "../../components/Typography"
+import { Box } from "@mui/material"
 
-const Title2 = styled("div")({
-  margin: "0 0 1rem 0",
-  fontSize: "1.5rem",
-  fontWeight: 700,
-})
+import MainCard from "../../components/layout/MainCard"
 
 export default function Classes({ classes, lastClassCode }) {
   setCookie(null, "nextautht1.lastClassCode", lastClassCode, {
     maxAge: 60 * 90 * 1,
   })
+
   return (
     <>
-      <Box
-        sx={{
-          width: "100%",
-        }}
-      >
-        <Box className={styles.maincard}>
-          <H2> Turmas </H2>
-
-          <Box className={styles.containerclasses}>
-            {classes &&
-              classes.map((classe) => (
-                <Link href={`/classes/${classe.class_id}`} key={classe._id}>
-                  <ClassCard
-                    title={classe.name}
-                    year={classe.year}
-                    semester={classe.semester}
-                  />
-                </Link>
-              ))}
-          </Box>
+      <MainCard title="Turmas">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          {classes &&
+            classes.map((classe) => (
+              <Link
+                href={`/classes/${classe.class_id}`}
+                key={classe._id}
+                underline="hover"
+                textDecoration="none"
+              >
+                <ClassCard
+                  title={classe.name}
+                  year={classe.year}
+                  semester={classe.semester}
+                />
+              </Link>
+            ))}
         </Box>
-      </Box>
+      </MainCard>
     </>
   )
 }

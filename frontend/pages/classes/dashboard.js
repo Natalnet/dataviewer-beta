@@ -1,37 +1,26 @@
-import styles from '../../styles/Home.module.css'
+import { getAPIClient } from "../../utils/axiosapi"
+import { parseCookies } from "nookies"
 
-import { getAPIClient } from '../../utils/axiosapi'
-import { parseCookies } from 'nookies'
-
-import { Box } from '@mui/material'
-import { H2 } from '../../components/Typography'
+import MainCard from "../../components/layout/MainCard"
 
 export default function Classes({ classes }) {
   return (
     <>
-      <Box
-        sx={{
-          width: '85%'
-        }}
-      >
-        <Box className={styles.maincard}>
-          <H2> Dashboard </H2>
-        </Box>
-      </Box>
+      <MainCard title="Dashboard"> </MainCard>
     </>
   )
 }
 
 export async function getServerSideProps(context) {
   const apiClient = getAPIClient(context)
-  const { ['nextautht1.token']: token } = parseCookies(context)
+  const { ["nextautht1.token"]: token } = parseCookies(context)
 
   if (!token) {
     return {
       redirect: {
-        destination: '/',
-        permanent: false
-      }
+        destination: "/",
+        permanent: false,
+      },
     }
   }
 
@@ -40,7 +29,7 @@ export async function getServerSideProps(context) {
   const classes = {}
   return {
     props: {
-      classes
-    }
+      classes,
+    },
   }
 }
