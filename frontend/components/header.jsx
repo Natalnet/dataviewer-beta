@@ -1,7 +1,8 @@
 import { AuthContext } from "../contexts/AuthContext"
 import { useContext } from "react"
 import Image from "next/image"
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
+import HeaderAvatarCard from "./layout/HeaderAvatarCard"
 
 export default function Header() {
   const { user } = useContext(AuthContext)
@@ -13,8 +14,10 @@ export default function Header() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        marginLeft: "20px",
-        marginRight: "8vw",
+        marginLeft: "25px",
+        marginRight: "1vw",
+        marginTop: "1vw",
+        marginBottom: "1vw",
       }}
     >
       <Image
@@ -24,10 +27,7 @@ export default function Header() {
         priority="true"
         alt="DataViewer Image"
       />
-      <Box>
-        <h3> {user?.name} </h3>
-        <p> {user?.email} </p>
-      </Box>
+      <HeaderAvatarCard userName={user.name} userImgGithubName={user.avatar} />
     </Box>
   )
 }
