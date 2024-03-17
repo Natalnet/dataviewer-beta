@@ -232,7 +232,7 @@ export class ClassesService {
 
   async findClassTitles(classCode: string): Promise<ClassClassDto[]> {
     const data = await this.classClassModel
-      .findOne({ class_code: classCode })
+      .findOne({ classCode: classCode })
       .exec();
 
     if (!data) return [];
