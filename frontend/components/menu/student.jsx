@@ -1,4 +1,3 @@
-import styles from "../../styles/Home.module.css"
 import { AuthContext } from "../../contexts/AuthContext"
 import { useRouter } from "next/router"
 import { useContext } from "react"

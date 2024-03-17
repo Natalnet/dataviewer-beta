@@ -8,7 +8,13 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
 } from "@mui/material"
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined"
+import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined"
+import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined"
+import ClassOutlinedIcon from "@mui/icons-material/ClassOutlined"
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined"
 
 export default function MenuProfessor() {
   const { logout } = useContext(AuthContext)
@@ -20,8 +26,8 @@ export default function MenuProfessor() {
 
   return (
     <Box>
-      <List className={styles.ul}>
-        <ListItem className={styles.li} disablePadding>
+      <List sx={{ width: "200px" }}>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/classes/dashboard"
@@ -30,6 +36,14 @@ export default function MenuProfessor() {
                 router.pathname.includes("/dashboard") && "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <DashboardOutlinedIcon
+                sx={{
+                  color: router.pathname.includes("/dashboard") && "white",
+                }}
+              />
+            </ListItemIcon>
+
             <ListItemText
               primary="Dashboard"
               sx={{
@@ -38,7 +52,7 @@ export default function MenuProfessor() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/classes"
@@ -47,6 +61,14 @@ export default function MenuProfessor() {
                 router.pathname.localeCompare("/classes") == 0 && "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <SchoolOutlinedIcon
+                sx={{
+                  color:
+                    router.pathname.localeCompare("/classes") == 0 && "white",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
               primary="Turmas"
               sx={{
@@ -56,7 +78,7 @@ export default function MenuProfessor() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/classes/assessments"
@@ -66,6 +88,15 @@ export default function MenuProfessor() {
                 "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <GradingOutlinedIcon
+                sx={{
+                  color:
+                    router.pathname.localeCompare("/classes/assessments") ==
+                      0 && "white",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
               primary="Avaliações"
               sx={{
@@ -76,7 +107,7 @@ export default function MenuProfessor() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton
             component="a"
             href="/classes/classes"
@@ -86,6 +117,15 @@ export default function MenuProfessor() {
                 "#248df4",
             }}
           >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <ClassOutlinedIcon
+                sx={{
+                  color:
+                    router.pathname.localeCompare("/classes/classes") == 0 &&
+                    "white",
+                }}
+              />
+            </ListItemIcon>
             <ListItemText
               primary="Aulas"
               sx={{
@@ -96,8 +136,11 @@ export default function MenuProfessor() {
             />
           </ListItemButton>
         </ListItem>
-        <ListItem className={styles.li} disablePadding>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
           <ListItemButton component="a" onClick={handleAnchorLogoutClick}>
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <LogoutOutlinedIcon />
+            </ListItemIcon>
             <ListItemText primary="Sair" />
           </ListItemButton>
         </ListItem>
