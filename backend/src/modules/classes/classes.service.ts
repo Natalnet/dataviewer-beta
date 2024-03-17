@@ -96,8 +96,8 @@ export class ClassesService {
       let lastClassCode = '';
       let lastYear = 0;
       for (const t of teacherClasses) {
-        //console.log(t);
-        let actualYear = Number(t.year) + Number(t.semester);
+        console.log(t);
+        let actualYear = Number(t.year) + Number(t.semester) / 10;
         if (actualYear > lastYear) {
           lastClassCode = t.class_code;
           lastYear = actualYear;
