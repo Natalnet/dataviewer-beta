@@ -79,6 +79,7 @@ export async function getServerSideProps(context) {
     };
   }
 
+  //console.log(lastClassCode);
   const { data } = await apiClient.get(`classes/classes/${lastClassCode}`);
   //console.log(data);
   const dataClasses = data;

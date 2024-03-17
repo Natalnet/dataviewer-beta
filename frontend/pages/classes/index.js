@@ -1,23 +1,24 @@
-import ClassCard from "../../components/classCard"
-import styles from "../../styles/Home.module.css"
+import ClassCard from "../../components/classCard";
+import styles from "../../styles/Home.module.css";
 
-import { getAPIClient } from "../../utils/axiosapi"
-import { parseCookies, setCookie } from "nookies"
-import Link from "next/link"
+import { getAPIClient } from "../../utils/axiosapi";
+import { parseCookies, setCookie } from "nookies";
+import Link from "next/link";
 
-import { Box, styled } from "@mui/material"
-import { H2 } from "../../components/Typography"
+import { Box, styled } from "@mui/material";
+import { H2 } from "../../components/Typography";
 
 const Title2 = styled("div")({
   margin: "0 0 1rem 0",
   fontSize: "1.5rem",
   fontWeight: 700,
-})
+});
 
 export default function Classes({ classes, lastClassCode }) {
   setCookie(null, "nextautht1.lastClassCode", lastClassCode, {
     maxAge: 60 * 90 * 1,
-  })
+  });
+
   return (
     <>
       <Box
@@ -43,12 +44,12 @@ export default function Classes({ classes, lastClassCode }) {
         </Box>
       </Box>
     </>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
-  const apiClient = getAPIClient(context)
-  const { ["nextautht1.token"]: token } = parseCookies(context)
+  const apiClient = getAPIClient(context);
+  const { ["nextautht1.token"]: token } = parseCookies(context);
 
   if (!token) {
     return {
@@ -56,18 +57,18 @@ export async function getServerSideProps(context) {
         destination: "/",
         permanent: false,
       },
-    }
+    };
   }
 
-  const { data } = await apiClient.get("classes")
-  const lastClass = await apiClient.get("classes/teacher/last")
+  const { data } = await apiClient.get("classes");
+  const lastClass = await apiClient.get("classes/teacher/last");
 
-  const classes = data
-  const lastClassCode = lastClass.data
+  const classes = data;
+  const lastClassCode = lastClass.data;
   return {
     props: {
       classes,
       lastClassCode,
     },
-  }
+  };
 }
