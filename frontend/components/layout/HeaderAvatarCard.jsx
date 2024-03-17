@@ -17,7 +17,7 @@ export default function HeaderAvatarCard({ userName, userImgGithubName }) {
         >
           {userName}
         </Typography>
-        <Link href="/users/edit" color="primary" underline="none">
+        <Link href="/users/edit" color="primary" underline="hover">
           Informações do perfil
         </Link>
       </Box>

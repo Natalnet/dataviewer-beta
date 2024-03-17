@@ -8,13 +8,10 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none; 
 }
 
-a:hover {
-  color: #273b73;
-  text-decoration: underline;
-}
+ 
 
 footer {
   display: block;

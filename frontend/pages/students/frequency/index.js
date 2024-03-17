@@ -1,6 +1,3 @@
-import { Box } from "@mui/material"
-import styles from "../../../styles/Home.module.css"
-import { H2 } from "../../../components/Typography"
 import { getAPIClient } from "../../../utils/axiosapi"
 import { parseCookies } from "nookies"
 import StudentFrequencyTable from "../../../components/students/StudentFrequencyTable"
