@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from "@mui/material"
+import { Box, Grid, Paper, Typography } from "@mui/material"
 
 import { H2 } from "../../../components/Typography"
 import { getAPIClient } from "../../../utils/axiosapi"
@@ -7,6 +7,7 @@ import ClassClassTable from "../../../components/classes/ClassClassTable"
 import ClassFrequencyTable from "../../../components/classes/ClassFrequenciesTable"
 
 import dynamic from "next/dynamic"
+import MainCard from "../../../components/layout/MainCard"
 
 const NoSSRClassFrequenciesChart = dynamic(
   () => import("../../../components/classes/ClassFrequenciesChart"),
@@ -17,50 +18,22 @@ function ClassClassesPage({ dataClasses, classFreqArray }) {
   //console.log(classFreqArray);
   return (
     <>
-      <Box
-        sx={{
-          width: "85%",
-        }}
-      >
+      <MainCard title="Aulas">
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
-            <Paper elevation={9}>
-              <Box
-                sx={{
-                  padding: "20px",
-                }}
-              >
-                <H2> Cronograma de Aulas </H2>
-                <ClassClassTable rows={dataClasses} />
-              </Box>
-            </Paper>
+            <Typography variant="h5"> Gráfico de Frequência Diária </Typography>
+            <NoSSRClassFrequenciesChart data={classFreqArray} />
           </Grid>
           <Grid item xs={12} md={12}>
-            <Paper elevation={9}>
-              <Box
-                sx={{
-                  padding: "20px",
-                }}
-              >
-                <H2> Frequência Diária </H2>
-                <ClassFrequencyTable rows={classFreqArray} />
-              </Box>
-            </Paper>
+            <Typography variant="h5"> Frequência Diária </Typography>
+            <ClassFrequencyTable rows={classFreqArray} />
           </Grid>
           <Grid item xs={12} md={12}>
-            <Paper elevation={9}>
-              <Box
-                sx={{
-                  padding: "20px",
-                }}
-              >
-                <H2> Gráfico de Frequência Diária </H2>
-                <NoSSRClassFrequenciesChart data={classFreqArray} />
-              </Box>
-            </Paper>
+            <Typography variant="h5">Cronograma de Aulas</Typography>
+            <ClassClassTable rows={dataClasses} />
           </Grid>
         </Grid>
-      </Box>
+      </MainCard>
     </>
   )
 }

@@ -1,25 +1,15 @@
-import styles from "../../styles/Home.module.css"
-
 import { getAPIClient } from "../../utils/axiosapi"
 import { parseCookies } from "nookies"
 
-import { Box } from "@mui/material"
-import { H2 } from "../../components/Typography"
 import AssessmentTable from "../../components/classes/AssessmentTable"
+import MainCard from "../../components/layout/MainCard"
 
 export default function Classes({ assessments }) {
   return (
     <>
-      <Box
-        sx={{
-          width: "85%",
-        }}
-      >
-        <Box className={styles.maincard}>
-          <H2> Avaliações </H2>
-          <AssessmentTable rows={assessments} />
-        </Box>
-      </Box>
+      <MainCard title="Avaliações">
+        <AssessmentTable rows={assessments} />
+      </MainCard>
     </>
   )
 }

@@ -4,7 +4,6 @@ import StudentFrequencyTable from "../../../components/students/StudentFrequency
 import MainCard from "../../../components/layout/MainCard"
 
 function StudentFrequencyPage({ data }) {
-  console.log(data)
   return (
     <>
       <MainCard title="Frequência">
@@ -33,14 +32,14 @@ export async function getServerSideProps(context) {
   let freqArray = []
   let res
   if (regNumber != "undefined") {
-    console.log(regNumber)
+    //console.log(regNumber)
     res = await apiClient.get(`students/frequency/${regNumber}`)
     let classFrequency = res.data
     let clcl
     if (classFrequency.classCode != null) {
       res = await apiClient.get(`classes/classes/${classFrequency.classCode}`)
       clcl = res.data
-      console.log(clcl)
+      //console.log(clcl)
     }
     //Criando um dicionário para guardar a frequência de cada aula de um aluno
     for (let i = 0; i < clcl.length; i++) {
