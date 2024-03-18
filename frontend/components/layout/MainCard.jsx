@@ -17,7 +17,6 @@ export default function MainCard({ children, title }) {
               justifyContent: "center",
               paddingTop: "20px",
               textAlign: "center",
-              peddingBottom: "30px",
               height: "100%",
               minHeight: "120px",
             }}
