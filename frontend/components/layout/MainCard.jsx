@@ -15,8 +15,11 @@ export default function MainCard({ children, title }) {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              paddingTop: "30px",
+              paddingTop: "20px",
               textAlign: "center",
+              peddingBottom: "30px",
+              height: "100%",
+              minHeight: "120px",
             }}
           >
             <Typography variant="h4" gutterBottom style={{ color: "#373737" }}>

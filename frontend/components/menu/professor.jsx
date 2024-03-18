@@ -15,6 +15,7 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined"
 import GradingOutlinedIcon from "@mui/icons-material/GradingOutlined"
 import ClassOutlinedIcon from "@mui/icons-material/ClassOutlined"
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined"
+import SettingsSuggestOutlinedIcon from "@mui/icons-material/SettingsSuggestOutlined"
 
 export default function MenuProfessor() {
   const { logout } = useContext(AuthContext)
@@ -132,6 +133,35 @@ export default function MenuProfessor() {
                 color:
                   router.pathname.localeCompare("/classes/classes") == 0 &&
                   "white",
+              }}
+            />
+          </ListItemButton>
+        </ListItem>
+        <ListItem sx={{ color: "#248df4" }} disablePadding>
+          <ListItemButton
+            component="a"
+            href="/classes/configuration"
+            sx={{
+              backgroundColor:
+                router.pathname.localeCompare("/classes/configuration") == 0 &&
+                "#248df4",
+            }}
+          >
+            <ListItemIcon sx={{ color: "#248df4" }}>
+              <SettingsSuggestOutlinedIcon
+                sx={{
+                  color:
+                    router.pathname.localeCompare("/classes/configuration") ==
+                      0 && "white",
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText
+              primary="Configurações"
+              sx={{
+                color:
+                  router.pathname.localeCompare("/classes/configuration") ==
+                    0 && "white",
               }}
             />
           </ListItemButton>
