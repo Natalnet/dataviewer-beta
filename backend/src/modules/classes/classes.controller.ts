@@ -69,6 +69,7 @@ export class ClassesController {
     return this.classesService.findClassTitles(classCode);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('frequency/:class_code')
   findClassFrequency(@Param('class_code') classCode: string) {
     return this.classesService.findClassFrequencies(classCode);
