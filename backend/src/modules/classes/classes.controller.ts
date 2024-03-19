@@ -8,6 +8,7 @@ import {
   UploadedFile,
   UseInterceptors,
   BadRequestException,
+  Body,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ClassesService } from './classes.service';
@@ -89,10 +90,10 @@ export class ClassesController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body) {
     if (!file) {
       throw new BadRequestException('File not provided');
     }
-    return this.classesService.processUpload(file);
+    return this.classesService.processUpload(file, body);
   }
 }

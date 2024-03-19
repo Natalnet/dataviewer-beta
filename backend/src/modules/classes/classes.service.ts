@@ -257,7 +257,7 @@ export class ClassesService {
     };
   }
 
-  async processUpload(file) {
+  async processUpload(file, body) {
     const content = file.buffer.toString();
     const results = parse(content, { header: true });
 
@@ -271,6 +271,7 @@ export class ClassesService {
 
     // Process the second line...
     console.log(secondLine);
+    console.log(body);
 
     return 'ok';
   }
