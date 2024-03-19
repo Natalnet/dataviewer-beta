@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ClassesService } from './classes.service';
 import { RequestWithUser } from 'src/types/Requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -73,5 +83,12 @@ export class ClassesController {
   @Get('frequency/:class_code')
   findClassFrequency(@Param('class_code') classCode: string) {
     return this.classesService.findClassFrequencies(classCode);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile() file) {
+    console.log(file);
+    return 'ok';
   }
 }
