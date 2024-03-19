@@ -7,11 +7,13 @@ import {
   UseGuards,
   UploadedFile,
   UseInterceptors,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ClassesService } from './classes.service';
 import { RequestWithUser } from 'src/types/Requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Express } from 'express';
 
 @Controller('classes')
 export class ClassesController {
@@ -87,8 +89,10 @@ export class ClassesController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file) {
-    console.log(file);
-    return 'ok';
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('File not provided');
+    }
+    return this.classesService.processUpload(file);
   }
 }

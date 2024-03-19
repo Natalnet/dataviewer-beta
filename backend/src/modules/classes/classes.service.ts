@@ -39,6 +39,7 @@ import {
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 import { ClassFrequency } from './schemas/classfrequency.schema';
+import { parse } from 'papaparse';
 
 @Injectable({})
 export class ClassesService {
@@ -254,5 +255,23 @@ export class ClassesService {
       classFreqs: data.classFreqs,
       studentNumber: data.studentNumber,
     };
+  }
+
+  async processUpload(file) {
+    const content = file.buffer.toString();
+    const results = parse(content, { header: true });
+
+    // Check if the CSV file has at least two lines
+    if (results.data.length < 2) {
+      throw new Error('The CSV file must have at least two lines');
+    }
+
+    // Get the second line
+    const secondLine = results.data[2];
+
+    // Process the second line...
+    console.log(secondLine);
+
+    return 'ok';
   }
 }
