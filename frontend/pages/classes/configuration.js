@@ -22,6 +22,7 @@ import {
 
 export default function Configuration() {
   const [fileLines, setFileLines] = useState([])
+  const [file, setFile] = useState(null)
   const [listOptions, setListOptions] = useState([])
   const [isUploaded, setIsUploaded] = useState(false)
   const [selectedValues, setSelectedValues] = useState({})
@@ -29,9 +30,10 @@ export default function Configuration() {
     "text/html": [".html", ".csv"],
     onDrop: async (acceptedFiles) => {
       try {
-        const file = acceptedFiles[0]
-        const content = await readAsText(file)
+        const fileIn = acceptedFiles[0]
+        const content = await readAsText(fileIn)
         const lines = content.split("\n")
+        setFile(fileIn)
         setFileLines(lines)
 
         let firstLineWords = []
@@ -43,6 +45,21 @@ export default function Configuration() {
           console.log(firstLineWords)
           setIsUploaded(true)
         }
+        /*
+        // Create a new FormData instance
+        const formData = new FormData()
+        // Append the file to the formData
+        formData.append("file", file)
+
+        // Send the file to the backend
+        const response = await fetch("http://localhost:3333/classes/upload", {
+          method: "POST",
+          body: formData,
+        })
+
+        if (!response.ok) {
+          throw new Error("File upload failed")
+        }*/
       } catch (err) {
         console.error(err)
       }
@@ -99,9 +116,43 @@ export default function Configuration() {
             </TableContainer>
             <Button
               variant="contained"
-              onClick={() => {
+              onClick={async () => {
                 console.log(selectedValues)
                 console.log(listOptions)
+                let strSelectedValues = "{"
+
+                for (let key in selectedValues) {
+                  if (selectedValues.hasOwnProperty(key)) {
+                    // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
+                    console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
+                    strSelectedValues += `${listOptions[key]}:"${selectedValues[key]}", `
+                  }
+                }
+                // remove the last comma and space
+                strSelectedValues = strSelectedValues.slice(0, -2)
+                strSelectedValues += "}"
+                console.log(strSelectedValues)
+                console.log(JSON.parse(strSelectedValues))
+
+                // Create a new FormData instance
+                const formData = new FormData()
+                // Append the file to the formData
+                formData.append("file", file)
+                formData.append("listUnits", strSelectedValues)
+
+                // Send the file to the backend
+                const response = await fetch(
+                  "http://localhost:3333/classes/upload",
+                  {
+                    method: "POST",
+                    body: formData,
+                  }
+                )
+
+                if (!response.ok) {
+                  throw new Error("File upload failed")
+                }
+                //TODO: Adicionar mensagem de sucesso
               }}
             >
               Cadastrar
