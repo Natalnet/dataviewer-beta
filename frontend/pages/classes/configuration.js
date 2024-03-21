@@ -148,68 +148,43 @@ export default function Configuration() {
 
             <Button
               variant="contained"
-              sx={{ marginTop: 4, marginBottom: 2 }}
               onClick={async () => {
-                setOpenAlert(true)
-                let selectedValuesError = false
                 console.log(selectedValues)
                 console.log(listOptions)
+                let strSelectedValues = "{"
 
-                let objSelectedValues = {}
-                try {
-                  for (let key in selectedValues) {
-                    if (selectedValues.hasOwnProperty(key)) {
-                      // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
-                      console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
-
-                      objSelectedValues[
-                        listOptions[key].trimEnd().replace(/"/g, "") // Remove aspas e espaços no final
-                      ] = selectedValues[key]
-                    }
-                  }
-                  //console.log(objSelectedValues)
-                  //console.log(JSON.stringify(objSelectedValues))
-                } catch (err) {
-                  selectedValuesError = true
-                  setAlertMessage("Erro na seleção das unidades das listas!")
-                  setAlertTitle("Erro")
-                  setAlertSeverity("error")
-                  console.error(err)
-                }
-
-                if (!selectedValuesError) {
-                  // Create a new FormData instance
-                  const formData = new FormData()
-                  // Append the file to the formData
-                  formData.append("file", file)
-                  //formData.append("listUnits", strSelectedValues)
-                  formData.append(
-                    "listUnits",
-                    JSON.stringify(objSelectedValues)
-                  )
-
-                  // Send the file to the backend
-                  const response = await fetch(
-                    "http://localhost:3333/classes/upload",
-                    {
-                      method: "POST",
-                      body: formData,
-                    }
-                  )
-
-                  if (!response.ok) {
-                    console.log("File upload failed!")
-
-                    setOpenAlert(true)
-                    setAlertMessage("Erro no envio do arquivo!")
-                    setAlertTitle("Erro")
-                    setAlertSeverity("error")
-                  } else {
-                    setAlertMessage("Arquivo enviado com sucesso!")
-                    setAlertTitle("Sucesso")
-                    setAlertSeverity("success")
+                for (let key in selectedValues) {
+                  if (selectedValues.hasOwnProperty(key)) {
+                    // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
+                    console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
+                    strSelectedValues += `${listOptions[key]}:"${selectedValues[key]}", `
                   }
                 }
+                // remove the last comma and space
+                strSelectedValues = strSelectedValues.slice(0, -2)
+                strSelectedValues += "}"
+                console.log(strSelectedValues)
+                console.log(JSON.parse(strSelectedValues))
+
+                // Create a new FormData instance
+                const formData = new FormData()
+                // Append the file to the formData
+                formData.append("file", file)
+                formData.append("listUnits", strSelectedValues)
+
+                // Send the file to the backend
+                const response = await fetch(
+                  "http://localhost:3333/classes/upload",
+                  {
+                    method: "POST",
+                    body: formData,
+                  }
+                )
+
+                if (!response.ok) {
+                  throw new Error("File upload failed")
+                }
+                //TODO: Adicionar mensagem de sucesso
               }}
             >
               Cadastrar
