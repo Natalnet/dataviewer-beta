@@ -269,9 +269,16 @@ export class ClassesService {
     // Get the second line
     const secondLine = results.data[2];
 
+    // Add list grade to student model and save it
+    const student = await this.studentListGradesModel.findOneAndUpdate(
+      { reg_num: '20240013154' }, // critérios de busca
+      { meanU1: '9', meanU2: '10', meanU3: '10' }, // atualizações
+      { upsert: true, new: true }, // opções
+    );
+
     // Process the second line...
     console.log(secondLine);
-    console.log(JSON.parse(body['listUnits']));
+    //console.log(JSON.parse(body['listUnits']));
 
     return 'ok';
   }
