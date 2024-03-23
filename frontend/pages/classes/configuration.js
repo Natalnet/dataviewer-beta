@@ -157,34 +157,13 @@ export default function Configuration() {
                   if (selectedValues.hasOwnProperty(key)) {
                     // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
                     console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
-                    strSelectedValues += `${listOptions[key]}:"${selectedValues[key]}", `
+                    // Reduz o tamamnho da string removendo que que está depois do ' ('
+
+                    strSelectedValues += `"${listOptions[key].trimEnd()}":"${
+                      selectedValues[key]
+                    }", `
                   }
                 }
-                // remove the last comma and space
-                strSelectedValues = strSelectedValues.slice(0, -2)
-                strSelectedValues += "}"
-                console.log(strSelectedValues)
-                console.log(JSON.parse(strSelectedValues))
-
-                // Create a new FormData instance
-                const formData = new FormData()
-                // Append the file to the formData
-                formData.append("file", file)
-                formData.append("listUnits", strSelectedValues)
-
-                // Send the file to the backend
-                const response = await fetch(
-                  "http://localhost:3333/classes/upload",
-                  {
-                    method: "POST",
-                    body: formData,
-                  }
-                )
-
-                if (!response.ok) {
-                  throw new Error("File upload failed")
-                }
-                //TODO: Adicionar mensagem de sucesso
               }}
             >
               Cadastrar

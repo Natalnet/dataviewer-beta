@@ -327,21 +327,20 @@ export class ClassesService {
     const content = file.buffer.toString();
     const results = parse(content, { header: true });
     const classListUnits = JSON.parse(body['listUnits']);
-    console.log(classListUnits);
 
     // Get all lines of the file
     results.data.forEach(async (line) => {
-      //console.log(line); // Print all lines
+      console.log(line); // Print all lines
 
       // Processe the first line of the file for save to the database
-      const tmpStudentListGrades = {}; // Fix: Change 'let' to 'const'
-      const tmpFileLine = line;
+      let tmpStudentListGrades = {};
+      let tmpFileLine = line;
       tmpStudentListGrades['reg_num'] = tmpFileLine['Matrícula'];
-      const tmpLists = [];
+      let tmpLists = [];
       const meanU = [0, 0, 0];
       const countGradeUnit = [0, 0, 0];
       // Calculate the mean of each unit, sum the grades and count the number of grades for each unit
-      for (const key in classListUnits) {
+      for (let key in classListUnits) {
         //console.log(`${key}:  ${classListUnits[key]} `);
         if (classListUnits[key] === '1') {
           meanU[0] = meanU[0] + parseFloat(tmpFileLine[key]);
@@ -355,7 +354,7 @@ export class ClassesService {
           meanU[2] = meanU[2] + parseFloat(tmpFileLine[key]);
           countGradeUnit[2] = countGradeUnit[2] + 1;
         }
-        const tmpL = { description: key, percent: tmpFileLine[key] };
+        let tmpL = { description: key, percent: tmpFileLine[key] };
         tmpLists.push(tmpL);
       }
       // calculate the mean of each unit
