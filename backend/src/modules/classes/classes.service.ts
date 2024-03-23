@@ -1,7 +1,6 @@
 import {
   Injectable,
   BadRequestException,
-  ForbiddenException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -208,12 +207,9 @@ export class ClassesService {
       overallPerformance[String(l.reg_num)].list3 = l.meanU3;
     }
     for (const g of grades) {
-      if (!overallPerformance[String(g.matricula)]) {
-        overallPerformance[String(g.matricula)] = {};
-      }
-      overallPerformance[String(g.matricula)].grade1 = parseFloat(g.nota1);
-      overallPerformance[String(g.matricula)].grade2 = parseFloat(g.nota2);
-      overallPerformance[String(g.matricula)].grade3 = parseFloat(g.nota3);
+      overallPerformance[String(g.matricula)].grade1 = g.nota1;
+      overallPerformance[String(g.matricula)].grade2 = g.nota2;
+      overallPerformance[String(g.matricula)].grade3 = g.nota3;
     }
 
     for (const p of participations) {
