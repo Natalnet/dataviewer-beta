@@ -188,19 +188,20 @@ export class ClassesService {
     const participations = await this.stdudentParticipationModel
       .find({ matricula: { $in: data.reg_students } })
       .exec();
-
+    console.log(lists);
     const overallPerformance = {};
-    for (const g of grades) {
-      overallPerformance[String(g.matricula)] = {};
-      overallPerformance[String(g.matricula)].grade1 = g.nota1;
-      overallPerformance[String(g.matricula)].grade2 = g.nota2;
-      overallPerformance[String(g.matricula)].grade3 = g.nota3;
-    }
     for (const l of lists) {
+      overallPerformance[String(l.reg_num)] = {};
       overallPerformance[String(l.reg_num)].list1 = l.meanU1;
       overallPerformance[String(l.reg_num)].list2 = l.meanU2;
       overallPerformance[String(l.reg_num)].list3 = l.meanU3;
     }
+    for (const g of grades) {
+      overallPerformance[String(g.matricula)].grade1 = g.nota1;
+      overallPerformance[String(g.matricula)].grade2 = g.nota2;
+      overallPerformance[String(g.matricula)].grade3 = g.nota3;
+    }
+
     for (const p of participations) {
       overallPerformance[String(p.matricula)].presence1 = (
         (parseFloat(p.presenca1) + parseFloat(p.atividade1)) /

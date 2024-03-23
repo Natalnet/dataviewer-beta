@@ -47,7 +47,20 @@ export async function getServerSideProps(context) {
   // Se viver vazio, não faz nada
   if (Object.keys(data).length !== 0) {
     for (const d of studentNames.data) {
-      console.log(d)
+      console.log(data[d.regNum])
+      if (data[d.regNum] === undefined) {
+        data[d.regNum] = {
+          presence1: "-",
+          list1: "-",
+          grade1: "-",
+          presence2: "-",
+          list2: "-",
+          grade2: "-",
+          presence3: "-",
+          list3: "-",
+          grade3: "-",
+        }
+      }
       data[d.regNum].name = d.name
       data[d.regNum].subClass = d.subClass
     }
