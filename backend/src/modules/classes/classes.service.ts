@@ -40,6 +40,7 @@ import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 import { ClassFrequency } from './schemas/classfrequency.schema';
 import { parse } from 'papaparse';
+import { count } from 'console';
 
 @Injectable({})
 export class ClassesService {
@@ -260,25 +261,60 @@ export class ClassesService {
   async processUpload(file, body) {
     const content = file.buffer.toString();
     const results = parse(content, { header: true });
+    const classListUnits = JSON.parse(body['listUnits']);
 
-    // Check if the CSV file has at least two lines
-    if (results.data.length < 2) {
-      throw new Error('The CSV file must have at least two lines');
-    }
+    // Get all lines of the file
+    results.data.forEach(async (line) => {
+      console.log(line); // Print all lines
 
-    // Get the second line
-    const secondLine = results.data[2];
+      // Processe the first line of the file for save to the database
+      let tmpStudentListGrades = {};
+      let tmpFileLine = line;
+      tmpStudentListGrades['reg_num'] = tmpFileLine['Matrícula'];
+      let tmpLists = [];
+      const meanU = [0, 0, 0];
+      const countGradeUnit = [0, 0, 0];
+      // Calculate the mean of each unit, sum the grades and count the number of grades for each unit
+      for (let key in classListUnits) {
+        //console.log(`${key}:  ${classListUnits[key]} `);
+        if (classListUnits[key] === '1') {
+          meanU[0] = meanU[0] + parseFloat(tmpFileLine[key]);
+          //console.log(parseFloat(tmpFileLine[key]));
+          countGradeUnit[0] = countGradeUnit[0] + 1;
+        } else if (classListUnits[key] === '2') {
+          meanU[1] = meanU[1] + parseFloat(tmpFileLine[key]);
+          countGradeUnit[1] = countGradeUnit[1] + 1;
+          //console.log(parseFloat(tmpFileLine[key]));
+        } else if (classListUnits[key] === '3') {
+          meanU[2] = meanU[2] + parseFloat(tmpFileLine[key]);
+          countGradeUnit[2] = countGradeUnit[2] + 1;
+        }
+        let tmpL = { description: key, percent: tmpFileLine[key] };
+        tmpLists.push(tmpL);
+      }
+      // calculate the mean of each unit
+      for (let i = 0; i < 3; i++) {
+        if (countGradeUnit[i] > 0) {
+          meanU[i] = meanU[i] / countGradeUnit[i];
+          //console.log(meanU[i]);
+        }
+      }
+      //console.log(meanU);
+      //console.log(tmpFileLine);
 
-    // Add list grade to student model and save it
-    const student = await this.studentListGradesModel.findOneAndUpdate(
-      { reg_num: '20240013154' }, // critérios de busca
-      { meanU1: '9', meanU2: '10', meanU3: '10' }, // atualizações
-      { upsert: true, new: true }, // opções
-    );
-
-    // Process the second line...
-    console.log(secondLine);
-    //console.log(JSON.parse(body['listUnits']));
+      // Add list grade to student model and save it
+      console.log(`Save the student ${tmpFileLine['Matrícula']}`);
+      const student = await this.studentListGradesModel.findOneAndUpdate(
+        { reg_num: tmpFileLine['Matrícula'] }, // critérios de busca
+        {
+          lists: tmpLists,
+          meanU1: meanU[0],
+          meanU2: meanU[1],
+          meanU3: meanU[2],
+        }, // atualizações
+        { upsert: true, new: true }, // opções
+      );
+    });
 
     return 'ok';
   }

@@ -125,7 +125,11 @@ export default function Configuration() {
                   if (selectedValues.hasOwnProperty(key)) {
                     // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
                     console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
-                    strSelectedValues += `${listOptions[key]}:"${selectedValues[key]}", `
+                    // Reduz o tamamnho da string removendo que que está depois do ' ('
+
+                    strSelectedValues += `"${listOptions[key].trimEnd()}":"${
+                      selectedValues[key]
+                    }", `
                   }
                 }
                 // remove the last comma and space
