@@ -1,13 +1,20 @@
 import { getAPIClient } from "../../utils/axiosapi"
 import { parseCookies } from "nookies"
 
+import { styled } from "@mui/system"
+import Box from "@mui/material/Box"
+import { blue } from "@mui/material/colors"
+
 import { useState } from "react"
 import { useDropzone } from "react-dropzone"
 import { readAsText } from "promise-file-reader"
 
 import MainCard from "../../components/layout/MainCard"
 import {
+  Alert,
+  AlertTitle,
   Button,
+  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -18,9 +25,27 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material"
+import { Close } from "@mui/icons-material"
+
+const StyledBox = styled(Box)(({ theme }) => ({
+  border: "3px dashed",
+  borderColor: blue[600],
+  padding: theme.spacing(4),
+  marginBottom: theme.spacing(5),
+  marginTop: theme.spacing(5),
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: blue[50],
+  },
+}))
 
 export default function Configuration() {
+  const [openAlert, setOpenAlert] = useState(false)
+  const [alertSeverity, setAlertSeverity] = useState("success")
+  const [alertMessage, setAlertMessage] = useState("")
+  const [alertTitle, setAlertTitle] = useState("")
   const [fileLines, setFileLines] = useState([])
   const [file, setFile] = useState(null)
   const [listOptions, setListOptions] = useState([])
@@ -71,13 +96,19 @@ export default function Configuration() {
       <MainCard title="Configurações">
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <p>
-            Arraste e solte um arquivo txt aqui, ou clique para selecionar um
-            arquivo
-          </p>
+          <Typography variant="h5">Escolha a arquivo CSV</Typography>
+          <StyledBox>
+            <Typography variant="body1">
+              Arraste e solte um arquivo CSV aqui, ou clique para selecionar um
+              arquivo.
+            </Typography>
+          </StyledBox>
         </div>
         {isUploaded ? (
           <>
+            <Typography variant="h5">
+              Escolha a unidade de cada lista
+            </Typography>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -114,30 +145,44 @@ export default function Configuration() {
                 </TableBody>
               </Table>
             </TableContainer>
+
             <Button
               variant="contained"
+              sx={{ marginTop: 4, marginBottom: 2 }}
               onClick={async () => {
+                setOpenAlert(true)
+                let selectedValuesError = false
                 console.log(selectedValues)
                 console.log(listOptions)
                 let strSelectedValues = "{"
+                try {
+                  for (let key in selectedValues) {
+                    if (selectedValues.hasOwnProperty(key)) {
+                      // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
+                      console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
+                      // Reduz o tamamnho da string removendo que que está depois do ' ('
 
-                for (let key in selectedValues) {
-                  if (selectedValues.hasOwnProperty(key)) {
-                    // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
-                    console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
-                    // Reduz o tamamnho da string removendo que que está depois do ' ('
-
-                    strSelectedValues += `"${listOptions[key].trimEnd()}":"${
-                      selectedValues[key]
-                    }", `
+                      strSelectedValues += `"${listOptions[key].trimEnd()}":"${
+                        selectedValues[key]
+                      }", `
+                    }
                   }
+                  // remove the last comma and space
+                  strSelectedValues = strSelectedValues.slice(0, -2)
+                  strSelectedValues += "}"
+                  console.log(strSelectedValues)
+                  console.log(JSON.parse(strSelectedValues))
+                } catch (err) {
+                  selectedValuesError = true
+                  setAlertMessage("Erro na seleção das unidades das listas!")
+                  setAlertTitle("Erro")
+                  setAlertSeverity("error")
+                  console.error(err)
                 }
-                // remove the last comma and space
-                strSelectedValues = strSelectedValues.slice(0, -2)
-                strSelectedValues += "}"
-                console.log(strSelectedValues)
-                console.log(JSON.parse(strSelectedValues))
 
+                if (selectedValuesError) {
+                  return
+                }
                 // Create a new FormData instance
                 const formData = new FormData()
                 // Append the file to the formData
@@ -154,9 +199,17 @@ export default function Configuration() {
                 )
 
                 if (!response.ok) {
-                  throw new Error("File upload failed")
+                  console.log("File upload failed!")
+
+                  setOpenAlert(true)
+                  setAlertMessage("Erro no envio do arquivo!")
+                  setAlertTitle("Erro")
+                  setAlertSeverity("error")
+                } else {
+                  setAlertMessage("Arquivo enviado com sucesso!")
+                  setAlertTitle("Sucesso")
+                  setAlertSeverity("success")
                 }
-                //TODO: Adicionar mensagem de sucesso
               }}
             >
               Cadastrar
@@ -165,6 +218,31 @@ export default function Configuration() {
         ) : (
           " - - - "
         )}
+        <Box
+          sx={{
+            marginTop: "10px",
+            marginBottom: 4,
+            textAlign: "left",
+          }}
+        >
+          {openAlert && (
+            <Alert
+              sx={{
+                width: "100%",
+              }}
+              severity={alertSeverity}
+              variant="filled"
+              action={
+                <IconButton size="small" onClick={() => setOpenAlert(false)}>
+                  <Close />
+                </IconButton>
+              }
+            >
+              <AlertTitle>{alertTitle}</AlertTitle>
+              {alertMessage}
+            </Alert>
+          )}
+        </Box>
       </MainCard>
     </>
   )

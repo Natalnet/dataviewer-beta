@@ -309,9 +309,9 @@ export class ClassesService {
         { reg_num: tmpFileLine['Matrícula'] }, // critérios de busca
         {
           lists: tmpLists,
-          meanU1: meanU[0],
-          meanU2: meanU[1],
-          meanU3: meanU[2],
+          meanU1: meanU[0] / 10,
+          meanU2: meanU[1] / 10,
+          meanU3: meanU[2] / 10,
         }, // atualizações
         { upsert: true, new: true }, // opções
       );
