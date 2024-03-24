@@ -1,7 +1,7 @@
 import { Avatar, Box, Typography, Link } from "@mui/material"
 
 export default function HeaderAvatarCard({ userName, userImgGithubName }) {
-  console.log(userImgGithubName)
+  //console.log(userImgGithubName)
   return (
     <Box display="flex" alignItems="right" sx={{ marginRight: "5px" }}>
       <Box
