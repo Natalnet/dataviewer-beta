@@ -18,6 +18,7 @@ export function AuthProvider({ children }) {
         setUser(response.data)
       })
     }
+    console.log("Update user data from '/user/info")
   }, [])
 
   function logout() {
@@ -41,12 +42,6 @@ export function AuthProvider({ children }) {
   }
 
   async function updateUser(name, registrationNumber, avatar) {
-    let x = {
-      name: "string(name)",
-      avatar: `${avatar}`,
-      registrationNumber: "string(registrationNumber)",
-    }
-    console.log(x)
     const { data } = await api.patch("/users/update-account", {
       name,
       registrationNumber,
