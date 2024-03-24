@@ -96,7 +96,7 @@ export default function Configuration() {
       <MainCard title="Configurações">
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <Typography variant="h5">Escolha o arquivo CSV</Typography>
+          <Typography variant="h5">Escolha a arquivo CSV</Typography>
           <StyledBox>
             <Typography variant="body1">
               Arraste e solte um arquivo CSV aqui, ou clique para selecionar um
@@ -151,8 +151,63 @@ export default function Configuration() {
               onClick={async () => {
                 console.log(selectedValues)
                 console.log(listOptions)
-                let strSelectedValues = "{"
+<<<<<<< HEAD
 
+<<<<<<< HEAD
+                let objSelectedValues = {}
+                try {
+                  for (let key in selectedValues) {
+                    if (selectedValues.hasOwnProperty(key)) {
+                      // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
+                      console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
+
+                      objSelectedValues[
+                        listOptions[key].trimEnd().replace(/"/g, "") // Remove aspas e espaços no final
+                      ] = selectedValues[key]
+                    }
+                  }
+                  //console.log(objSelectedValues)
+                  //console.log(JSON.stringify(objSelectedValues))
+                } catch (err) {
+                  selectedValuesError = true
+                  setAlertMessage("Erro na seleção das unidades das listas!")
+                  setAlertTitle("Erro")
+                  setAlertSeverity("error")
+                  console.error(err)
+                }
+
+                if (!selectedValuesError) {
+                  // Create a new FormData instance
+                  const formData = new FormData()
+                  // Append the file to the formData
+                  formData.append("file", file)
+                  //formData.append("listUnits", strSelectedValues)
+                  formData.append(
+                    "listUnits",
+                    JSON.stringify(objSelectedValues)
+                  )
+
+                  // Send the file to the backend
+                  const response = await fetch(
+                    "http://localhost:3333/classes/upload",
+                    {
+                      method: "POST",
+                      body: formData,
+                    }
+                  )
+
+                  if (!response.ok) {
+                    console.log("File upload failed!")
+
+                    setOpenAlert(true)
+                    setAlertMessage("Erro no envio do arquivo!")
+                    setAlertTitle("Erro")
+                    setAlertSeverity("error")
+                  } else {
+                    setAlertMessage("Arquivo enviado com sucesso!")
+                    setAlertTitle("Sucesso")
+                    setAlertSeverity("success")
+=======
                 for (let key in selectedValues) {
                   if (selectedValues.hasOwnProperty(key)) {
                     // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
@@ -162,8 +217,68 @@ export default function Configuration() {
                     strSelectedValues += `"${listOptions[key].trimEnd()}":"${
                       selectedValues[key]
                     }", `
+>>>>>>> ec8ba78 (Add list grade to student model and save it)
+=======
+                let strSelectedValues = "{"
+                try {
+                  for (let key in selectedValues) {
+                    if (selectedValues.hasOwnProperty(key)) {
+                      // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
+                      console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
+                      // Reduz o tamamnho da string removendo que que está depois do ' ('
+
+                      strSelectedValues += `"${listOptions[key].trimEnd()}":"${
+                        selectedValues[key]
+                      }", `
+                    }
+>>>>>>> 182feb9 (Close #91)
                   }
+                  // remove the last comma and space
+                  strSelectedValues = strSelectedValues.slice(0, -2)
+                  strSelectedValues += "}"
+                  console.log(strSelectedValues)
+                  console.log(JSON.parse(strSelectedValues))
+                } catch (err) {
+                  selectedValuesError = true
+                  setAlertMessage("Erro na seleção das unidades das listas!")
+                  setAlertTitle("Erro")
+                  setAlertSeverity("error")
+                  console.error(err)
                 }
+<<<<<<< HEAD
+=======
+
+                if (selectedValuesError) {
+                  return
+                }
+                // Create a new FormData instance
+                const formData = new FormData()
+                // Append the file to the formData
+                formData.append("file", file)
+                formData.append("listUnits", strSelectedValues)
+
+                // Send the file to the backend
+                const response = await fetch(
+                  "http://localhost:3333/classes/upload",
+                  {
+                    method: "POST",
+                    body: formData,
+                  }
+                )
+
+                if (!response.ok) {
+                  console.log("File upload failed!")
+
+                  setOpenAlert(true)
+                  setAlertMessage("Erro no envio do arquivo!")
+                  setAlertTitle("Erro")
+                  setAlertSeverity("error")
+                } else {
+                  setAlertMessage("Arquivo enviado com sucesso!")
+                  setAlertTitle("Sucesso")
+                  setAlertSeverity("success")
+                }
+>>>>>>> 182feb9 (Close #91)
               }}
             >
               Cadastrar
