@@ -248,35 +248,34 @@ export default function Configuration() {
 <<<<<<< HEAD
 =======
 
-                if (selectedValuesError) {
-                  return
-                }
-                // Create a new FormData instance
-                const formData = new FormData()
-                // Append the file to the formData
-                formData.append("file", file)
-                formData.append("listUnits", strSelectedValues)
+                if (!selectedValuesError) {
+                  // Create a new FormData instance
+                  const formData = new FormData()
+                  // Append the file to the formData
+                  formData.append("file", file)
+                  formData.append("listUnits", strSelectedValues)
 
-                // Send the file to the backend
-                const response = await fetch(
-                  "http://localhost:3333/classes/upload",
-                  {
-                    method: "POST",
-                    body: formData,
+                  // Send the file to the backend
+                  const response = await fetch(
+                    "http://localhost:3333/classes/upload",
+                    {
+                      method: "POST",
+                      body: formData,
+                    }
+                  )
+
+                  if (!response.ok) {
+                    console.log("File upload failed!")
+
+                    setOpenAlert(true)
+                    setAlertMessage("Erro no envio do arquivo!")
+                    setAlertTitle("Erro")
+                    setAlertSeverity("error")
+                  } else {
+                    setAlertMessage("Arquivo enviado com sucesso!")
+                    setAlertTitle("Sucesso")
+                    setAlertSeverity("success")
                   }
-                )
-
-                if (!response.ok) {
-                  console.log("File upload failed!")
-
-                  setOpenAlert(true)
-                  setAlertMessage("Erro no envio do arquivo!")
-                  setAlertTitle("Erro")
-                  setAlertSeverity("error")
-                } else {
-                  setAlertMessage("Arquivo enviado com sucesso!")
-                  setAlertTitle("Sucesso")
-                  setAlertSeverity("success")
                 }
 >>>>>>> 182feb9 (Close #91)
               }}
