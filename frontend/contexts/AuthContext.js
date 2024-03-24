@@ -1,41 +1,41 @@
-import { createContext, useEffect, useState } from "react";
-import { setCookie, parseCookies, destroyCookie } from "nookies";
-import Router from "next/router";
-import { api } from "../utils/http";
+import { createContext, useEffect, useState } from "react"
+import { setCookie, parseCookies, destroyCookie } from "nookies"
 
-export const AuthContext = createContext({});
+import Router from "next/router"
+import { api } from "../utils/http"
+
+export const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState({});
-  const isAuthenticated = false;
+  const [user, setUser] = useState({})
+  const isAuthenticated = false
 
   useEffect(() => {
-    const { "nextautht1.token": userCookie } = parseCookies();
+    const { "nextautht1.token": userCookie } = parseCookies()
 
     if (userCookie) {
       api.get("/users/info").then((response) => {
-        setUser(response.data);
-      });
+        setUser(response.data)
+      })
     }
-  }, []);
+  }, [])
 
   function logout() {
     //TODO: apagar o cookie / token
 
-    const { "nextautht1.token": userCookie } = parseCookies();
+    const { "nextautht1.token": userCookie } = parseCookies()
 
     if (!userCookie) {
-      return;
+      return
+    } else {
+      destroyCookie(null, "nextautht1.token", { path: "/" })
+      destroyCookie(null, "nextautht1.email", { path: "/" })
+      destroyCookie(null, "nextautht1.mat", { path: "/" })
+      destroyCookie(null, "nextautht1.lastClassCode", { path: "/" })
+      console.log("Logout, cookies apagados!")
     }
 
-    if (userCookie) {
-      destroyCookie(null, "nextautht1.token");
-      destroyCookie(null, "nextautht1.email");
-      destroyCookie(null, "nextautht1.mat");
-      destroyCookie(null, "nextautht1.lastClassCode");
-    }
-
-    Router.push("/");
+    Router.push("/")
   }
 
   async function updateUser(name, registrationNumber, avatar) {
@@ -43,13 +43,13 @@ export function AuthProvider({ children }) {
       name: "string(name)",
       avatar: `${avatar}`,
       registrationNumber: "string(registrationNumber)",
-    };
-    console.log(x);
+    }
+    console.log(x)
     const { data } = await api.patch("/users/update-account", {
       name,
       registrationNumber,
       avatar,
-    });
+    })
   }
 
   async function signUp(name, email, password, registrationNumber) {
@@ -59,38 +59,38 @@ export function AuthProvider({ children }) {
       email,
       password,
       registrationNumber,
-    });
+    })
 
-    setUser(data.user);
+    setUser(data.user)
   }
 
   async function signIn(email, password) {
     //TODO: realizar tratamento de erros
-    const { data } = await api.post("/auth/login", { email, password });
+    const { data } = await api.post("/auth/login", { email, password })
 
-    setUser(data.user);
-    console.log("Front: " + data.user.mat);
+    setUser(data.user)
+    console.log("Front: " + data.user.mat)
 
-    const token = data.accessToken;
-    const registrationNumber = data.user.mat;
+    const token = data.accessToken
+    const registrationNumber = data.user.mat
 
-    const cookieTime = 60 * 90 * 1; //130 min
+    const cookieTime = 60 * 90 * 1 //130 min
 
     setCookie(null, "nextautht1.token", token, {
       maxAge: cookieTime,
-    });
+    })
 
     setCookie(null, "nextautht1.email", email, {
       maxAge: cookieTime,
-    });
+    })
 
     setCookie(null, "nextautht1.mat", registrationNumber, {
       maxAge: cookieTime,
-    });
+    })
 
-    console.log(data.user.profile);
-    if (data.user.profile == "PROFESSOR") Router.push("/classes");
-    else Router.push("/students");
+    console.log(data.user.profile)
+    if (data.user.profile == "PROFESSOR") Router.push("/classes")
+    else Router.push("/students")
   }
   return (
     <AuthContext.Provider
@@ -98,5 +98,5 @@ export function AuthProvider({ children }) {
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 }

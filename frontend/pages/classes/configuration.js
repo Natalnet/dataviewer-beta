@@ -246,3 +246,21 @@ export default function Configuration() {
     </>
   )
 }
+
+export async function getServerSideProps(context) {
+  const apiClient = getAPIClient(context)
+  const { ["nextautht1.token"]: token } = parseCookies(context)
+  console.log(token)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }
+  }
+  return {
+    props: {},
+  }
+}
