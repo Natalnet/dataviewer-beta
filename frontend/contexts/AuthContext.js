@@ -29,9 +29,11 @@ export function AuthProvider({ children }) {
       return
     } else {
       destroyCookie(null, "nextautht1.token", { path: "/" })
+      destroyCookie(null, "nextautht1.token", { path: "/students" })
       destroyCookie(null, "nextautht1.email", { path: "/" })
       destroyCookie(null, "nextautht1.mat", { path: "/" })
       destroyCookie(null, "nextautht1.lastClassCode", { path: "/" })
+      destroyCookie(null, "nextautht1.lastClassCode", { path: "/classes" })
       console.log("Logout, cookies apagados!")
     }
 
@@ -78,14 +80,17 @@ export function AuthProvider({ children }) {
 
     setCookie(null, "nextautht1.token", token, {
       maxAge: cookieTime,
+      path: "/",
     })
 
     setCookie(null, "nextautht1.email", email, {
       maxAge: cookieTime,
+      path: "/",
     })
 
     setCookie(null, "nextautht1.mat", registrationNumber, {
       maxAge: cookieTime,
+      path: "/",
     })
 
     console.log(data.user.profile)
