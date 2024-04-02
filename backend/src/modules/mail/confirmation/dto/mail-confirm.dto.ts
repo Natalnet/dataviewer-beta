@@ -1,3 +1,3 @@
 export class MailConfirmDto {
-    token: string;
+  token: string;
 }

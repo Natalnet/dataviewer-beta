@@ -22,6 +22,9 @@ export class CoordinatorController {
     @Param('code') code: string,
     @Param('semester') semester: string,
   ) {
-    return this.coordinatorService.findSubjectPerformanceForSemester(code,semester) 
+    return this.coordinatorService.findSubjectPerformanceForSemester(
+      code,
+      semester,
+    );
   }
 }

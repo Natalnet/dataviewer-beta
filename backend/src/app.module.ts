@@ -22,7 +22,7 @@ import { MailModule } from './modules/mail/mail.module';
     ClassesModule,
     CoordinatorModule,
     StudentsModule,
-    MailModule
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
