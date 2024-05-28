@@ -96,7 +96,7 @@ export default function Configuration() {
       <MainCard title="Configurações">
         <div {...getRootProps()}>
           <input {...getInputProps()} />
-          <Typography variant="h5">Escolha a arquivo CSV</Typography>
+          <Typography variant="h5">Escolha o arquivo CSV</Typography>
           <StyledBox>
             <Typography variant="body1">
               Arraste e solte um arquivo CSV aqui, ou clique para selecionar um
@@ -155,6 +155,7 @@ export default function Configuration() {
                 console.log(selectedValues)
                 console.log(listOptions)
                 let strSelectedValues = "{"
+                let objSelectedValues = {}
                 try {
                   for (let key in selectedValues) {
                     if (selectedValues.hasOwnProperty(key)) {
@@ -162,16 +163,21 @@ export default function Configuration() {
                       console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
                       // Reduz o tamamnho da string removendo que que está depois do ' ('
 
-                      strSelectedValues += `"${listOptions[key].trimEnd()}":"${
+                      strSelectedValues += `'${listOptions[key].trimEnd()}':'${
                         selectedValues[key]
-                      }", `
+                      }', `
+                      objSelectedValues[listOptions[key].trimEnd()] =
+                        selectedValues[key]
+                      //strSelectedValues += `'${key}':'${selectedValues[key]}', `
                     }
                   }
                   // remove the last comma and space
                   strSelectedValues = strSelectedValues.slice(0, -2)
                   strSelectedValues += "}"
-                  console.log(strSelectedValues)
-                  console.log(JSON.parse(strSelectedValues))
+                  console.log(objSelectedValues)
+
+                  //console.log(JSON.parse(strSelectedValues))
+                  console.log(JSON.stringify(objSelectedValues))
                 } catch (err) {
                   selectedValuesError = true
                   setAlertMessage("Erro na seleção das unidades das listas!")
@@ -185,7 +191,11 @@ export default function Configuration() {
                   const formData = new FormData()
                   // Append the file to the formData
                   formData.append("file", file)
-                  formData.append("listUnits", strSelectedValues)
+                  //formData.append("listUnits", strSelectedValues)
+                  formData.append(
+                    "listUnits",
+                    JSON.stringify(objSelectedValues)
+                  )
 
                   // Send the file to the backend
                   const response = await fetch(
