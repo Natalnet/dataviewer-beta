@@ -154,30 +154,21 @@ export default function Configuration() {
                 let selectedValuesError = false
                 console.log(selectedValues)
                 console.log(listOptions)
-                let strSelectedValues = "{"
+
                 let objSelectedValues = {}
                 try {
                   for (let key in selectedValues) {
                     if (selectedValues.hasOwnProperty(key)) {
                       // Verifica se a chave é realmente uma propriedade do objeto e não da cadeia de protótipos
                       console.log(`Key: ${key}, Value: ${selectedValues[key]}`)
-                      // Reduz o tamamnho da string removendo que que está depois do ' ('
 
-                      strSelectedValues += `'${listOptions[key].trimEnd()}':'${
-                        selectedValues[key]
-                      }', `
-                      objSelectedValues[listOptions[key].trimEnd()] =
-                        selectedValues[key]
-                      //strSelectedValues += `'${key}':'${selectedValues[key]}', `
+                      objSelectedValues[
+                        listOptions[key].trimEnd().replace(/"/g, "") // Remove aspas e espaços no final
+                      ] = selectedValues[key]
                     }
                   }
-                  // remove the last comma and space
-                  strSelectedValues = strSelectedValues.slice(0, -2)
-                  strSelectedValues += "}"
-                  console.log(objSelectedValues)
-
-                  //console.log(JSON.parse(strSelectedValues))
-                  console.log(JSON.stringify(objSelectedValues))
+                  //console.log(objSelectedValues)
+                  //console.log(JSON.stringify(objSelectedValues))
                 } catch (err) {
                   selectedValuesError = true
                   setAlertMessage("Erro na seleção das unidades das listas!")

@@ -263,10 +263,11 @@ export class ClassesService {
     const content = file.buffer.toString();
     const results = parse(content, { header: true });
     const classListUnits = JSON.parse(body['listUnits']);
+    console.log(classListUnits);
 
     // Get all lines of the file
     results.data.forEach(async (line) => {
-      console.log(line); // Print all lines
+      //console.log(line); // Print all lines
 
       // Processe the first line of the file for save to the database
       const tmpStudentListGrades = {}; // Fix: Change 'let' to 'const'
