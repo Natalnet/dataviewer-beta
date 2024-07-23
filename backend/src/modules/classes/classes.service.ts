@@ -197,9 +197,16 @@ export class ClassesService {
       overallPerformance[String(l.reg_num)].list3 = l.meanU3;
     }
     for (const g of grades) {
-      overallPerformance[String(g.matricula)].grade1 = g.nota1;
-      overallPerformance[String(g.matricula)].grade2 = g.nota2;
-      overallPerformance[String(g.matricula)].grade3 = g.nota3;
+      try {
+        overallPerformance[String(g.matricula)].grade1 = parseFloat(g.nota1);
+        overallPerformance[String(g.matricula)].grade2 = parseFloat(g.nota2);
+        overallPerformance[String(g.matricula)].grade3 = parseFloat(g.nota3);
+      } catch (e) {
+        console.log(e);
+        console.log(
+          'Erro ao adicionar nota ' + g.nota1 + ' da matrícula ' + g.matricula,
+        );
+      }
     }
 
     for (const p of participations) {
