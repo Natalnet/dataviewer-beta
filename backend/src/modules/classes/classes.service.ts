@@ -188,7 +188,7 @@ export class ClassesService {
     const participations = await this.stdudentParticipationModel
       .find({ matricula: { $in: data.reg_students } })
       .exec();
-    console.log(lists);
+    //console.log(lists);
     const overallPerformance = {};
     for (const l of lists) {
       overallPerformance[String(l.reg_num)] = {};
@@ -197,16 +197,12 @@ export class ClassesService {
       overallPerformance[String(l.reg_num)].list3 = l.meanU3;
     }
     for (const g of grades) {
-      try {
-        overallPerformance[String(g.matricula)].grade1 = parseFloat(g.nota1);
-        overallPerformance[String(g.matricula)].grade2 = parseFloat(g.nota2);
-        overallPerformance[String(g.matricula)].grade3 = parseFloat(g.nota3);
-      } catch (e) {
-        console.log(e);
-        console.log(
-          'Erro ao adicionar nota ' + g.nota1 + ' da matrícula ' + g.matricula,
-        );
+      if (!overallPerformance[String(g.matricula)]) {
+        overallPerformance[String(g.matricula)] = {};
       }
+      overallPerformance[String(g.matricula)].grade1 = parseFloat(g.nota1);
+      overallPerformance[String(g.matricula)].grade2 = parseFloat(g.nota2);
+      overallPerformance[String(g.matricula)].grade3 = parseFloat(g.nota3);
     }
 
     for (const p of participations) {
