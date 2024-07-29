@@ -47,70 +47,79 @@ function ClassDetails({ subjects, difficulties, listsSubs, students }) {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <div className={styles.maincontainer}>
-        <div className={styles.containercharts}>
-          <Grid
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-          >
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <div className={styles.secondarycard}>
-                <h2>Desempenho</h2>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                >
-                  <Tab label="Por Listas" {...a11yProps(0)} />
-                  <Tab label="Por Assuntos" {...a11yProps(1)} />
-                  <Tab label="Por Dificuldades" {...a11yProps(1)} />
-                </Tabs>
-                <TabPanel value={value} index={0}>
-                  <ClassChart data={listsSubs} width={600} />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                  <ClassChart data={subjects} width={600} />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                  <ClassChart data={difficulties} width={600} />
-                </TabPanel>
-              </div>
+      <Box sx={{ flexGrow: 1 }}>
+        <div className={styles.maincontainer}>
+          <div className={styles.containercharts}>
+            <Grid container>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <div className={styles.secondarycard}>
+                    <h2>Submissões diárias</h2>
+                  </div>
+                </Grid>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <div className={styles.secondarycard}>
-                <h2>Desempenho por assuntos</h2>
-                <RadarGraph data={subjects} />
-              </div>
+          </div>
+          <div className={styles.containercharts}>
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <div className={styles.secondarycard}>
+                  <h2>Desempenho</h2>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                  >
+                    <Tab label="Por Listas" {...a11yProps(0)} />
+                    <Tab label="Por Assuntos" {...a11yProps(1)} />
+                    <Tab label="Por Dificuldades" {...a11yProps(1)} />
+                  </Tabs>
+                  <TabPanel value={value} index={0}>
+                    <ClassChart data={listsSubs} width={600} />
+                  </TabPanel>
+                  <TabPanel value={value} index={1}>
+                    <ClassChart data={subjects} width={600} />
+                  </TabPanel>
+                  <TabPanel value={value} index={2}>
+                    <ClassChart data={difficulties} width={600} />
+                  </TabPanel>
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <div className={styles.secondarycard}>
+                  <h2>Desempenho por assuntos</h2>
+                  <RadarGraph data={subjects} />
+                </div>
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
+          <div className={styles.containercharts}>
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <div className={styles.secondarycard}>
+                  <h2>Estudantes da Turma</h2>
+                  <StudentCards
+                    students={students}
+                    pagePath="/students/listgrades"
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <div className={styles.secondarycard}>
+                  <h2>Ranking da Turma</h2>
+                  <ClassRanking rows={students} />
+                </div>
+              </Grid>
+            </Grid>
+          </div>
         </div>
-        <div className={styles.containercharts}>
-          <Grid
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-          >
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <div className={styles.secondarycard}>
-                <h2>Estudantes da Turma</h2>
-                <StudentCards
-                  students={students}
-                  pagePath="/students/listgrades"
-                />
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
-              <div className={styles.secondarycard}>
-                <h2>Ranking da Turma</h2>
-                <ClassRanking rows={students} />
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-    </Box>
+      </Box>
   )
 }
 

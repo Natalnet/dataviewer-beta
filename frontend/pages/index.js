@@ -140,7 +140,7 @@ export default function Home() {
             onChange={e => setEmail(e.target.value)}
           />
           <TextField
-            label="senha"
+            label="Senha"
             variant="outlined"
             size="small"
             type="password"
