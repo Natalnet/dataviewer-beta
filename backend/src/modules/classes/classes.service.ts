@@ -277,7 +277,7 @@ export class ClassesService {
       .findOne({ classCode: class_Code })
       .exec();
 
-    if (!data) return [];
+    if (!data) return null;
     return {
       datas: data.counts,
     };
