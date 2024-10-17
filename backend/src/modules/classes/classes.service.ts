@@ -39,6 +39,10 @@ import {
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 import { ClassFrequency } from './schemas/classfrequency.schema';
+import {
+  SubmissionCount,
+  SubmissionCountDocument,
+} from './schemas/submissioncount.schema';
 import { parse } from 'papaparse';
 import { count } from 'console';
 
@@ -68,6 +72,8 @@ export class ClassesService {
     private readonly classClassModel: Model<ClassClassDocument>,
     @InjectModel(ClassFrequency.name)
     private readonly classFrequencyModel: Model<ClassFrequency>,
+    @InjectModel(SubmissionCount.name)
+    private readonly submissionCountModel: Model<SubmissionCountDocument>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -259,6 +265,17 @@ export class ClassesService {
     return {
       classFreqs: data.classFreqs,
       studentNumber: data.studentNumber,
+    };
+  }
+
+  async findSubmissionCount(class_Code: string) {
+    const data = await this.submissionCountModel
+      .findOne({ classCode: class_Code })
+      .exec();
+
+    if (!data) return null;
+    return {
+      datas: data.counts,
     };
   }
 

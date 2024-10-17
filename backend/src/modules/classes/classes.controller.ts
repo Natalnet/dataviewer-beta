@@ -15,6 +15,7 @@ import { ClassesService } from './classes.service';
 import { RequestWithUser } from 'src/types/Requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Express } from 'express';
+import { SubmissionCount } from './schemas/submissioncount.schema';
 
 @Controller('classes')
 export class ClassesController {
@@ -86,6 +87,11 @@ export class ClassesController {
   @Get('frequency/:class_code')
   findClassFrequency(@Param('class_code') classCode: string) {
     return this.classesService.findClassFrequencies(classCode);
+  }
+
+  @Get('submissioncount/:class_Code')
+  findSubmissionCount(@Param('class_Code') class_Code: string) {
+    return this.classesService.findSubmissionCount(class_Code);
   }
 
   @Post('upload')
