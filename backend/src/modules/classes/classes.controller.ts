@@ -16,6 +16,7 @@ import { RequestWithUser } from 'src/types/Requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Express } from 'express';
 import { SubmissionCount } from './schemas/submissioncount.schema';
+import { CreateSubmissionDto } from './dto/create-submission.dto';
 
 @Controller('classes')
 export class ClassesController {
@@ -92,6 +93,10 @@ export class ClassesController {
   @Get('submissioncount/:class_Code')
   findSubmissionCount(@Param('class_Code') class_Code: string) {
     return this.classesService.findSubmissionCount(class_Code);
+  }
+  @Post('submissioncount/')
+  createSubmissionCount(@Body() newSubmission: CreateSubmissionDto) {
+    return this.classesService.createSubmissionCount(newSubmission);
   }
 
   @Post('upload')
