@@ -1,6 +1,7 @@
 import {
   Injectable,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -277,7 +278,7 @@ export class ClassesService {
       .findOne({ classCode: class_Code })
       .exec();
 
-    if (!data) return null;
+    if (!data) return [];
     return {
       datas: data.counts,
     };
