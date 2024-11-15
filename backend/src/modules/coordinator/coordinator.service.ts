@@ -3,17 +3,18 @@ import { Semester } from 'src/types/semester';
 import { Performance, PerformanceDocument } from './schemas/performance.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { SubjectPerformance, SubjectPerformanceDocument } from './schemas/subjectperformance.schema';
- 
+import {
+  SubjectPerformance,
+  SubjectPerformanceDocument,
+} from './schemas/subjectperformance.schema';
 
 @Injectable()
 export class CoordinatorService {
   constructor(
     @InjectModel(Performance.name)
     private readonly performanceModel: Model<PerformanceDocument>,
-    @InjectModel(SubjectPerformance.name) 
-    private readonly subjectPerformaceModel: Model<SubjectPerformanceDocument>, 
-
+    @InjectModel(SubjectPerformance.name)
+    private readonly subjectPerformaceModel: Model<SubjectPerformanceDocument>,
   ) {}
 
   async findPerformanceForSemester(

@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ClassesService } from './classes.service';
-import { RequestWithUser } from 'src/types/Requests';
+import { RequestWithUser } from 'src/types/requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Express } from 'express';
 import { SubmissionCount } from './schemas/submissioncount.schema';

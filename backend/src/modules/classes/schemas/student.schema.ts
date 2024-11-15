@@ -3,22 +3,19 @@ import { HydratedDocument } from 'mongoose';
 
 export type StudentDocument = HydratedDocument<Student>;
 
-
 @Schema()
-export class Student {  
-  @Prop( ) 
+export class Student {
+  @Prop()
   id: string;
 
-  @Prop() 
-  name: string; 
+  @Prop()
+  name: string;
 
-  @Prop() 
-  email: string; 
+  @Prop()
+  email: string;
 
-  @Prop() 
-  percent: number; 
-
- 
+  @Prop()
+  percent: number;
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);

@@ -1,6 +1,6 @@
 export class StudentDto {
   id: string;
-  name: string; 
+  name: string;
   email: string;
-  progress: number;   
+  progress: number;
 }
