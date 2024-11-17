@@ -19,6 +19,7 @@ import {
   StudentFrequency,
   StudentFrequencyDocument,
 } from './schemas/studentfrequency.schema';
+import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
 
 @Injectable()
 export class StudentsService {
