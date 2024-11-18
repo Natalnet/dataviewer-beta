@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { StudentListGradesDto } from './dto/get-student-list-grades.dto';
@@ -20,6 +24,7 @@ import {
   StudentFrequencyDocument,
 } from './schemas/studentfrequency.schema';
 import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
+import { StudentRepository } from './student.repository';
 
 @Injectable()
 export class StudentsService {
@@ -32,6 +37,7 @@ export class StudentsService {
     private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
     @InjectModel(StudentFrequency.name)
     private readonly studentFrequencyModel: Model<StudentFrequencyDocument>,
+    private readonly studentReposity: StudentRepository,
   ) {}
 
   async findStudentListGrades(id: string): Promise<StudentListGradesDto[]> {
@@ -78,6 +84,45 @@ export class StudentsService {
       meanU2: data.meanU2,
       meanU3: data.meanU3,
     };
+  }
+  async createStudentListGrades(createStudent: StudentListGradesPostDto) {
+    if (
+      !createStudent.meanU1 ||
+      createStudent.meanU1.trim() == '' ||
+      !createStudent.meanU2 ||
+      createStudent.meanU2.trim() == '' ||
+      !createStudent.meanU3 ||
+      createStudent.meanU3.trim() == ''
+    ) {
+      throw new BadRequestException(
+        'Campos meanU1, meanU2 ou meanU3 inválidos',
+      );
+    }
+    // eslint-disable-next-line prettier/prettier
+      if ( !Array.isArray(createStudent.lists) ||
+      createStudent.lists.length == 0
+    ) {
+      throw new BadRequestException(
+        'Campo lists não é um lista de array ou está vazia.',
+      );
+    }
+
+    return await this.studentReposity.createStudentList(createStudent);
+  }
+  async updateStudentListGrades(
+    studentId: string,
+    updateData: StudentListGradesPostDto,
+  ) {
+    const result = await this.studentReposity.updateStudentList(
+      studentId,
+      updateData,
+    );
+    if (!result) {
+      throw new NotFoundException(
+        `Não encontrado Student List de id ${studentId}`,
+      );
+    }
+    return { message: 'Dados atualizados', result: result };
   }
 
   async findExamGrades(mat: string): Promise<ExamGradesDto> {
