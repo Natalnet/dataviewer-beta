@@ -1,6 +1,7 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { StudentsService } from './students.service';
+import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
 
 @Controller('students')
 export class StudentsController {
@@ -21,6 +22,10 @@ export class StudentsController {
   @Get('listunitgrades/:mat')
   findListUnitGrades(@Param('mat') mat: string) {
     return this.studentService.findStudentListUnitGrades(mat);
+  }
+  @Post('listgrades')
+  createListGrades(@Body() request: StudentListGradesPostDto) {
+    return this.studentService.createStudentListGrades(request);
   }
 
   @UseGuards(JwtAuthGuard)

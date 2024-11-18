@@ -8,7 +8,7 @@ import {
 import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
 
 @Injectable()
-export class StudentRepository {
+export class StudentsRepository {
   constructor(
     @InjectModel(StudentListGrades.name)
     private readonly studentListGradesModel: Model<StudentListGradesDocument>,

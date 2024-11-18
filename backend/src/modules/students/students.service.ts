@@ -24,7 +24,7 @@ import {
   StudentFrequencyDocument,
 } from './schemas/studentfrequency.schema';
 import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
-import { StudentRepository } from './student.repository';
+import { StudentsRepository } from './students.repository';
 
 @Injectable()
 export class StudentsService {
@@ -37,7 +37,7 @@ export class StudentsService {
     private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
     @InjectModel(StudentFrequency.name)
     private readonly studentFrequencyModel: Model<StudentFrequencyDocument>,
-    private readonly studentReposity: StudentRepository,
+    private readonly studentRepository: StudentsRepository,
   ) {}
 
   async findStudentListGrades(id: string): Promise<StudentListGradesDto[]> {
@@ -107,13 +107,13 @@ export class StudentsService {
       );
     }
 
-    return await this.studentReposity.createStudentList(createStudent);
+    return await this.studentRepository.createStudentList(createStudent);
   }
   async updateStudentListGrades(
     studentId: string,
     updateData: StudentListGradesPostDto,
   ) {
-    const result = await this.studentReposity.updateStudentList(
+    const result = await this.studentRepository.updateStudentList(
       studentId,
       updateData,
     );
