@@ -78,6 +78,10 @@ export class StudentsController {
   findListUnitGrades(@Param('mat') mat: string) {
     return this.studentService.findStudentListUnitGrades(mat);
   }
+  @Post('listgrades')
+  createListGrades(@Body() request: StudentListGradesPostDto) {
+    return this.studentService.createStudentListGrades(request);
+  }
 
   @Post('listgrades')
   @ApiOperation({

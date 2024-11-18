@@ -24,7 +24,6 @@ import {
   StudentFrequencyDocument,
 } from './schemas/studentfrequency.schema';
 import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
-import { StudentRepository } from './student.repository';
 import { StudentsRepository } from './students.repository';
 
 @Injectable()
