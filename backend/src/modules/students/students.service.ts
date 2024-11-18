@@ -24,6 +24,7 @@ import {
   StudentFrequencyDocument,
 } from './schemas/studentfrequency.schema';
 import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
+import { StudentRepository } from './student.repository';
 import { StudentsRepository } from './students.repository';
 
 @Injectable()
@@ -106,8 +107,8 @@ export class StudentsService {
         'Campos meanU1, meanU2 ou meanU3 inválidos',
       );
     }
-    if (
-      !Array.isArray(createStudent.lists) ||
+    // eslint-disable-next-line prettier/prettier
+      if ( !Array.isArray(createStudent.lists) ||
       createStudent.lists.length == 0
     ) {
       throw new BadRequestException(
