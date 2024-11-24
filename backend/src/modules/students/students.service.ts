@@ -106,8 +106,8 @@ export class StudentsService {
         'Campos meanU1, meanU2 ou meanU3 inválidos',
       );
     }
-    // eslint-disable-next-line prettier/prettier
-      if ( !Array.isArray(createStudent.lists) ||
+    if (
+      !Array.isArray(createStudent.lists) ||
       createStudent.lists.length == 0
     ) {
       throw new BadRequestException(
