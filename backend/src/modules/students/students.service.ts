@@ -119,9 +119,8 @@ export class StudentsService {
       createStudent,
     );
 
-    if (!newStudent) {
-      return [];
-    }
+    if (!newStudent) return [];
+
     return {
       student_id: newStudent.student_id,
       meanU1: newStudent.meanU1,
