@@ -86,6 +86,14 @@ export class StudentsService {
     };
   }
   async createStudentListGrades(createStudent: StudentListGradesPostDto) {
+    const dataExist = await this.studentRepository.findStudentListById(
+      createStudent.student_id,
+    );
+
+    if (dataExist) {
+      throw new BadRequestException('Student com este id já existe!');
+    }
+
     if (
       !createStudent.meanU1 ||
       createStudent.meanU1.trim() == '' ||
@@ -98,8 +106,8 @@ export class StudentsService {
         'Campos meanU1, meanU2 ou meanU3 inválidos',
       );
     }
-    // eslint-disable-next-line prettier/prettier
-      if ( !Array.isArray(createStudent.lists) ||
+    if (
+      !Array.isArray(createStudent.lists) ||
       createStudent.lists.length == 0
     ) {
       throw new BadRequestException(
@@ -107,22 +115,20 @@ export class StudentsService {
       );
     }
 
-    return await this.studentRepository.createStudentList(createStudent);
-  }
-  async updateStudentListGrades(
-    studentId: string,
-    updateData: StudentListGradesPostDto,
-  ) {
-    const result = await this.studentRepository.updateStudentList(
-      studentId,
-      updateData,
+    const newStudent = await this.studentRepository.createStudentList(
+      createStudent,
     );
-    if (!result) {
-      throw new NotFoundException(
-        `Não encontrado Student List de id ${studentId}`,
-      );
+
+    if (!newStudent) {
+      return [];
     }
-    return { message: 'Dados atualizados', result: result };
+    return {
+      student_id: newStudent.student_id,
+      meanU1: newStudent.meanU1,
+      meanU2: newStudent.meanU2,
+      meanU3: newStudent.meanU3,
+      lists: newStudent.lists,
+    };
   }
 
   async findExamGrades(mat: string): Promise<ExamGradesDto> {
