@@ -30,6 +30,7 @@
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^8.0.7",
     "bcrypt": "^5.1.0",
     "handlebars": "^4.7.7",
     "mongoose": "^6.7.2",
