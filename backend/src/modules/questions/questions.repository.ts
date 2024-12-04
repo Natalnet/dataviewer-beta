@@ -11,7 +11,7 @@ export class QuestionsRepository {
     private readonly questionsByDifficultyModel: Model<QuestionsByDifficultyDocument>
   ) {}
 
-  async findById(questionId: string): Promise<QuestionsByDifficulty | null> {
+  async findById(questionId: string): Promise<QuestionsByDifficulty> {
     return await this.questionsByDifficultyModel
       .findOne({ question_id: questionId })
       .exec();
@@ -22,7 +22,7 @@ export class QuestionsRepository {
     return await newQuestion.save();
   }
 
-  async updateById(id: string, updateData: Partial<DifficultyOfQuestionDto>): Promise<QuestionsByDifficulty | null> {
+  async updateById(id: string, updateData: Partial<DifficultyOfQuestionDto>): Promise<QuestionsByDifficulty> {
     return await this.questionsByDifficultyModel
       .findOneAndUpdate(
         { question_id: id },

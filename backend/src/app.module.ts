@@ -16,7 +16,7 @@ import { QuestionsModule } from './modules/questions/questions.module';
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DATABASE_HOST, {
       authMechanism: 'DEFAULT',
-      dbName: 'dataviewert1',
+      dbName: process.env.DATABASE_NAME,
     }),
     UsersModule,
     AuthModule,
