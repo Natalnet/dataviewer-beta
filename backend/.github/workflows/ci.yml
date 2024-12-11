@@ -1,0 +1,23 @@
+name: Continuos Integration
+
+on: [pull_request, push]
+
+jobs: 
+  continuos-integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install 
+
+      - name: Build application
+        run: yarn build
+
+      - name: Run tests
+        run: yarn test
