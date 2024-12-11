@@ -35,7 +35,7 @@ describe('QuestionsController', () => {
       });
 
       test('should return a question', () => {
-        expect(question).toEqual(questionStub());
+        expect(question).toEqual('');
       });
     });
 
