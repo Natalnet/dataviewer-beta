@@ -10,6 +10,16 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Docs')
     .setDescription('Dataviewer API description')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        name: 'Authorization',
+        description: 'Enter token',
+        in: 'header',
+      },
+      'KEY_AUTH',
+    )
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger/docs', app, documentFactory);

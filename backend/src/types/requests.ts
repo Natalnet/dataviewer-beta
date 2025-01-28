@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+
 export interface RequestWithUser extends Request {
   user: RequestUserData;
 }
