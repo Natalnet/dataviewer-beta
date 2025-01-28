@@ -78,7 +78,30 @@ export class StudentsController {
   findListUnitGrades(@Param('mat') mat: string) {
     return this.studentService.findStudentListUnitGrades(mat);
   }
+
   @Post('listgrades')
+  @ApiOperation({
+    summary: 'Create new student list grades',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Successfully created the list grades.',
+    schema: {
+      type: 'object',
+      properties: {
+        student_id: { type: 'string' },
+        meanU1: { type: 'string' },
+        meanU2: { type: 'string' },
+        meanU3: { type: 'string' },
+        lists: {
+          type: 'array',
+          items: {
+            type: 'object',
+          },
+        },
+      },
+    },
+  })
   createListGrades(@Body() request: StudentListGradesPostDto) {
     return this.studentService.createStudentListGrades(request);
   }
