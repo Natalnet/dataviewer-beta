@@ -31,4 +31,7 @@ export class QuestionsRepository {
       )
       .exec();
   }
+  async findOneByIdAndActive(id: string): Promise<QuestionsByDifficulty | null> {
+    return this.questionsByDifficultyModel.findOne({ _id: id, is_active: true }).exec();
+  }
 }

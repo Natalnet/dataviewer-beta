@@ -26,4 +26,11 @@ export class QuestionsService {
     }
     return updatedDifficultyOfQuestion;
   }
+   async findByIdAndActive(id: string): Promise<QuestionsByDifficulty> {
+    const question = await this.questionsRepository.findOneByIdAndActive(id);
+    if (!question) {
+      throw new NotFoundException('Active question not found');
+    }
+    return question;
+  }
 }

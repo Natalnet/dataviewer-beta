@@ -3,6 +3,7 @@ import { QuestionsByDifficulty } from "src/modules/questions/schemas/questionsby
 export const questionStub = (): QuestionsByDifficulty => {
   return {
     question_id: '100',
-    percentage: 23.5
+    percentage: 23.5,
+    is_active:true
   }
 }

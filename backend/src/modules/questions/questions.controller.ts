@@ -7,13 +7,13 @@ import { DifficultyOfQuestionDto } from './dto/post-difficulty-of-question';
 export class QuestionsController {
   constructor(private questionsService: QuestionsService) {}
 
-  @UseGuards(JwtAuthGuard)
+  
   @Get('difficulty/:id')
   findDifficultyQuestionById(@Param('id') id: string) {
     return this.questionsService.findDifficultyQuestionById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  
   @Post('difficulty')
   createDifficultyForQuestion(@Body() request: DifficultyOfQuestionDto) {
     return this.questionsService.createDifficultyOfQuestion(request);
@@ -24,4 +24,5 @@ export class QuestionsController {
   updateDifficultyForQuestion(@Param('id') id: string, @Body() request: DifficultyOfQuestionDto) {
     return this.questionsService.updateDifficultyOfQuestion(id, request);
   }
+  
 }

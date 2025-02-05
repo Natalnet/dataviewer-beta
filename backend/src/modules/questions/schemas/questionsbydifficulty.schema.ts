@@ -8,6 +8,9 @@ export class QuestionsByDifficulty {
 
   @Prop()
   percentage: number;
+
+  @Prop()
+  is_active:boolean;
 }
 
 export type QuestionsByDifficultyDocument = 
