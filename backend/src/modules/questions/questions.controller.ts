@@ -24,4 +24,8 @@ export class QuestionsController {
   updateDifficultyForQuestion(@Param('id') id: string, @Body() request: DifficultyOfQuestionDto) {
     return this.questionsService.updateDifficultyOfQuestion(id, request);
   }
+  @Get('teste')
+  teste(){
+    return 'hello';
+  }
 }
