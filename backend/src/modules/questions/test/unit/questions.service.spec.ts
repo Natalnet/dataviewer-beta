@@ -48,7 +48,7 @@ describe('QuestionsService', () => {
 
   describe('createDifficultyOfQuestion', () => {
     let createdQuestion: QuestionsByDifficulty;
-    const requestDto = { question_id: '100', percentage: 23.5 };
+    const requestDto = { question_id: '100', percentage: 23.5, is_active:true };
 
     beforeEach(async () => {
       jest.spyOn(questionsRepository, 'create').mockResolvedValue(questionStub());
@@ -62,7 +62,7 @@ describe('QuestionsService', () => {
 
 
   describe('updateDifficultyOfQuestion', () => {
-    const requestDto = { question_id: '100', percentage: 23.5 };
+    const requestDto = { question_id: '100', percentage: 23.5, is_active:true };
 
     describe('when question is successfully updated', () => {
       let updatedQuestion: QuestionsByDifficulty;

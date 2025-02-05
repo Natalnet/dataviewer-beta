@@ -53,7 +53,7 @@ describe('QuestionsController', () => {
   describe('createDifficultyForQuestion', () => {
     describe('when createDifficultyForQuestion is called', () => {
       let createdQuestion: QuestionsByDifficulty;
-      const requestDto = { question_id: '100', percentage: 23.5 };
+      const requestDto = { question_id: '100', percentage: 23.5, is_active:true };
 
       beforeEach(async () => {
         createdQuestion = await questionsController.createDifficultyForQuestion(requestDto);
@@ -69,7 +69,7 @@ describe('QuestionsController', () => {
     });
 
     describe('when createDifficultyForQuestion fails', () => {
-      const requestDto = { question_id: '100', percentage: 23.5 };
+      const requestDto = { question_id: '100', percentage: 23.5, is_active:true };
   
       beforeEach(() => {
         jest.spyOn(questionsService, 'createDifficultyOfQuestion').mockRejectedValue(new NotFoundException());
@@ -84,7 +84,7 @@ describe('QuestionsController', () => {
   describe('updateDifficultyForQuestion', () => {
     describe('when updateDifficultyForQuestion is called', () => {
       let updatedQuestion: QuestionsByDifficulty;
-      const requestDto = { question_id: '100', percentage: 23.5 };
+      const requestDto = { question_id: '100', percentage: 23.5, is_active:true };
 
       beforeEach(async () => {
         updatedQuestion = await questionsController.updateDifficultyForQuestion('100', requestDto);
@@ -101,7 +101,7 @@ describe('QuestionsController', () => {
 
     describe('when updateDifficultyForQuestion is called with a valid ID', () => {
       let updatedQuestion: QuestionsByDifficulty;
-      const requestDto = { question_id: '100', percentage: 23.5 };
+      const requestDto = { question_id: '100', percentage: 23.5, is_active:true };
   
       beforeEach(async () => {
         jest.spyOn(questionsService, 'updateDifficultyOfQuestion').mockResolvedValue(questionStub());
