@@ -8,9 +8,11 @@ import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 export class StudentsController {
   constructor(private studentService: StudentsService) {}
 
+  @Get('listgrades/:id')
+  @ApiBearerAuth('KEY_AUTH')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
-    summary: 'Consilt a student performance in each exercise list',
+    summary: 'Consult a student performance in each exercise list',
   })
   @ApiResponse({
     status: 200,
@@ -25,14 +27,13 @@ export class StudentsController {
       },
     },
   })
-  @Get('listgrades/:id')
   findListGradesById(@Param('id') id: string) {
     return this.studentService.findStudentListGrades(id);
   }
 
+  @Get('listgradesbymat/:mat')
   @ApiBearerAuth('KEY_AUTH')
   @UseGuards(JwtAuthGuard)
-  @Get('listgradesbymat/:mat')
   @ApiOperation({
     summary: 'Get student list grades by registration',
   })
@@ -59,9 +60,12 @@ export class StudentsController {
   }
 
   @Get('listunitgrades/:mat')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Retrieve student unit grades',
-    description: 'Returns the mean grades for units U1, U2, and U3 for the specified student registration number.',
+    description:
+      'Returns the mean grades for units U1, U2, and U3 for the specified student registration number.',
   })
   @ApiResponse({
     status: 200,
@@ -80,61 +84,37 @@ export class StudentsController {
   }
 
   @Post('listgrades')
-  @ApiOperation({
-    summary: 'Create new student list grades',
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'Successfully created the list grades.',
-    schema: {
-      type: 'object',
-      properties: {
-        student_id: { type: 'string' },
-        meanU1: { type: 'string' },
-        meanU2: { type: 'string' },
-        meanU3: { type: 'string' },
-        lists: {
-          type: 'array',
-          items: {
-            type: 'object',
-          },
-        },
-      },
-    },
-  })
-  createListGrades(@Body() request: StudentListGradesPostDto) {
-    return this.studentService.createStudentListGrades(request);
-  }
-
-  @Post('listgrades')
-  @ApiOperation({
-    summary: 'Create new student list grades',
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'Successfully created the list grades.',
-    schema: {
-      type: 'object',
-      properties: {
-        student_id: { type: 'string' },
-        meanU1: { type: 'string' },
-        meanU2: { type: 'string' },
-        meanU3: { type: 'string' },
-        lists: {
-          type: 'array',
-          items: {
-            type: 'object',
-          },
-        },
-      },
-    },
-  })
-  createListGrades(@Body() request: StudentListGradesPostDto) {
-    return this.studentService.createStudentListGrades(request);
-  }
-
+  @ApiBearerAuth('KEY_AUTH')
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    summary: 'Create new student list grades',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Successfully created the list grades.',
+    schema: {
+      type: 'object',
+      properties: {
+        student_id: { type: 'string' },
+        meanU1: { type: 'string' },
+        meanU2: { type: 'string' },
+        meanU3: { type: 'string' },
+        lists: {
+          type: 'array',
+          items: {
+            type: 'object',
+          },
+        },
+      },
+    },
+  })
+  createListGrades(@Body() request: StudentListGradesPostDto) {
+    return this.studentService.createStudentListGrades(request);
+  }
+
   @Get('frequency/:mat')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Consult student frequency information',
   })
@@ -159,8 +139,9 @@ export class StudentsController {
     return this.studentService.findStudentFrequency(mat);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('examgrades/:mat')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Consult grades for each exam in a student subject',
   })
@@ -185,8 +166,9 @@ export class StudentsController {
     return this.studentService.findExamGrades(mat);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('participations/:mat')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get a student participation performance in each unit',
   })

@@ -30,7 +30,7 @@ export class UsersService {
         avatar: createdUser.avatar,
         registrationNumber: createdUser.registrationNumber,
       };
-
+      console.log('User create')
       return res;
     } catch (error) {
       console.log('Error: ', error);

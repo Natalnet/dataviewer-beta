@@ -8,13 +8,18 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
   @ApiOperation({
     summary: 'Login',
   })
   @ApiResponse({
     status: 200,
     description: 'Login successfull',
+    schema: {
+      type: 'object',
+      properties: {
+        accessToken: { type: 'string' },
+      },
+    },
   }) // Resposta esperada
   @ApiResponse({
     status: 400,

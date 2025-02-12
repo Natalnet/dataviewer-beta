@@ -17,14 +17,15 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Express } from 'express';
 import { SubmissionCount } from './schemas/submissioncount.schema';
 import { CreateSubmissionDto } from './dto/create-submission.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('classes')
 export class ClassesController {
   constructor(private classesService: ClassesService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get classes taught by the logged-in teacher' })
   @ApiResponse({
     status: 200,
@@ -47,8 +48,9 @@ export class ClassesController {
     return this.classesService.findTeacherClasses(req.user.userEmail);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get class details by ID' })
   @ApiResponse({
     status: 200,
@@ -70,8 +72,9 @@ export class ClassesController {
     return this.classesService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('listsubject/:id')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get the performance of a class in each subject' })
   @ApiResponse({
     status: 200,
@@ -92,8 +95,9 @@ export class ClassesController {
     return this.classesService.findListSubjectClass(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('lists/:id')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get the performance of a class in each list' })
   @ApiResponse({
     status: 200,
@@ -114,8 +118,9 @@ export class ClassesController {
     return this.classesService.findClassLists(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('difficulties/:id')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get class performance for the difficulty levels of the questions',
   })
@@ -138,8 +143,9 @@ export class ClassesController {
     return this.classesService.findClassDifficulties(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('students/:id')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get the overall performance of students in an class',
   })
@@ -161,8 +167,9 @@ export class ClassesController {
     return this.classesService.findClassStudents(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('overallperformance/:class_code')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get overall performance of students in a class' })
   @ApiResponse({
     status: 200,
@@ -189,8 +196,9 @@ export class ClassesController {
     return this.classesService.findClassOverallPerformance(code);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('studantnames/:class_code')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get the names of students in a class' })
   @ApiResponse({
     status: 200,
@@ -210,8 +218,9 @@ export class ClassesController {
     return this.classesService.findClassStudentNames(classCode);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('teacher/last')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get the most recent class of the teacher' })
   @ApiResponse({
     status: 200,
@@ -227,8 +236,9 @@ export class ClassesController {
     return this.classesService.findTeacherLastClasses(req.user.userEmail);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('classes/:class_code')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get titles of classes by code' })
   @ApiResponse({
     status: 200,
@@ -250,8 +260,9 @@ export class ClassesController {
     return this.classesService.findClassTitles(classCode);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('frequency/:class_code')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get frequency details of a class by class code' })
   @ApiResponse({
     status: 200,
@@ -280,6 +291,8 @@ export class ClassesController {
   }
 
   @Get('submissioncount/:class_Code')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get submission count by class code' })
   @ApiResponse({
     status: 200,
@@ -289,6 +302,8 @@ export class ClassesController {
     return this.classesService.findSubmissionCount(class_Code);
   }
   @Post('submissioncount/')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new submission count' })
   @ApiResponse({
     status: 201,
