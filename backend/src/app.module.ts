@@ -10,6 +10,7 @@ import { CoordinatorModule } from './modules/coordinator/coordinator.module';
 import { StudentsModule } from './modules/students/students.module';
 import { MailModule } from './modules/mail/mail.module';
 import { QuestionsModule } from './modules/questions/questions.module';
+import { GithubModule } from './modules/github/github.module';
 
 @Module({
   imports: [
@@ -25,8 +26,10 @@ import { QuestionsModule } from './modules/questions/questions.module';
     StudentsModule,
     QuestionsModule,
     MailModule,
+    GithubModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}

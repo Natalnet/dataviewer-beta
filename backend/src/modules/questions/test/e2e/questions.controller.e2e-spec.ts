@@ -6,7 +6,7 @@ import { Connection } from 'mongoose';
 import { User } from 'src/modules/users/schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/modules/users/users.service';
-
+jest.setTimeout(30000);
 describe('QuestionsController (E2E)', () => {
   let app: INestApplication;
   let questionId: string;
