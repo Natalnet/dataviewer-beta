@@ -1,3 +1,8 @@
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -19,6 +24,8 @@ import {
   StudentFrequency,
   StudentFrequencyDocument,
 } from './schemas/studentfrequency.schema';
+import { StudentListGradesPostDto } from './dto/post-student-list-grades.dto';
+import { StudentsRepository } from './students.repository';
 
 @Injectable()
 export class StudentsService {
@@ -31,6 +38,7 @@ export class StudentsService {
     private readonly stdudentParticipationModel: Model<StudentParticipationDocument>,
     @InjectModel(StudentFrequency.name)
     private readonly studentFrequencyModel: Model<StudentFrequencyDocument>,
+    private readonly studentRepository: StudentsRepository,
   ) {}
 
   async findStudentListGrades(id: string): Promise<StudentListGradesDto[]> {
@@ -76,6 +84,51 @@ export class StudentsService {
       meanU1: data.meanU1,
       meanU2: data.meanU2,
       meanU3: data.meanU3,
+    };
+  }
+
+  async createStudentListGrades(createStudent: StudentListGradesPostDto) {
+    const dataExist = await this.studentRepository.findStudentListById(
+      createStudent.student_id,
+    );
+
+    if (dataExist) {
+      throw new BadRequestException('Student com este id já existe!');
+    }
+
+    if (
+      !createStudent.meanU1 ||
+      createStudent.meanU1.trim() == '' ||
+      !createStudent.meanU2 ||
+      createStudent.meanU2.trim() == '' ||
+      !createStudent.meanU3 ||
+      createStudent.meanU3.trim() == ''
+    ) {
+      throw new BadRequestException(
+        'Campos meanU1, meanU2 ou meanU3 inválidos',
+      );
+    }
+    if (
+      !Array.isArray(createStudent.lists) ||
+      createStudent.lists.length == 0
+    ) {
+      throw new BadRequestException(
+        'Campo lists não é um lista de array ou está vazia.',
+      );
+    }
+
+    const newStudent = await this.studentRepository.createStudentList(
+      createStudent,
+    );
+
+    if (!newStudent) return [];
+
+    return {
+      student_id: newStudent.student_id,
+      meanU1: newStudent.meanU1,
+      meanU2: newStudent.meanU2,
+      meanU3: newStudent.meanU3,
+      lists: newStudent.lists,
     };
   }
 
