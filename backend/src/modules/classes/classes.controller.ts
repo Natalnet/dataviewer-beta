@@ -277,6 +277,18 @@ export class ClassesController {
     return this.classesService.findClassFrequencies(classCode);
   }
 
+  @Get('submissioncount/:class_Code')
+  @ApiBearerAuth('KEY_AUTH')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get submission count by class code' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully retrieved the submission count details.'
+  })
+  findSubmissionCount(@Param('class_Code') class_Code: string) {
+    return this.classesService.findSubmissionCount(class_Code);
+  }
+
   @Post('submissioncount/')
   @ApiBearerAuth('KEY_AUTH')
   @UseGuards(JwtAuthGuard)

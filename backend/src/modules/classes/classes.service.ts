@@ -260,6 +260,17 @@ export class ClassesService {
     };
   }
 
+  async findSubmissionCount(class_Code: string) {
+    const data = await this.submissionCountModel
+      .findOne({ classCode: class_Code })
+      .exec();
+
+    if (!data) return [];
+    return {
+      datas: data.counts,
+    };
+  }
+
   async createSubmissionCount(createSubmission: CreateSubmissionDto) {
     let result;
     try {
