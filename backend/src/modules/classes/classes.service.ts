@@ -39,7 +39,7 @@ import {
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 import { ClassFrequency } from './schemas/classfrequency.schema';
-import { CreateSubmissionDto } from './dto/create-submission.dto';
+import { CreateSubmissionDto } from './dto/post-submission-count.dto';
 import { SubmissionCount, SubmissionCountDocument } from './schemas/submissioncount.schema';
 
 @Injectable({})
