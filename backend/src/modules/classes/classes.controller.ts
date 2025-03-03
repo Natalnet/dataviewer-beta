@@ -1,7 +1,9 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { ClassesService } from './classes.service';
 import { RequestWithUser } from 'src/types/requests';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { SubmissionCount } from './schemas/submissioncount.schema';
+import { CreateSubmissionDto } from './dto/create-submission.dto';
 
 @Controller('classes')
 export class ClassesController {
@@ -72,5 +74,10 @@ export class ClassesController {
   @Get('frequency/:class_code')
   findClassFrequency(@Param('class_code') classCode: string) {
     return this.classesService.findClassFrequencies(classCode);
+  }
+  
+  @Post('submissioncount/')
+  createSubmissionCount(@Body() newSubmission: CreateSubmissionDto) {
+    return this.classesService.createSubmissionCount(newSubmission);
   }
 }

@@ -39,6 +39,7 @@ import {
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 import { ClassFrequency } from './schemas/classfrequency.schema';
+import { CreateSubmissionDto } from './dto/create-submission.dto';
 import { SubmissionCount, SubmissionCountDocument } from './schemas/submissioncount.schema';
 
 @Injectable({})
@@ -258,44 +259,45 @@ export class ClassesService {
       studentNumber: data.studentNumber,
     };
   }
-}
-async createSubmissionCount(createSubmission: CreateSubmissionDto) {
-  let result;
-  try {
-    if (
-      !createSubmission.classCode ||
-      createSubmission.classCode.trim() == ''
-    ) {
-      throw 'O campo classCode não pode estar vazio';
-    }
-    if (
-      !Array.isArray(createSubmission.counts) ||
-      createSubmission.counts.length == 0
-    ) {
-      throw 'Campo counts não é um lista de array ou está vazia.';
-    }
 
-    const existingData = await this.submissionCountModel
-      .findOne({ classCode: createSubmission.classCode })
-      .exec();
-    if (existingData) {
-      result = await this.submissionCountModel.updateOne(
-        { classCode: createSubmission.classCode },
-        { $set: { counts: createSubmission.counts } },
-      );
-      return { message: 'Dados atualizados com sucesso.' };
-    } else {
-      result = await new this.submissionCountModel({
-        counts: createSubmission.counts,
-        classCode: createSubmission.classCode,
-      }).save();
-      return {
-        classCode: result.classCode,
-        counts: result.counts,
-      };
+  async createSubmissionCount(createSubmission: CreateSubmissionDto) {
+    let result;
+    try {
+      if (
+        !createSubmission.classCode ||
+        createSubmission.classCode.trim() == ''
+      ) {
+        throw 'O campo classCode não pode estar vazio';
+      }
+      if (
+        !Array.isArray(createSubmission.counts) ||
+        createSubmission.counts.length == 0
+      ) {
+        throw 'Campo counts não é um lista de array ou está vazia.';
+      }
+
+      const existingData = await this.submissionCountModel
+        .findOne({ classCode: createSubmission.classCode })
+        .exec();
+      if (existingData) {
+        result = await this.submissionCountModel.updateOne(
+          { classCode: createSubmission.classCode },
+          { $set: { counts: createSubmission.counts } },
+        );
+        return { message: 'Dados atualizados com sucesso.' };
+      } else {
+        result = await new this.submissionCountModel({
+          counts: createSubmission.counts,
+          classCode: createSubmission.classCode,
+        }).save();
+        return {
+          classCode: result.classCode,
+          counts: result.counts,
+        };
+      }
+    } catch (error) {
+      throw new BadRequestException(error);
     }
-  } catch (error) {
-    throw new BadRequestException(error);
   }
-}
 
+}
