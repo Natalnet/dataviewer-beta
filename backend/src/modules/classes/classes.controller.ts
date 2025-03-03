@@ -297,7 +297,6 @@ export class ClassesController {
     status: 201,
     description: 'Submission count created successfully',
   })
-  @Post('submissioncount/')
   createSubmissionCount(@Body() newSubmission: CreateSubmissionDto) {
     return this.classesService.createSubmissionCount(newSubmission);
   }

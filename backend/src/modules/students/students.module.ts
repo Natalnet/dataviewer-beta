@@ -15,6 +15,7 @@ import {
   StudentFrequency,
   StudentFrequencySchema,
 } from './schemas/studentfrequency.schema';
+import { StudentsRepository } from './students.repository';
 
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import {
     ]),
   ],
   controllers: [StudentsController],
-  providers: [StudentsService],
+  providers: [StudentsService, StudentsRepository],
 })
 export class StudentsModule {}
