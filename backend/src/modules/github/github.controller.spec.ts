@@ -18,26 +18,27 @@ describe('GithubController', () => {
     service = module.get<GithubService>(GithubService);
   });
 
-  it('deve retornar repositórios', async () => {
-    const mockResponse = {
-      total_count: 1,
-      incomplete_results: false,
-      items: [
-        {
-          id: 10270250,
-          name: "react",
-          full_name: "facebook/react",
-          description: "The library for web and native user interfaces.",
-        },
-      ],
-    };
+  describe('searchRepositories', () => {
+    it('deve retornar repositórios', async () => {
+      const mockResponse = {
+        total_count: 1,
+        incomplete_results: false,
+        items: [
+          {
+            id: 10270250,
+            name: "react",
+            full_name: "facebook/react",
+            description: "The library for web and native user interfaces.",
+          },
+        ],
+      };
 
+      service.searchRepositories = jest.fn().mockResolvedValue(mockResponse);
 
-    service.searchRepositories = jest.fn().mockResolvedValue(mockResponse);
+      const query = 'react';
+      const result = await controller.searchRepositories(query);
 
-
-    const query = 'react';
-    const result = await controller.searchRepositories(query);
-    expect(result).toEqual(mockResponse);
+      expect(result).toEqual(mockResponse);
+    });
   });
 });

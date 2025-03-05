@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { GithubModule } from '../github/github.module';
-jest.setTimeout(30000);
 describe('GithubController (e2e)', () => {
   let app: INestApplication;
 
