@@ -38,6 +38,7 @@ import {
   ClassFrequency,
   ClassFrequencySchema,
 } from './schemas/classfrequency.schema';
+import { SubmissionCount, SubmissionCountSchema } from './schemas/submissioncount.schema';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import {
       { name: StudentParticipation.name, schema: StudentParticipationSchema },
       { name: ClassClass.name, schema: ClassClassSchema },
       { name: ClassFrequency.name, schema: ClassFrequencySchema },
+      { name: SubmissionCount.name, schema: SubmissionCountSchema },
     ]),
   ],
   controllers: [ClassesController],

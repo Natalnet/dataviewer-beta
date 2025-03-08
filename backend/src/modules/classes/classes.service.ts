@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ClassMetricsDto } from './dto/get-class-metrics.dto';
@@ -39,6 +39,8 @@ import {
 import { StudentNamesDto } from './dto/get-class-student-names.dto';
 import { ClassClass, ClassClassDocument } from './schemas/classclass.schema';
 import { ClassFrequency } from './schemas/classfrequency.schema';
+import { CreateSubmissionDto } from './dto/post-submission-count.dto';
+import { SubmissionCount, SubmissionCountDocument } from './schemas/submissioncount.schema';
 
 @Injectable({})
 export class ClassesService {
@@ -66,6 +68,8 @@ export class ClassesService {
     private readonly classClassModel: Model<ClassClassDocument>,
     @InjectModel(ClassFrequency.name)
     private readonly classFrequencyModel: Model<ClassFrequency>,
+    @InjectModel(SubmissionCount.name)
+    private readonly submissionCountModel: Model<SubmissionCountDocument>,
   ) {}
 
   async findTeacherClasses(userEmail: string): Promise<ClassDto[]> {
@@ -255,4 +259,56 @@ export class ClassesService {
       studentNumber: data.studentNumber,
     };
   }
+
+  async findSubmissionCount(class_Code: string) {
+    const data = await this.submissionCountModel
+      .findOne({ classCode: class_Code })
+      .exec();
+
+    if (!data) return [];
+    return {
+      datas: data.counts,
+    };
+  }
+
+  async createSubmissionCount(createSubmission: CreateSubmissionDto) {
+    let result;
+    try {
+      if (
+        !createSubmission.classCode ||
+        createSubmission.classCode.trim() == ''
+      ) {
+        throw 'O campo classCode não pode estar vazio';
+      }
+      if (
+        !Array.isArray(createSubmission.counts) ||
+        createSubmission.counts.length == 0
+      ) {
+        throw 'Campo counts não é um lista de array ou está vazia.';
+      }
+
+      const existingData = await this.submissionCountModel
+        .findOne({ classCode: createSubmission.classCode })
+        .exec();
+      if (existingData) {
+        result = await this.submissionCountModel.updateOne(
+          { classCode: createSubmission.classCode },
+          { $set: { counts: createSubmission.counts } },
+        );
+        return { message: 'Dados atualizados com sucesso.' };
+      } else {
+        result = await new this.submissionCountModel({
+          counts: createSubmission.counts,
+          classCode: createSubmission.classCode,
+        }).save();
+        return {
+          classCode: result.classCode,
+          counts: result.counts,
+        };
+      }
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
 }
