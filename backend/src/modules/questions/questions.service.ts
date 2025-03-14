@@ -1,29 +1,54 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { QuestionsByDifficulty } from "./schemas/questionsbydifficulty.schema";
-import { DifficultyOfQuestionDto } from "./dto/post-difficulty-of-question";
-import { QuestionsRepository } from "./questions.repository";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  DifficultyQuestions,
+  DifficultyQuestionsDocument,
+} from './schemas/difficulty-question.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateDifficultyQuestionDto } from './dto/create-difficulty-question';
 
 @Injectable()
 export class QuestionsService {
-  constructor(private readonly questionsRepository: QuestionsRepository) {}
+  constructor(
+    @InjectModel(DifficultyQuestions.name)
+    private readonly DifficultyQuestionsModel: Model<DifficultyQuestionsDocument>,
+  ) {}
 
-  async findDifficultyQuestionById(id: string): Promise<QuestionsByDifficulty> {
-    const question = await this.questionsRepository.findById(id);
+  async findById(questionId: string): Promise<DifficultyQuestions> {
+    const question = await this.DifficultyQuestionsModel.findOne({
+      question_id: questionId,
+    }).exec();
     if (!question) {
-      throw new NotFoundException(`Question with id ${id} not found`);
+      throw new NotFoundException(`Question with id ${questionId} not found`);
     }
     return question;
   }
 
-  async createDifficultyOfQuestion(difficultyOfQuestionDto: DifficultyOfQuestionDto): Promise<QuestionsByDifficulty> {
-    return await this.questionsRepository.create(difficultyOfQuestionDto);
+  async create(
+    createDifficultyQuestionDto: CreateDifficultyQuestionDto,
+  ): Promise<DifficultyQuestions> {
+    const newQuestion = await this.DifficultyQuestionsModel.create(
+      createDifficultyQuestionDto,
+    );
+    return newQuestion.save();
   }
 
-  async updateDifficultyOfQuestion(id: string, request: DifficultyOfQuestionDto) {
-    const updatedDifficultyOfQuestion = await this.questionsRepository.updateById(id, request);
-    if (!updatedDifficultyOfQuestion) {
-      throw new NotFoundException(`Question with id ${id} not found`);
+  async updateById(
+    id: string,
+    updateData: Partial<CreateDifficultyQuestionDto>,
+  ): Promise<DifficultyQuestions> {
+    const updatedQuestion =
+      await this.DifficultyQuestionsModel.findOneAndUpdate(
+        { question_id: id },
+        { $set: updateData },
+        { new: true },
+      ).exec();
+
+    if (!updatedQuestion) {
+      throw new NotFoundException(
+        `Question with id ${id} not found for update`,
+      );
     }
-    return updatedDifficultyOfQuestion;
+    return updatedQuestion;
   }
 }
