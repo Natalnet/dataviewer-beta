@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types'; // permite a atualização de parte dos atributos
+import { PartialType } from '@nestjs/mapped-types';
 
 export class TempUpUserDto {
   name: string;

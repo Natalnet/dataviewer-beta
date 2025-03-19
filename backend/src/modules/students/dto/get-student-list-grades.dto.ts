@@ -1,4 +1,4 @@
 export class StudentListGradesDto {
-  fullName: string; 
-  progress: number;  
+  fullName: string;
+  progress: number;
 }

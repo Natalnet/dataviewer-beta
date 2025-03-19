@@ -1,18 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
+export type DifficultyQuestionsDocument = HydratedDocument<DifficultyQuestions>;
+
 @Schema()
 export class DifficultyQuestions {
-  @Prop()
+  @Prop({ unique: true, required: true })
   question_id: string;
 
-  @Prop()
+  @Prop({ type: Number, min: 0, max: 100 })
   percentage: number;
 }
 
-export type DifficultyQuestionsDocument =
-  HydratedDocument<DifficultyQuestions>;
-
-export const DifficultyQuestionsSchema = SchemaFactory.createForClass(
-  DifficultyQuestions,
-);
+export const DifficultyQuestionsSchema = SchemaFactory.createForClass(DifficultyQuestions);

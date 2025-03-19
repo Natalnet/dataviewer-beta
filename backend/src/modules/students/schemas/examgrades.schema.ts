@@ -1,6 +1,7 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
+export type ExamGradesDocument = HydratedDocument<ExamGrades>;
 
 @Schema()
 export class ExamGrades {
@@ -11,22 +12,19 @@ export class ExamGrades {
   nota1: string;
 
   @Prop()
-  comentario1: string; 
+  comentario1: string;
 
   @Prop()
   nota2: string;
 
   @Prop()
-  comentario2: string; 
+  comentario2: string;
 
   @Prop()
   nota3: string;
 
   @Prop()
-  comentario3: string; 
-
+  comentario3: string;
 }
 
-export type ExamGradesDocument = HydratedDocument<ExamGrades> 
-
-export const ExamGradesSchema = SchemaFactory.createForClass(ExamGrades)
+export const ExamGradesSchema = SchemaFactory.createForClass(ExamGrades);

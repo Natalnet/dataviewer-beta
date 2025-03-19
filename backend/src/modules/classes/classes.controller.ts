@@ -59,7 +59,6 @@ export class ClassesController {
   @UseGuards(JwtAuthGuard)
   @Get('teacher/last')
   findLastClass(@Req() req: RequestWithUser) {
-    //console.log(req);
     return this.classesService.findTeacherLastClasses(req.user.userEmail);
   }
 

@@ -17,10 +17,7 @@ export class CoordinatorService {
     private readonly subjectPerformaceModel: Model<SubjectPerformanceDocument>,
   ) {}
 
-  async findPerformanceForSemester(
-    year: number,
-    semester: Semester,
-  ): Promise<Performance> {
+  async findPerformanceForSemester(year: number, semester: Semester): Promise<Performance> {
     const performanceForSemester = await this.performanceModel
       .findOne({ year: year, semester: semester })
       .exec();
@@ -35,6 +32,7 @@ export class CoordinatorService {
     const subjectPerformanceForSemester = await this.subjectPerformaceModel
       .findOne({ code: code, semester: semester })
       .exec();
+
     return subjectPerformanceForSemester;
   }
 }

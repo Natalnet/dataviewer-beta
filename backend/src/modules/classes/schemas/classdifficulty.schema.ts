@@ -19,5 +19,4 @@ export class ClassDifficulty {
   difficulty: Difficulty[];
 }
 
-export const ClassDifficultySchema =
-  SchemaFactory.createForClass(ClassDifficulty);
+export const ClassDifficultySchema = SchemaFactory.createForClass(ClassDifficulty);
