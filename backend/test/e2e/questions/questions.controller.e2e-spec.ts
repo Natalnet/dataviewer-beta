@@ -11,6 +11,7 @@ import {
 import { DifficultyQuestionsFactory } from 'test/factories/difficulty-questions.factory';
 import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
+import { randomUUID } from 'crypto';
 
 describe('QuestionsController (e2e)', () => {
   let app: INestApplication;
@@ -51,13 +52,10 @@ describe('QuestionsController (e2e)', () => {
     const user = await userFactory.create();
     const accessToken = jwt.sign({ sub: user._id.toString() });
 
-    const question = await difficultyQuestionsFactory.create({
-      question_id: '100',
-      percentage: 80,
-    });
+    const question = await difficultyQuestionsFactory.create();
 
     const response = await request(app.getHttpServer())
-      .get('/questions/difficulty/100')
+      .get(`/questions/difficulty/${question.question_id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200);
 
@@ -70,40 +68,41 @@ describe('QuestionsController (e2e)', () => {
     const user = await userFactory.create();
     const accessToken = jwt.sign({ sub: user._id.toString() });
 
+    const newDifficultyQuestion = {
+      question_id: randomUUID(),
+      percentage: 75,
+    };
+
     const response = await request(app.getHttpServer())
       .post('/questions/difficulty')
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        question_id: '200',
-        percentage: 75,
-      })
+      .send(newDifficultyQuestion)
       .expect(201);
 
     expect(response.body).toHaveProperty('_id');
-    expect(response.body).toHaveProperty('question_id', '200');
-    expect(response.body).toHaveProperty('percentage', 75);
+    expect(response.body).toHaveProperty('question_id', newDifficultyQuestion.question_id);
+    expect(response.body).toHaveProperty('percentage', newDifficultyQuestion.percentage);
   });
 
   it('[PUT] questions/difficulty/:id', async () => {
     const user = await userFactory.create();
     const accessToken = jwt.sign({ sub: user._id.toString() });
 
-    await difficultyQuestionsFactory.create({
-      question_id: '300',
-      percentage: 10,
-    });
+    const question = await difficultyQuestionsFactory.create();
+
+    const updateDifficultyQuestion = {
+      question_id: randomUUID(),
+      percentage: 30,
+    };
 
     const response = await request(app.getHttpServer())
-      .put('/questions/difficulty/300')
+      .put(`/questions/difficulty/${question.question_id}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        question_id: '302',
-        percentage: 23.5,
-      })
+      .send(updateDifficultyQuestion)
       .expect(200);
 
     expect(response.body).toHaveProperty('_id');
-    expect(response.body).toHaveProperty('question_id', '302');
-    expect(response.body).toHaveProperty('percentage', 23.5);
+    expect(response.body).toHaveProperty('question_id', updateDifficultyQuestion.question_id);
+    expect(response.body).toHaveProperty('percentage', updateDifficultyQuestion.percentage);
   });
 });
