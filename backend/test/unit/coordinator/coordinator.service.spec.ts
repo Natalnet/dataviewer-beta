@@ -55,7 +55,7 @@ describe('CoordinatorService (unit)', () => {
     it('should successfully return performance for semester', async () => {
       const mockResponse: SubjectPerformance = {
         code: 'ADM0561',
-        semester: 1,
+        semester: '2024.1',
         approved: 50,
         approvedByGrade: 40,
         canceled: 5,
@@ -73,10 +73,10 @@ describe('CoordinatorService (unit)', () => {
         exec: jest.fn().mockResolvedValueOnce(mockResponse),
       });
 
-      const result = await coordinatorService.findSubjectPerformanceForSemester('ADM0561', 1);
+      const result = await coordinatorService.findSubjectPerformanceForSemester('ADM0561', '2024.1');
 
       expect(result).toEqual(mockResponse);
-      expect(mockSchema.findOne).toHaveBeenCalledWith({ code: 'ADM0561', semester: 1 });
+      expect(mockSchema.findOne).toHaveBeenCalledWith({ code: 'ADM0561', semester: '2024.1' });
     });
   });
 });

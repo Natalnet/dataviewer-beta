@@ -72,7 +72,7 @@ describe('CoordinatorController (e2e)', () => {
     const performance = await subjectPerfomanceFactory.create();
 
     const response = await request(app.getHttpServer())
-      .get(`/coordinator/subject/${performance.code}/2`)
+      .get(`/coordinator/subject/${performance.code}/${performance.semester}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200);
 

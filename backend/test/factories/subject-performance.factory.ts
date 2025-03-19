@@ -6,7 +6,7 @@ import { SubjectPerformance, SubjectPerformanceDocument } from 'src/modules/coor
 
 export function makeSubjectPerformance(override: Partial<SubjectPerformance> = {}) {
   return {
-    semester: 2,
+    semester: 2025.2,
     approved: faker.number.int({ min: 0, max: 100 }),
     approvedByGrade: faker.number.int({ min: 0, max: 100 }),
     canceled: faker.number.int({ min: 0, max: 50 }),
