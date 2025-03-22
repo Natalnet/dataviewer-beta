@@ -43,7 +43,6 @@ describe('QuestionsController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await connection.dropDatabase();
     await connection.close();
     await app.close();
   });
