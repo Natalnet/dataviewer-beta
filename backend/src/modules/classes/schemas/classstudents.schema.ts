@@ -1,12 +1,12 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-export type ClassStudentsDocument = HydratedDocument<ClassStudents>; 
+export type ClassStudentsDocument = HydratedDocument<ClassStudents>;
 
 @Schema()
 export class ClassStudents {
-  @Prop() 
-  class_id: string; 
+  @Prop()
+  class_id: string;
 
   @Prop()
   students: string[];
@@ -15,8 +15,7 @@ export class ClassStudents {
   reg_students: string[];
 
   @Prop()
-  class_code: string; 
-
+  class_code: string;
 }
 
-export const ClassStudentsSchema = SchemaFactory.createForClass(ClassStudents); 
+export const ClassStudentsSchema = SchemaFactory.createForClass(ClassStudents);

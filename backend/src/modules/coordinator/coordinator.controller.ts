@@ -9,22 +9,13 @@ export class CoordinatorController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/:year/:semester')
-  findPerformance(
-    @Param('year') year: number,
-    @Param('semester') semester: Semester,
-  ) {
+  findPerformance(@Param('year') year: number, @Param('semester') semester: Semester) {
     return this.coordinatorService.findPerformanceForSemester(year, semester);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('subject/:code/:semester')
-  findSubjectPerformance(
-    @Param('code') code: string,
-    @Param('semester') semester: string,
-  ) {
-    return this.coordinatorService.findSubjectPerformanceForSemester(
-      code,
-      semester,
-    );
+  findSubjectPerformance(@Param('code') code: string, @Param('semester') semester: string) {
+    return this.coordinatorService.findSubjectPerformanceForSemester(code, semester);
   }
 }

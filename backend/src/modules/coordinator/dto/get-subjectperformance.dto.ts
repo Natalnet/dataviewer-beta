@@ -1,9 +1,9 @@
- export class SubjectPerformanceDto {
+export class SubjectPerformanceDto {
   semester: string;
   approved: number;
   approvedByGrade: number;
   canceled: number;
-  Code:string;
+  code: string;
   disapproved: number;
   disapprovedByAbsence: number;
   disapprovedByGrade: number;
@@ -11,5 +11,5 @@
   disapprovedByMeanAbsence: number;
   excluded: number;
   locked: number;
-  name:string;
+  name: string;
 }

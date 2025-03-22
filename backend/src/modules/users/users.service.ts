@@ -12,7 +12,6 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    console.log('Creating user...');
     try {
       const createdUser = await new this.userModel({
         ...createUserDto,
@@ -33,8 +32,6 @@ export class UsersService {
 
       return res;
     } catch (error) {
-      console.log('Error: ', error);
-      //TODO: melhorar o tratamento de exceção
       throw new ForbiddenException('Credentials Error!');
     }
   }

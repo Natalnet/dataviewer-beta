@@ -5,5 +5,5 @@ export class UserDto {
   emailConfirmed: boolean;
   profile: string;
   avatar: string;
-  registrationNumber: string; 
+  registrationNumber: string;
 }

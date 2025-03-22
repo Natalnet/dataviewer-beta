@@ -72,7 +72,7 @@ export class ClassesService {
     const teacherClassData = await this.teacherClassModel
       .findOne({ email: userEmail })
       .exec();
-    //console.log(teacherClassData);
+
     if (teacherClassData != null) {
       const classIds = teacherClassData['classes'];
 
@@ -85,14 +85,14 @@ export class ClassesService {
     const teacherClassData = await this.teacherClassModel
       .findOne({ email: userEmail })
       .exec();
-    //console.log(teacherClassData);
+
     if (teacherClassData != null) {
       const classIds = teacherClassData['classes'];
 
       const teacherClasses = await this.classModel
         .find({ class_id: { $in: classIds } })
         .exec();
-      // guarda o código da turma mais recente
+
       let lastClassCode = '';
       let lastYear = 0;
       for (const t of teacherClasses) {
@@ -113,7 +113,6 @@ export class ClassesService {
   }
 
   async findListSubjectClass(id: string): Promise<ListSubjectClassDto[]> {
-    // Realiza tratamento de exceção
     const data = await this.listSubjectClass.findOne({ class_id: id }).exec();
     if (!data) return [];
     return data['tags'].map((l) => ({
@@ -126,7 +125,6 @@ export class ClassesService {
   }
 
   async findClassLists(id: string): Promise<ClassMetricsDto[]> {
-    // Realiza tratamento de exceção
     const data = await this.classListModel.findOne({ class_id: id }).exec();
 
     if (!data) return [];
@@ -176,7 +174,6 @@ export class ClassesService {
       .exec();
     if (!data) return [];
 
-    //return this.classModel.find({ class_id: { $in: classIds } }).exec();
     const grades = await this.examGradesModel
       .find({ matricula: { $in: data.reg_students } })
       .exec();
