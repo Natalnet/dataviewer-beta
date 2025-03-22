@@ -14,7 +14,7 @@ import { SubjectPerformance, SubjectPerformanceSchema } from 'src/modules/coordi
 describe('CoordinatorController (e2e)', () => {
   let app: INestApplication;
   let connection;
-  let subjectPerfomanceFactory: SubjectPerformanceFactory;
+  let subjectPerformanceFactory: SubjectPerformanceFactory;
   let performanceFactory: PerformanceFactory;
   let userFactory: UserFactory;
   let jwt: JwtService;
@@ -37,7 +37,7 @@ describe('CoordinatorController (e2e)', () => {
 
     await app.init();
 
-    subjectPerfomanceFactory = moduleRef.get(SubjectPerformanceFactory);
+    subjectPerformanceFactory = moduleRef.get(SubjectPerformanceFactory);
     performanceFactory = moduleRef.get(PerformanceFactory);
     userFactory = moduleRef.get(UserFactory);
     connection = app.get(getConnectionToken());
@@ -68,7 +68,7 @@ describe('CoordinatorController (e2e)', () => {
     const user = await userFactory.create();
     const accessToken = jwt.sign({ sub: user._id.toString() });
 
-    const performance = await subjectPerfomanceFactory.create();
+    const performance = await subjectPerformanceFactory.create();
 
     const response = await request(app.getHttpServer())
       .get(`/coordinator/subject/${performance.code}/${performance.semester}`)
