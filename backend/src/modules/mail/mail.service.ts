@@ -34,7 +34,7 @@ export class MailService {
   }
 
   async generateToken(email: string) {
-    return this.jwtService.sign(email, {
+    return this.jwtService.sign({ email }, {
       expiresIn: '7d',
     });
   }
