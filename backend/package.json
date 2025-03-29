@@ -22,24 +22,6 @@
     "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@faker-js/faker": "^9.4.0",
-    "@nestjs-modules/mailer": "^1.8.1",
-    "@nestjs/common": "^9.0.0",
-    "@nestjs/config": "^2.3.1",
-    "@nestjs/core": "^9.0.0",
-    "@nestjs/jwt": "^9.0.0",
-    "@nestjs/mapped-types": "*",
-    "@nestjs/mongoose": "^9.2.1",
-    "@nestjs/passport": "^9.0.0",
-    "@nestjs/platform-express": "^9.0.0",
-    "bcrypt": "^5.1.0",
-    "handlebars": "^4.7.7",
-    "mongoose": "^6.7.2",
-    "nodemailer": "^6.9.3",
-    "passport": "^0.6.0",
-    "passport-jwt": "^4.0.0",
-=======
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^11.0.12",
     "@nestjs/config": "^4.0.2",
@@ -61,7 +43,6 @@
     "nodemailer": "^6.10.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
->>>>>>> 129b801 (chore: update nestjs and dependencies)
     "passport-local": "^1.0.0",
     "preview-email": "^3.1.0",
     "pug": "^3.0.3",
@@ -115,15 +96,11 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/"
-<<<<<<< HEAD
     ],
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/src/$1",
       "^test/(.*)$": "<rootDir>/test/$1"
     }
-=======
-    ]
->>>>>>> 129b801 (chore: update nestjs and dependencies)
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
