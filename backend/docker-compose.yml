@@ -1,11 +1,10 @@
 services:
   database:
     container_name: mongodb_dataviewer
-    image: mongo
+    image: mongo:8.0
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 12345678
+    env_file:
+      - .env
     ports:
       - "27018:27017"
     volumes:
