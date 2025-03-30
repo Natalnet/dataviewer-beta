@@ -1,10 +1,32 @@
-name: Continuos Integration
+name: CI
 
 on: [pull_request, push]
 
 jobs: 
   continuos-integration:
     runs-on: ubuntu-latest
+
+    env:
+      MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      mongo:
+        image: mongo:6
+        ports:
+          - 27018:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: ${{ env.MONGO_USERNAME }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ env.MONGO_PASSWORD }}
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
@@ -14,16 +36,13 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: |
-          cd backend
-          yarn install
+        run: yarn install
 
       - name: Build application
-        run: |
-          cd backend
-          yarn build
+        run: yarn build
 
-      - name: Run tests
-        run: |
-          cd backend
-          yarn test
+      - name: Run Unit tests
+        run: yarn test
+
+      - name: Run E2E tests
+        run: yarn test
