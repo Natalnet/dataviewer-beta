@@ -4,16 +4,18 @@ import * as request from 'supertest';
 import { AppModule } from 'src/app.module';
 import { JwtService } from '@nestjs/jwt';
 import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { PerformanceFactory } from 'test/factories/performance.factory';
 import { Performance, PerformanceSchema } from 'src/modules/coordinator/schemas/performance.schema';
 import { SubjectPerformanceFactory } from 'test/factories/subject-performance.factory';
 import { SubjectPerformance, SubjectPerformanceSchema } from 'src/modules/coordinator/schemas/subjectperformance.schema';
+import { clearDatabase } from 'test/utils/clear-database';
 
 describe('CoordinatorController (e2e)', () => {
   let app: INestApplication;
-  let connection;
+  let connection: Connection;
   let subjectPerformanceFactory: SubjectPerformanceFactory;
   let performanceFactory: PerformanceFactory;
   let userFactory: UserFactory;
@@ -44,6 +46,7 @@ describe('CoordinatorController (e2e)', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase(connection);
     await connection.close();
     await app.close();
   });

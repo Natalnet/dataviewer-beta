@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from 'src/app.module';
 import { JwtService } from '@nestjs/jwt';
 import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import {
   DifficultyQuestions,
   DifficultyQuestionsSchema,
@@ -12,10 +13,11 @@ import { DifficultyQuestionsFactory } from 'test/factories/difficulty-questions.
 import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { randomUUID } from 'crypto';
+import { clearDatabase } from 'test/utils/clear-database';
 
 describe('QuestionsController (e2e)', () => {
   let app: INestApplication;
-  let connection;
+  let connection: Connection;
   let difficultyQuestionsFactory: DifficultyQuestionsFactory;
   let userFactory: UserFactory;
   let jwt: JwtService;
@@ -43,6 +45,7 @@ describe('QuestionsController (e2e)', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase(connection);
     await connection.close();
     await app.close();
   });
