@@ -2,48 +2,55 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Semester } from 'src/types/semester';
 
-export type SubjectPerformanceDocument = HydratedDocument<SubjectPerformance>;
-
-@Schema()
-export class SubjectPerformance {
+export type SubjectPerformanceDocument = HydratedDocument<SubjectPerformance>
+@Schema({ _id: false })
+export class PerformanceStats {
   @Prop()
-  semester: string;
-
+  aproved: number;
+  
   @Prop()
-  approved: number;
-
-  @Prop()
-  approvedByGrade: number;
+  aprovedByGrade: number;
 
   @Prop()
   canceled: number;
 
   @Prop()
-  code: string;
+  disaproved: number;
 
   @Prop()
-  disapproved: number;
+  disaprovedByAbsence: number;
 
   @Prop()
-  disapprovedByAbsence: number;
+  disaprovedByGrade: number;
 
   @Prop()
-  disapprovedByGrade: number;
+  disaprovedByGradeAndEssense: number;
 
   @Prop()
-  disapprovedByGradeAndAbsence: number;
+  disaprovedByMeanAbsence: number;
 
   @Prop()
-  disapprovedByMeanAbsence: number;
-
-  @Prop()
-  excluded: number;
+  exclued: number;
 
   @Prop()
   locked: number;
+}
+
+export const PerformanceStatsSchema = SchemaFactory.createForClass(PerformanceStats);
+
+@Schema()
+export class SubjectPerformance extends Document{
+  @Prop()
+  semester: string;
+
+  @Prop()
+  code: string;
 
   @Prop()
   name: string;
+
+  @Prop()
+  stats: PerformanceStats;
 }
 
 export const SubjectPerformanceSchema = SchemaFactory.createForClass(SubjectPerformance);
