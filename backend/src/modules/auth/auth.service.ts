@@ -1,44 +1,65 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { compare } from 'bcrypt';
-import { JwtService } from '@nestjs/jwt';
-import { LoginDto } from './dto/login.dto';
+import { compare, hash } from 'bcrypt';
+import { SignUpDto } from './dto/sign-up.dto';
+import { TokenService } from './token.service';
+import { UserResponseDto } from '../users/dto/user-response.dto';
+import { AuthResponseDto } from './dto/auth-response.dto';
+import { mapToDto } from 'src/utils/mapper.util';
+import { HASH_SALT_LENGTH } from 'src/shared/constants/hash.constants';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private tokenService: TokenService,
     private usersService: UsersService,
-    private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string) {
+  async validateUser(email: string, password: string): Promise<UserResponseDto> {
     const user = await this.usersService.findOneByEmail(email);
 
-    if (!user) return null;
+    if (!user) {
+      throw new UnauthorizedException('Invalid email or password.');
+    }
 
-    const isPasswordCorrect = await compare(password, user.password);
+    const isPasswordValid = await compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid email or password.');
+    }
 
-    if (!isPasswordCorrect) return null;
-
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-    };
+    return mapToDto(UserResponseDto, user);
   }
 
-  async login(user: LoginDto) {
-    const payload = { email: user.email, sub: user.id };
-    const userData = await this.usersService.findOneByEmail(user.email);
+  async signIn(user: UserResponseDto): Promise<AuthResponseDto> {
+    const tokens = this.tokenService.generateTokens(user);
+    await this.tokenService.saveRefreshToken(user.id, tokens.refreshToken);
 
-    return {
-      accessToken: this.jwtService.sign(payload),
-      user: {
-        profile: userData.profile,
-        name: userData.name,
-        email: userData.email,
-        mat: userData.registrationNumber,
-      },
-    };
+    return tokens;
+  }
+
+  async signUp(signUpDto: SignUpDto): Promise<UserResponseDto> {
+    const { name, email, password } = signUpDto;
+
+    const existingUser = await this.usersService.findOneByEmail(email);
+
+    if (existingUser) {
+      throw new UnauthorizedException('Email is already registered');
+    }
+
+    const hashedPassword = await hash(password, HASH_SALT_LENGTH);
+    return this.usersService.create({ name, email, password: hashedPassword });
+  }
+
+  async refreshToken(refreshToken: string): Promise<AuthResponseDto> {
+    const token = await this.tokenService.validateRefreshToken(refreshToken);
+
+    const user = await this.usersService.findOne(token.userId.toString());
+
+    await this.tokenService.revokeToken(token);
+
+    const tokens = this.tokenService.generateTokens(user);
+    await this.tokenService.saveRefreshToken(user.id, tokens.refreshToken);
+
+    return tokens;
   }
 }
