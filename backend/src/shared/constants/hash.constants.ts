@@ -1,0 +1,1 @@
+export const HASH_SALT_LENGTH = 8;
