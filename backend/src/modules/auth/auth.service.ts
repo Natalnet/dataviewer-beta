@@ -1,18 +1,18 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { compare, hash } from 'bcrypt';
 import { SignUpDto } from './dto/sign-up.dto';
 import { TokenService } from './token.service';
 import { UserResponseDto } from '../users/dto/user-response.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { mapToDto } from 'src/utils/mapper.util';
-import { HASH_SALT_LENGTH } from 'src/shared/constants/hash.constants';
+import { BcryptService } from './bcrypt.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private tokenService: TokenService,
     private usersService: UsersService,
+    private bcryptService: BcryptService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserResponseDto> {
@@ -22,7 +22,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password.');
     }
 
-    const isPasswordValid = await compare(password, user.password);
+    const isPasswordValid = await this.bcryptService.comparePasswords(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid email or password.');
     }
@@ -38,16 +38,22 @@ export class AuthService {
   }
 
   async signUp(signUpDto: SignUpDto): Promise<UserResponseDto> {
-    const { name, email, password } = signUpDto;
+    const { name, email, password, registrationNumber } = signUpDto;
 
     const existingUser = await this.usersService.findOneByEmail(email);
 
     if (existingUser) {
-      throw new UnauthorizedException('Email is already registered');
+      throw new ConflictException('Email is already registered');
     }
 
-    const hashedPassword = await hash(password, HASH_SALT_LENGTH);
-    return this.usersService.create({ name, email, password: hashedPassword });
+    const existingRegistrationNumber = await this.usersService.findOneByRegistrationNumber(registrationNumber);
+    
+    if (existingRegistrationNumber) {
+      throw new ConflictException('Registration number is already registered');
+    }
+
+    const hashedPassword = await this.bcryptService.hashPassword(password);
+    return this.usersService.create({ name, email, password: hashedPassword, registrationNumber });
   }
 
   async refreshToken(refreshToken: string): Promise<AuthResponseDto> {

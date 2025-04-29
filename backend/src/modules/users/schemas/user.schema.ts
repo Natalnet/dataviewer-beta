@@ -24,7 +24,7 @@ export class User {
   @Prop({ default: null })
   avatar: string;
 
-  @Prop({ unique: true, sparse: true, default: null })
+  @Prop({ required: true, unique: true })
   registrationNumber: string;
 }
 

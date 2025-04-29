@@ -6,12 +6,15 @@ import { User, UserDocument } from './schemas/user.schema';
 import { UserResponseDto } from './dto/user-response.dto';
 import { mapToDto } from 'src/utils/mapper.util';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { hash } from 'bcrypt';
-import { HASH_SALT_LENGTH } from 'src/shared/constants/hash.constants';
+import { BcryptService } from '../auth/bcrypt.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) 
+    private userModel: Model<UserDocument>,
+    private bcryptService: BcryptService,
+  ) {}
 
   async findAll(): Promise<UserResponseDto[]> {
     const users = await this.userModel.find().exec();
@@ -37,6 +40,10 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
+  async findOneByRegistrationNumber(registrationNumber: string): Promise<User | null> {
+    return this.userModel.findOne({ registrationNumber }).exec();
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserResponseDto> {
     if (updateUserDto.email) {
       const existingUser = await this.userModel.findOne({ email: updateUserDto.email }).exec();
@@ -46,7 +53,7 @@ export class UsersService {
     }
 
     if (updateUserDto.password) {
-      updateUserDto.password = await hash(updateUserDto.password, HASH_SALT_LENGTH);
+      updateUserDto.password = await this.bcryptService.hashPassword(updateUserDto.password);
     }
 
     const user = await this.userModel

@@ -20,7 +20,6 @@ export class CreateUserDto {
   @IsString()
   avatar?: string;
 
-  @IsOptional()
   @IsString()
-  registrationNumber?: string;
+  registrationNumber: string;
 }

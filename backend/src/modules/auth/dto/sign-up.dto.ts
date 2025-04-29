@@ -15,4 +15,7 @@ export class SignUpDto {
   @ValidateIf((o) => o.password)
   @Match('password', { message: 'Password confirmation does not match password' })
   passwordConfirmation: string;
+
+  @IsString()
+  registrationNumber: string;
 }
