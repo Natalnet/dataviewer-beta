@@ -4,7 +4,6 @@ import * as request from 'supertest';
 import { AppModule } from 'src/app.module';
 import { JwtService } from '@nestjs/jwt';
 import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
 import {
   DifficultyQuestions,
   DifficultyQuestionsSchema,
@@ -13,11 +12,11 @@ import { DifficultyQuestionsFactory } from 'test/factories/difficulty-questions.
 import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { randomUUID } from 'crypto';
-import { clearDatabase } from 'test/utils/clear-database';
+import { rootMongooseTestModule, closeInMongodConnection } from 'test/utils/mongo-memory-server';
+import { BcryptService } from 'src/modules/auth/bcrypt.service';
 
 describe('QuestionsController (e2e)', () => {
   let app: INestApplication;
-  let connection: Connection;
   let difficultyQuestionsFactory: DifficultyQuestionsFactory;
   let userFactory: UserFactory;
   let jwt: JwtService;
@@ -25,13 +24,14 @@ describe('QuestionsController (e2e)', () => {
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [
+        rootMongooseTestModule(),
         AppModule,
         MongooseModule.forFeature([
           { name: DifficultyQuestions.name, schema: DifficultyQuestionsSchema },
           { name: User.name, schema: UserSchema },
         ]),
       ],
-      providers: [DifficultyQuestionsFactory, UserFactory],
+      providers: [DifficultyQuestionsFactory, UserFactory, BcryptService],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -41,18 +41,16 @@ describe('QuestionsController (e2e)', () => {
 
     difficultyQuestionsFactory = moduleRef.get(DifficultyQuestionsFactory);
     userFactory = moduleRef.get(UserFactory);
-    connection = app.get(getConnectionToken());
   });
 
   afterAll(async () => {
-    await clearDatabase(connection);
-    await connection.close();
     await app.close();
+    await closeInMongodConnection();
   });
-
+  
   it('[GET] questions/difficulty/:id', async () => {
-    const user = await userFactory.create();
-    const accessToken = jwt.sign({ sub: user._id.toString() });
+    const user = await userFactory.create({ password: 'password123' });
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, aud: 'access' });
 
     const question = await difficultyQuestionsFactory.create();
 
@@ -67,8 +65,8 @@ describe('QuestionsController (e2e)', () => {
   });
 
   it('[POST] questions/difficulty', async () => {
-    const user = await userFactory.create();
-    const accessToken = jwt.sign({ sub: user._id.toString() });
+    const user = await userFactory.create({ password: 'password123' });
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, aud: 'access' });
 
     const newDifficultyQuestion = {
       question_id: randomUUID(),
@@ -87,8 +85,8 @@ describe('QuestionsController (e2e)', () => {
   });
 
   it('[PUT] questions/difficulty/:id', async () => {
-    const user = await userFactory.create();
-    const accessToken = jwt.sign({ sub: user._id.toString() });
+    const user = await userFactory.create({ password: 'password123' });
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, aud: 'access' });
 
     const question = await difficultyQuestionsFactory.create();
 
