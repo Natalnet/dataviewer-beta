@@ -40,6 +40,7 @@ describe('AuthController (e2e)', () => {
       email: 'johndoe@example.com',
       password: 'password123',
       passwordConfirmation: 'password123',
+      registrationNumber: '123456789',
     };
 
     const response = await request(app.getHttpServer())
