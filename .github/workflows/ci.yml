@@ -6,27 +6,9 @@ jobs:
   continuos-integration:
     runs-on: ubuntu-latest
 
-    env:
-      MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-
     defaults:
       run:
         working-directory: backend
-
-    services:
-      mongo:
-        image: mongo:8.0
-        ports:
-          - 27018:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: ${{ env.MONGO_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ env.MONGO_PASSWORD }}
-        options: >-
-          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'" 
-          --health-interval 10s 
-          --health-timeout 5s 
-          --health-retries 5
 
     steps:
       - uses: actions/checkout@v4
