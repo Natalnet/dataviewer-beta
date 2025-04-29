@@ -14,6 +14,7 @@ import {
 } from './schemas/password-reset-token.schema';
 import { RefreshToken, RefreshTokenSchema } from './schemas/refresh-token.schema';
 import { TokenService } from './token.service';
+import { BcryptService } from './bcrypt.service';
 
 @Module({
   imports: [
@@ -40,7 +41,7 @@ import { TokenService } from './token.service';
     PassportModule,
     ConfigModule,
   ],
-  providers: [AuthService, TokenService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, TokenService, BcryptService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
   controllers: [AuthController],
 })

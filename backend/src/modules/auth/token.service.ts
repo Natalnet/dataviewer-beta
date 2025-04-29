@@ -5,11 +5,10 @@ import { RefreshToken, RefreshTokenDocument } from './schemas/refresh-token.sche
 import { Model } from 'mongoose';
 import { add } from 'date-fns';
 import { JwtService } from '@nestjs/jwt';
-import { compare, hash } from 'bcrypt';
 import { UserResponseDto } from '../users/dto/user-response.dto';
 import { randomUUID } from 'crypto';
 import { AuthResponseDto } from './dto/auth-response.dto';
-import { HASH_SALT_LENGTH } from 'src/shared/constants/hash.constants';
+import { BcryptService } from './bcrypt.service';
 
 @Injectable()
 export class TokenService {
@@ -17,6 +16,7 @@ export class TokenService {
     @InjectModel(RefreshToken.name) private refreshTokenModel: Model<RefreshTokenDocument>,
     private configService: ConfigService,
     private jwtService: JwtService,
+    private bcryptService: BcryptService,
   ) {}
 
   generateTokens(user: UserResponseDto): AuthResponseDto {
@@ -54,7 +54,7 @@ export class TokenService {
   async saveRefreshToken(userId: string, refreshToken: string): Promise<void> {
     const decoded = this.validateJwtToken(refreshToken, 'refresh');
 
-    const hashedToken = await hash(refreshToken, HASH_SALT_LENGTH);
+    const hashedToken = await this.bcryptService.hashPassword(refreshToken);
     const expiresAt = add(new Date(), {
       days: this.configService.get<number>('REFRESH_TOKEN_DB_EXPIRATION'),
     });
@@ -81,7 +81,7 @@ export class TokenService {
       throw new UnauthorizedException('Invalid or expired refresh token.');
     }
 
-    const isValid = await compare(refreshToken, token.token);
+    const isValid = await this.bcryptService.comparePasswords(refreshToken, token.token);
     if (!isValid) {
       throw new UnauthorizedException('Invalid refresh token.');
     }
