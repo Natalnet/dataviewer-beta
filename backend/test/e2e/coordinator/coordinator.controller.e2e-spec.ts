@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from 'src/app.module';
 import { JwtService } from '@nestjs/jwt';
-import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { PerformanceFactory } from 'test/factories/performance.factory';
