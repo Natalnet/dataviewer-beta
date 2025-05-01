@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from 'src/app.module';
-import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { UserFactory } from 'test/factories/user.factory';
 import { rootMongooseTestModule, closeInMongodConnection } from 'test/utils/mongo-memory-server';
@@ -23,7 +24,7 @@ describe('AuthController (e2e)', () => {
     }).compile();
 
     app = moduleRef.createNestApplication();
-    
+    app.use(cookieParser());
     await app.init();
 
     userFactory = moduleRef.get(UserFactory);
@@ -67,7 +68,7 @@ describe('AuthController (e2e)', () => {
       .expect(201);
 
     expect(response.body).toHaveProperty('accessToken');
-    expect(response.body).toHaveProperty('refreshToken');
+    expect(response.headers['set-cookie']).toBeDefined();
   });
 
   it('[POST] auth/refresh', async () => {
@@ -78,14 +79,13 @@ describe('AuthController (e2e)', () => {
       .send({ email: user.email, password: 'password123' })
       .expect(201);
 
-    const refreshToken = signInResponse.body.refreshToken;
+    const cookies = signInResponse.headers['set-cookie'];
 
     const response = await request(app.getHttpServer())
       .post('/auth/refresh')
-      .send({ refresh_token: refreshToken })
+      .set('Cookie', cookies)
       .expect(201);
 
-    expect(response.body).toHaveProperty('accessToken');
-    expect(response.body).toHaveProperty('refreshToken');
+      expect(response.body).toHaveProperty('accessToken');
   });
 });
