@@ -3,40 +3,39 @@ import { HydratedDocument } from 'mongoose';
 import { Semester } from 'src/types/semester';
 
 export type SubjectPerformanceDocument = HydratedDocument<SubjectPerformance>
+
 @Schema({ _id: false })
 export class PerformanceStats {
   @Prop()
-  aproved: number;
+  approved: number;
   
   @Prop()
-  aprovedByGrade: number;
+  approvedByGrade: number;
 
   @Prop()
   canceled: number;
 
   @Prop()
-  disaproved: number;
+  disapproved: number;
 
   @Prop()
-  disaprovedByAbsence: number;
+  disapprovedByAbsence: number;
 
   @Prop()
-  disaprovedByGrade: number;
+  disapprovedByGrade: number;
 
   @Prop()
-  disaprovedByGradeAndEssense: number;
+  disapprovedByGradeAndEssense: number;
 
   @Prop()
-  disaprovedByMeanAbsence: number;
+  disapprovedByMeanAbsence: number;
 
   @Prop()
-  exclued: number;
+  excluded: number;
 
   @Prop()
   locked: number;
 }
-
-export const PerformanceStatsSchema = SchemaFactory.createForClass(PerformanceStats);
 
 @Schema()
 export class SubjectPerformance extends Document{
@@ -49,7 +48,7 @@ export class SubjectPerformance extends Document{
   @Prop()
   name: string;
 
-  @Prop()
+  @Prop({ type: () => PerformanceStats })
   stats: PerformanceStats;
 }
 
