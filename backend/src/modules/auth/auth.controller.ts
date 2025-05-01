@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, Post, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -53,5 +53,23 @@ export class AuthController {
     });
 
     return { accessToken: tokens.accessToken };
+  }
+
+  @Post('signOut')
+  @HttpCode(204)
+  async signOut(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies['refresh_token'];
+
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token not found.');
+    }
+
+    await this.authService.signOut(refreshToken);
+
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      sameSite: 'strict',
+      path: '/auth',
+    });
   }
 }

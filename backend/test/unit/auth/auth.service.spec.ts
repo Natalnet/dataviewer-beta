@@ -196,4 +196,24 @@ describe('AuthService (unit)', () => {
       expect(result).toEqual(mockTokens);
     });
   });
+
+  describe('signOut', () => {
+    it('should validate and revoke the refresh token', async () => {
+      const mockToken = {
+        id: '1',
+        userId: '1',
+        token: 'hashedRefreshToken',
+        revoked: false,
+        save: jest.fn(),
+      } as any;
+  
+      tokenService.validateRefreshToken.mockResolvedValue(mockToken);
+      tokenService.revokeToken.mockResolvedValue();
+  
+      await authService.signOut('validRefreshToken');
+  
+      expect(tokenService.validateRefreshToken).toHaveBeenCalledWith('validRefreshToken');
+      expect(tokenService.revokeToken).toHaveBeenCalledWith(mockToken);
+    });
+  });
 });

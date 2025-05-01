@@ -68,4 +68,9 @@ export class AuthService {
 
     return tokens;
   }
+
+  async signOut(refreshToken: string): Promise<void> {
+    const token = await this.tokenService.validateRefreshToken(refreshToken);
+    await this.tokenService.revokeToken(token);
+  }
 }

@@ -88,4 +88,27 @@ describe('AuthController (e2e)', () => {
 
       expect(response.body).toHaveProperty('accessToken');
   });
+
+  it('[POST] auth/signOut', async () => {
+    const user = await userFactory.create({ password: 'password123' });
+
+    const signInResponse = await request(app.getHttpServer())
+      .post('/auth/signIn')
+      .send({ email: user.email, password: 'password123' })
+      .expect(201);
+
+    const cookies = signInResponse.headers['set-cookie'];
+
+    await request(app.getHttpServer())
+    .post('/auth/signOut')
+    .set('Cookie', cookies)
+    .expect(204);
+
+    const refreshResponse = await request(app.getHttpServer())
+      .post('/auth/refresh')
+      .set('Cookie', cookies)
+      .expect(401);
+
+    expect(refreshResponse.body.message).toBe('Invalid or expired refresh token.');
+  });
 });
