@@ -53,7 +53,7 @@ describe('CoordinatorService (unit)', () => {
 
   describe('findSubjectPerformanceForSemester', () => {
     it('should successfully return performance for semester', async () => {
-      const mockResponse: Partial<SubjectPerformance> = {
+      const mockResponse: SubjectPerformance = {
         code: 'ADM0561',
         semester: '2024.1',
         name: 'Administração Geral',

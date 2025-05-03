@@ -38,7 +38,7 @@ export class PerformanceStats {
 }
 
 @Schema()
-export class SubjectPerformance extends Document {
+export class SubjectPerformance {
   @Prop()
   semester: string;
 
