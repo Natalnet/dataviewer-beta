@@ -25,7 +25,7 @@ export class PerformanceStats {
   disapprovedByGrade: number;
 
   @Prop()
-  disapprovedByGradeAndEssense: number;
+  disapprovedByGradeAndAbsence: number;
 
   @Prop()
   disapprovedByMeanAbsence: number;

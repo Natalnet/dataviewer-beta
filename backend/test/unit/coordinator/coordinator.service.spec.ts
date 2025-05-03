@@ -53,20 +53,22 @@ describe('CoordinatorService (unit)', () => {
 
   describe('findSubjectPerformanceForSemester', () => {
     it('should successfully return performance for semester', async () => {
-      const mockResponse: SubjectPerformance = {
+      const mockResponse: Partial<SubjectPerformance> = {
         code: 'ADM0561',
         semester: '2024.1',
-        approved: 50,
-        approvedByGrade: 40,
-        canceled: 5,
-        disapproved: 10,
-        disapprovedByAbsence: 2,
-        disapprovedByGrade: 5,
-        disapprovedByGradeAndAbsence: 3,
-        disapprovedByMeanAbsence: 1,
-        excluded: 0,
-        locked: 1,
         name: 'Administração Geral',
+        stats: {
+          approved: 50,
+          approvedByGrade: 40,
+          canceled: 5,
+          disapproved: 10,
+          disapprovedByAbsence: 2,
+          disapprovedByGrade: 5,
+          disapprovedByGradeAndAbsence: 3,
+          disapprovedByMeanAbsence: 1,
+          excluded: 0,
+          locked: 1,
+        }
       };
 
       mockSchema.findOne.mockReturnValueOnce({
