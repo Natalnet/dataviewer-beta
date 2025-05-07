@@ -1,86 +1,76 @@
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
-import { hashSync } from 'bcrypt';
-import { UserDto } from './dto/get-user.dto';
+import { UserResponseDto } from './dto/user-response.dto';
+import { mapToDto } from 'src/utils/mapper.util';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { BcryptService } from '../auth/services/bcrypt.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) 
+    private userModel: Model<UserDocument>,
+    private bcryptService: BcryptService,
+  ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    try {
-      const createdUser = await new this.userModel({
-        ...createUserDto,
-        password: hashSync(createUserDto.password, 10),
-        profile: 'STUDENT',
-        avatar: '',
-      }).save();
-
-      const res: UserDto = {
-        id: createdUser.id,
-        email: createdUser.email,
-        name: createdUser.name,
-        emailConfirmed: createdUser.emailConfirmed,
-        profile: createdUser.profile,
-        avatar: createdUser.avatar,
-        registrationNumber: createdUser.registrationNumber,
-      };
-
-      return res;
-    } catch (error) {
-      throw new ForbiddenException('Credentials Error!');
-    }
-  }
-
-  async findAll(): Promise<UserDto[]> {
+  async findAll(): Promise<UserResponseDto[]> {
     const users = await this.userModel.find().exec();
-
-    return users.map((user) => ({
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      emailConfirmed: user.emailConfirmed,
-      profile: user.profile,
-      avatar: user.avatar,
-      registrationNumber: user.registrationNumber,
-    }));
+    return users.map((user) => mapToDto(UserResponseDto, user));
   }
 
-  async findOne(id: string): Promise<UserDto> {
+  async create(
+    createUserDto: Omit<CreateUserDto, 'passwordConfirmation'>,
+  ): Promise<UserResponseDto> {
+    const user = await this.userModel.create(createUserDto);
+    return mapToDto(UserResponseDto, user);
+  }
+
+  async findOne(id: string): Promise<UserResponseDto> {
     const user = await this.userModel.findById(id).exec();
-    return {
-      email: user.email,
-      name: user.name,
-      id: user.id,
-      emailConfirmed: user.emailConfirmed,
-      profile: user.profile,
-      avatar: user.avatar,
-      registrationNumber: user.registrationNumber,
-    };
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
+    return mapToDto(UserResponseDto, user);
   }
 
-  async findOneByEmail(email: string) {
-    const user = await this.userModel.findOne({ email }).exec();
-    return user;
+  async findOneByEmail(email: string): Promise<User | null> {
+    return this.userModel.findOne({ email }).exec();
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    const updatedUser = await this.userModel
-      .findByIdAndUpdate(id, {
-        $set: updateUserDto,
-      })
+  async findOneByRegistrationNumber(registrationNumber: string): Promise<User | null> {
+    return this.userModel.findOne({ registrationNumber }).exec();
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserResponseDto> {
+    if (updateUserDto.email) {
+      const existingUser = await this.userModel.findOne({ email: updateUserDto.email }).exec();
+      if (existingUser && existingUser._id.toString() !== id) {
+        throw new BadRequestException('Email is already in use by another user.');
+      }
+    }
+
+    if (updateUserDto.password) {
+      updateUserDto.password = await this.bcryptService.hashPassword(updateUserDto.password);
+    }
+
+    const user = await this.userModel
+      .findByIdAndUpdate(id, { $set: updateUserDto }, { new: true, runValidators: true })
       .exec();
 
-    return {
-      result: 'ok',
-    };
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
+
+    return mapToDto(UserResponseDto, user);
   }
 
-  async remove(id: string): Promise<void> {
-    this.userModel.findByIdAndDelete(id).exec();
+  async delete(id: string): Promise<void> {
+    const user = await this.userModel.findByIdAndDelete(id).exec();
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
   }
 }

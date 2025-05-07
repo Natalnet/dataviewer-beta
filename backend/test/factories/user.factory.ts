@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/modules/users/schemas/user.schema';
+import { Role } from 'src/modules/users/enums/role.enum';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 
 export function makeUser(override: Partial<User> = {}) {
   return {
@@ -10,7 +12,7 @@ export function makeUser(override: Partial<User> = {}) {
     email: faker.internet.email(),
     password: faker.internet.password(),
     emailConfirmed: override.emailConfirmed ?? false,
-    profile: 'admin',
+    role: Role.STUDENT,
     avatar: faker.image.avatar(),
     registrationNumber: faker.string.uuid(),
     ...override,
@@ -19,10 +21,15 @@ export function makeUser(override: Partial<User> = {}) {
 
 @Injectable()
 export class UserFactory {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) 
+    private userModel: Model<UserDocument>,
+    private bcryptService: BcryptService,
+  ) {}
 
   async create(data: Partial<User> = {}): Promise<UserDocument> {
     const userData = makeUser(data);
+    userData.password = await this.bcryptService.hashPassword(userData.password);
 
     const savedUser = new this.userModel(userData);
     await savedUser.save();

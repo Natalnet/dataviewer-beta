@@ -1,46 +1,43 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Delete,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Controller, Get, Body, Patch, Delete, UseGuards, Param, HttpCode } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RequestWithUser } from 'src/types/requests';
+import { UserResponseDto } from './dto/user-response.dto';
+import { GetUser } from 'src/shared/decorators/get-user.decorator';
+import { JwtPayload } from '../auth/interfaces/jwt-payload';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  async getProfile(@GetUser() userPayload: JwtPayload) {
+    return this.usersService.findOne(userPayload.sub);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('info')
-  getProfile(@Request() req: RequestWithUser) {
-    return this.usersService.findOne(req.user.userId);
+  @Get()
+  async findAll() {
+    return this.usersService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch('update-account')
-  update(
-    @Request() req: RequestWithUser,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return this.usersService.update(req.user.userId, updateUserDto);
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.usersService.findOne(id);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete('delete-account')
-  remove(@Request() req: RequestWithUser) {
-    return this.usersService.remove(req.user.userId);
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(204)
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    await this.usersService.delete(id);
   }
 }

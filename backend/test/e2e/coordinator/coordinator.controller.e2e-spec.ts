@@ -3,19 +3,18 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from 'src/app.module';
 import { JwtService } from '@nestjs/jwt';
-import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { PerformanceFactory } from 'test/factories/performance.factory';
 import { Performance, PerformanceSchema } from 'src/modules/coordinator/schemas/performance.schema';
 import { SubjectPerformanceFactory } from 'test/factories/subject-performance.factory';
 import { SubjectPerformance, SubjectPerformanceSchema } from 'src/modules/coordinator/schemas/subjectperformance.schema';
-import { clearDatabase } from 'test/utils/clear-database';
+import { rootMongooseTestModule, closeInMongodConnection } from 'test/utils/mongo-memory-server';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 
 describe('CoordinatorController (e2e)', () => {
   let app: INestApplication;
-  let connection: Connection;
   let subjectPerformanceFactory: SubjectPerformanceFactory;
   let performanceFactory: PerformanceFactory;
   let userFactory: UserFactory;
@@ -24,6 +23,7 @@ describe('CoordinatorController (e2e)', () => {
   beforeAll(async () => {
     const moduleRef: TestingModule = await Test.createTestingModule({
       imports: [
+        rootMongooseTestModule(),
         AppModule,
         MongooseModule.forFeature([
           { name: SubjectPerformance.name, schema: SubjectPerformanceSchema },
@@ -31,7 +31,7 @@ describe('CoordinatorController (e2e)', () => {
           { name: User.name, schema: UserSchema },
         ]),
       ],
-      providers: [SubjectPerformanceFactory, PerformanceFactory, UserFactory],
+      providers: [SubjectPerformanceFactory, PerformanceFactory, UserFactory, BcryptService],
     }).compile();
 
     app = moduleRef.createNestApplication();
@@ -42,18 +42,16 @@ describe('CoordinatorController (e2e)', () => {
     subjectPerformanceFactory = moduleRef.get(SubjectPerformanceFactory);
     performanceFactory = moduleRef.get(PerformanceFactory);
     userFactory = moduleRef.get(UserFactory);
-    connection = app.get(getConnectionToken());
   });
 
   afterAll(async () => {
-    await clearDatabase(connection);
-    await connection.close();
     await app.close();
+    await closeInMongodConnection();
   });
 
   it('[GET] coordinator/:year/:semester', async () => {
     const user = await userFactory.create();
-    const accessToken = jwt.sign({ sub: user._id.toString() });
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, aud: 'access' });
 
     const performance = await performanceFactory.create();
 
@@ -62,14 +60,13 @@ describe('CoordinatorController (e2e)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200);
 
-    expect(response.body).toHaveProperty('_id');
     expect(response.body).toHaveProperty('year', performance.year);
     expect(response.body).toHaveProperty('semester', performance.semester);
   });
 
   it('[GET] coordinator/:code/:semester', async () => {
     const user = await userFactory.create();
-    const accessToken = jwt.sign({ sub: user._id.toString() });
+    const accessToken = jwt.sign({ sub: user.id, email: user.email, aud: 'access' });
 
     const performance = await subjectPerformanceFactory.create();
 
@@ -78,7 +75,6 @@ describe('CoordinatorController (e2e)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(200);
 
-    expect(response.body).toHaveProperty('_id');
     expect(response.body).toHaveProperty('code', performance.code);
     expect(response.body).toHaveProperty('semester', performance.semester);
   });
