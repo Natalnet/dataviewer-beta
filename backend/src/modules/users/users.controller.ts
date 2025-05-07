@@ -12,7 +12,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@GetUser() userPayload: JwtPayload): Promise<UserResponseDto> {
+  async getProfile(@GetUser() userPayload: JwtPayload) {
     return this.usersService.findOne(userPayload.sub);
   }
 
@@ -24,7 +24,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<UserResponseDto> {
+  async findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
