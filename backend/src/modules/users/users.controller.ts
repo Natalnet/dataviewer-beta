@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserResponseDto } from './dto/user-response.dto';
 import { GetUser } from 'src/shared/decorators/get-user.decorator';
+import { JwtPayload } from '../auth/interfaces/jwt-payload';
 
 @Controller('users')
 export class UsersController {
@@ -11,7 +12,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@GetUser() userPayload: JwtPayload) {
+  async getProfile(@GetUser() userPayload: JwtPayload): Promise<UserResponseDto> {
     return this.usersService.findOne(userPayload.sub);
   }
 
