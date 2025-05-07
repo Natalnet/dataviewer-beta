@@ -13,7 +13,7 @@ import { UserFactory } from 'test/factories/user.factory';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { randomUUID } from 'crypto';
 import { rootMongooseTestModule, closeInMongodConnection } from 'test/utils/mongo-memory-server';
-import { BcryptService } from 'src/modules/auth/bcrypt.service';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 
 describe('QuestionsController (e2e)', () => {
   let app: INestApplication;

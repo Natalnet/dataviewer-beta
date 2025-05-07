@@ -6,7 +6,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { UserResponseDto } from './dto/user-response.dto';
 import { mapToDto } from 'src/utils/mapper.util';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { BcryptService } from '../auth/bcrypt.service';
+import { BcryptService } from '../auth/services/bcrypt.service';
 
 @Injectable()
 export class UsersService {

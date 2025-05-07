@@ -11,7 +11,7 @@ import { Performance, PerformanceSchema } from 'src/modules/coordinator/schemas/
 import { SubjectPerformanceFactory } from 'test/factories/subject-performance.factory';
 import { SubjectPerformance, SubjectPerformanceSchema } from 'src/modules/coordinator/schemas/subjectperformance.schema';
 import { rootMongooseTestModule, closeInMongodConnection } from 'test/utils/mongo-memory-server';
-import { BcryptService } from 'src/modules/auth/bcrypt.service';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 
 describe('CoordinatorController (e2e)', () => {
   let app: INestApplication;

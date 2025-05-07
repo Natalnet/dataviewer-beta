@@ -1,11 +1,11 @@
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { SignUpDto } from './dto/sign-up.dto';
-import { TokenService } from './token.service';
-import { UserResponseDto } from '../users/dto/user-response.dto';
-import { AuthResponseDto } from './dto/auth-response.dto';
 import { mapToDto } from 'src/utils/mapper.util';
+import { TokenService } from './token.service';
+import { UsersService } from 'src/modules/users/users.service';
 import { BcryptService } from './bcrypt.service';
+import { UserResponseDto } from 'src/modules/users/dto/user-response.dto';
+import { AuthResponseDto } from '../dto/auth-response.dto';
+import { SignUpDto } from '../dto/sign-up.dto';
 
 @Injectable()
 export class AuthService {
@@ -46,8 +46,9 @@ export class AuthService {
       throw new ConflictException('Email is already registered');
     }
 
-    const existingRegistrationNumber = await this.usersService.findOneByRegistrationNumber(registrationNumber);
-    
+    const existingRegistrationNumber =
+      await this.usersService.findOneByRegistrationNumber(registrationNumber);
+
     if (existingRegistrationNumber) {
       throw new ConflictException('Registration number is already registered');
     }

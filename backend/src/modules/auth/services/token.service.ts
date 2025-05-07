@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
-import { RefreshToken, RefreshTokenDocument } from './schemas/refresh-token.schema';
+import { RefreshToken, RefreshTokenDocument } from '../schemas/refresh-token.schema';
 import { Model } from 'mongoose';
 import { add } from 'date-fns';
 import { JwtService } from '@nestjs/jwt';
-import { UserResponseDto } from '../users/dto/user-response.dto';
+import { UserResponseDto } from '../../users/dto/user-response.dto';
 import { randomUUID } from 'crypto';
-import { AuthResponseDto } from './dto/auth-response.dto';
+import { AuthResponseDto } from '../dto/auth-response.dto';
 import { BcryptService } from './bcrypt.service';
 
 @Injectable()

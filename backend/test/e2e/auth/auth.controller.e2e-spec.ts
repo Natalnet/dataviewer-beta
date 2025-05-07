@@ -7,7 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/modules/users/schemas/user.schema';
 import { UserFactory } from 'test/factories/user.factory';
 import { rootMongooseTestModule, closeInMongodConnection } from 'test/utils/mongo-memory-server';
-import { BcryptService } from 'src/modules/auth/bcrypt.service';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;

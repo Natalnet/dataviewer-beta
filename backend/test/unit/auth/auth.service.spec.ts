@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from 'src/modules/auth/auth.service';
+import { AuthService } from 'src/modules/auth/services/auth.service';
 import { UsersService } from 'src/modules/users/users.service';
-import { TokenService } from 'src/modules/auth/token.service';
-import { BcryptService } from 'src/modules/auth/bcrypt.service';
+import { TokenService } from 'src/modules/auth/services/token.service';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { SignUpDto } from 'src/modules/auth/dto/sign-up.dto';
 import { AuthResponseDto } from 'src/modules/auth/dto/auth-response.dto';

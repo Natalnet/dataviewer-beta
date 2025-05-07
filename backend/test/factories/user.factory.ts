@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/modules/users/schemas/user.schema';
 import { Role } from 'src/modules/users/enums/role.enum';
-import { BcryptService } from 'src/modules/auth/bcrypt.service';
+import { BcryptService } from 'src/modules/auth/services/bcrypt.service';
 
 export function makeUser(override: Partial<User> = {}) {
   return {
