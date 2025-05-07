@@ -9,6 +9,7 @@ import { UserResponseDto } from '../../users/dto/user-response.dto';
 import { randomUUID } from 'crypto';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { BcryptService } from './bcrypt.service';
+import { JwtPayload } from '../interfaces/jwt-payload';
 
 @Injectable()
 export class TokenService {
