@@ -2,24 +2,18 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Semester } from 'src/types/semester';
 
-export type SubjectPerformanceDocument = HydratedDocument<SubjectPerformance>;
+export type SubjectPerformanceDocument = HydratedDocument<SubjectPerformance>
 
-@Schema()
-export class SubjectPerformance {
-  @Prop()
-  semester: string;
-
+@Schema({ _id: false })
+export class PerformanceStats {
   @Prop()
   approved: number;
-
+  
   @Prop()
   approvedByGrade: number;
 
   @Prop()
   canceled: number;
-
-  @Prop()
-  code: string;
 
   @Prop()
   disapproved: number;
@@ -41,9 +35,21 @@ export class SubjectPerformance {
 
   @Prop()
   locked: number;
+}
+
+@Schema()
+export class SubjectPerformance {
+  @Prop()
+  semester: string;
+
+  @Prop()
+  code: string;
 
   @Prop()
   name: string;
+
+  @Prop({ type: PerformanceStats })
+  stats: PerformanceStats;
 }
 
 export const SubjectPerformanceSchema = SchemaFactory.createForClass(SubjectPerformance);
