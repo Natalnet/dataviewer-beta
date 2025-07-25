@@ -22,6 +22,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@bull-board/api": "^6.9.6",
+    "@bull-board/express": "^6.9.6",
+    "@bull-board/ui": "^6.9.6",
     "@faker-js/faker": "^9.6.0",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/bullmq": "^11.0.2",
@@ -62,6 +65,7 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.1",
+    "@types/handlebars": "^4.1.0",
     "@types/jest": "29.5.14",
     "@types/mjml": "^4.7.4",
     "@types/node": "^22.13.14",
