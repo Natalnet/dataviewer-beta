@@ -1,22 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import * as cookieParser from 'cookie-parser';
+import { setupMiddlewares } from './config/setupMiddlewares';
+import { setupCors } from './config/setupCors';
+import { setupPipes } from './config/setupPipes';
+import { BullQueueProviderModule } from './providers/queue/bull.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser());
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-  });
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: true,
-    }),
-  );
+  
+  setupMiddlewares(app);
+  setupCors(app);
+  setupPipes(app);
+  const bullQueueProvider = app.get(BullQueueProviderModule);
+  bullQueueProvider.configure(app);
+
   await app.listen(3333);
 }
 bootstrap();

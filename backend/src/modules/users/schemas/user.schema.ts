@@ -18,6 +18,9 @@ export class User {
   @Prop({ default: false })
   emailConfirmed: boolean;
 
+  @Prop({ default: null })
+  confirmationToken: string | null;
+
   @Prop({ required: true, enum: Role, default: Role.STUDENT })
   role: Role;
 

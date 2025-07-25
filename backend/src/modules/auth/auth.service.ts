@@ -1,11 +1,13 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { TokenService } from './token.service';
 import { UserResponseDto } from '../users/dto/user-response.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
-import { mapToDto } from 'src/utils/mapper.util';
+import { mapToDto } from 'src/common/utils/mapper.util';
 import { BcryptService } from './bcrypt.service';
+import { MailService } from '../mail/mail.service';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +15,7 @@ export class AuthService {
     private tokenService: TokenService,
     private usersService: UsersService,
     private bcryptService: BcryptService,
+    private mailService: MailService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserResponseDto> {
@@ -39,7 +42,6 @@ export class AuthService {
 
   async signUp(signUpDto: SignUpDto): Promise<UserResponseDto> {
     const { name, email, password, registrationNumber } = signUpDto;
-
     const existingUser = await this.usersService.findOneByEmail(email);
 
     if (existingUser) {
@@ -53,12 +55,28 @@ export class AuthService {
     }
 
     const hashedPassword = await this.bcryptService.hashPassword(password);
-    return this.usersService.create({ name, email, password: hashedPassword, registrationNumber });
+
+    const confirmationToken = randomUUID();
+    const user = await this.usersService.create({ 
+      name,
+      email,
+      password: hashedPassword,
+      registrationNumber,
+      emailConfirmed: false,
+      confirmationToken,
+    });
+
+    await this.mailService.sendConfirmationEmail({
+      to: user.email,
+      name: user.name,
+      confirmationToken,
+    });
+
+    return user;
   }
 
   async refreshToken(refreshToken: string): Promise<AuthResponseDto> {
     const token = await this.tokenService.validateRefreshToken(refreshToken);
-
     const user = await this.usersService.findOne(token.userId.toString());
 
     await this.tokenService.revokeToken(token);
@@ -72,5 +90,16 @@ export class AuthService {
   async signOut(refreshToken: string): Promise<void> {
     const token = await this.tokenService.validateRefreshToken(refreshToken);
     await this.tokenService.revokeToken(token);
+  }
+
+  async confirmAccount(token: string): Promise<void> {
+    const user = await this.usersService.findByConfirmationToken(token);
+    if (!user) {
+      throw new BadRequestException('Invalid or expired token');
+    }
+    await this.usersService.update(user.id, {
+      emailConfirmed: true,
+      confirmationToken: null,
+    });
   }
 }

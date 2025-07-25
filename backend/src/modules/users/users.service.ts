@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
 import { UserResponseDto } from './dto/user-response.dto';
-import { mapToDto } from 'src/utils/mapper.util';
+import { mapToDto } from 'src/common/utils/mapper.util';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { BcryptService } from '../auth/bcrypt.service';
 
@@ -72,5 +72,9 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('User not found.');
     }
+  }
+
+  async findByConfirmationToken(token: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ confirmationToken: token }).exec();
   }
 }

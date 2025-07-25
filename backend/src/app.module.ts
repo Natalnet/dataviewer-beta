@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
@@ -8,14 +7,14 @@ import { CoordinatorModule } from './modules/coordinator/coordinator.module';
 import { StudentsModule } from './modules/students/students.module';
 import { MailModule } from './modules/mail/mail.module';
 import { QuestionsModule } from './modules/questions/questions.module';
+import { MongoDatabaseProviderModule } from './providers/database/mongo.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.DATABASE_HOST, {
-      authMechanism: 'DEFAULT',
-      dbName: process.env.DATABASE_NAME,
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
+    MongoDatabaseProviderModule,
     UsersModule,
     AuthModule,
     ClassesModule,

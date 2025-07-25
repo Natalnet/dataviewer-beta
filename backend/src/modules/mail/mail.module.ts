@@ -1,29 +1,28 @@
-import { MailerModule } from '@nestjs-modules/mailer';
 import { Module } from '@nestjs/common';
+import { MailService } from './mail.service';
+import { MailProducer } from './mail.producer';
+import { MailProcessor } from './mail.processor';
+import { MailJobFactory } from './factories/mail-job.factory';
+import { SendWelcomeMailJob } from './jobs/send-welcome-mail.job';
+import { SendResetPasswordMailJob } from './jobs/send-reset-password-mail.job';
+import { BullQueueProviderModule } from 'src/providers/queue/bull.module';
+import { MailerProviderModule } from 'src/providers/mail/mailer.module';
+import { SendConfirmationMailJob } from './jobs/send-confirmation-mail.job';
 
 @Module({
   imports: [
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.SMTP_HOST,
-        port: parseInt(process.env.SMTP_PORT),
-        secure: false,
-
-        auth: {
-          user: process.env.SMTP_USERNAME,
-          pass: process.env.SMTP_PASSWORD,
-        },
-
-        ignoreTLS: true,
-      },
-
-      defaults: {
-        from: '"',
-      },
-    }),
+    BullQueueProviderModule,
+    MailerProviderModule,
   ],
-
-  providers: [MailerModule],
-  exports: [MailerModule],
+  providers: [
+    MailService,
+    MailProducer,
+    MailProcessor,
+    MailJobFactory,
+    SendWelcomeMailJob,
+    SendResetPasswordMailJob,
+    SendConfirmationMailJob,
+  ],
+  exports: [MailService],
 })
 export class MailModule {}

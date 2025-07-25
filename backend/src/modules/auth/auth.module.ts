@@ -15,6 +15,7 @@ import {
 import { RefreshToken, RefreshTokenSchema } from './schemas/refresh-token.schema';
 import { TokenService } from './token.service';
 import { BcryptService } from './bcrypt.service';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { BcryptService } from './bcrypt.service';
     UsersModule,
     PassportModule,
     ConfigModule,
+    MailModule
   ],
   providers: [AuthService, TokenService, BcryptService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
