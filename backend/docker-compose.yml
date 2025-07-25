@@ -10,5 +10,18 @@ services:
     volumes:
       - mongodb_vol_dataviewer:/data/db
 
+  redis:
+    container_name: redis_dataviewer
+    image: redis:7.0
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+
 volumes:
-  mongodb_vol_dataviewer: 
+  mongodb_vol_dataviewer:
+  redis_data:
