@@ -7,6 +7,7 @@ import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { SignUpDto } from 'src/modules/auth/dto/sign-up.dto';
 import { AuthResponseDto } from 'src/modules/auth/dto/auth-response.dto';
 import { Role } from 'src/modules/users/enums/role.enum';
+import { MailService } from 'src/modules/mail/mail.service';
 
 describe('AuthService (unit)', () => {
   let authService: AuthService;
@@ -33,6 +34,11 @@ describe('AuthService (unit)', () => {
     comparePasswords: jest.fn(),
   };
 
+  const mockMailService = {
+    sendConfirmationEmail: jest.fn(),
+    sendWelcomeEmail: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -48,6 +54,10 @@ describe('AuthService (unit)', () => {
         {
           provide: BcryptService,
           useValue: mockBcryptService,
+        },
+        {
+          provide: MailService,
+          useValue: mockMailService,
         },
       ],
     }).compile();
@@ -71,6 +81,7 @@ describe('AuthService (unit)', () => {
         role: Role.STUDENT,
         avatar: null,
         registrationNumber: '123456',
+        confirmationToken: null,
       };
 
       usersService.findOneByEmail.mockResolvedValue(mockUser);
@@ -101,6 +112,7 @@ describe('AuthService (unit)', () => {
         role: Role.STUDENT,
         avatar: null,
         registrationNumber: null,
+        confirmationToken: null,
       };
 
       usersService.findOneByEmail.mockResolvedValue(mockUser);
@@ -143,6 +155,8 @@ describe('AuthService (unit)', () => {
         email: 'test@example.com',
         password: 'hashedPassword',
         registrationNumber: '123456',
+        emailConfirmed: false,
+        confirmationToken: expect.any(String),
       });
       expect(result).toEqual(mockUser);
     });
@@ -165,6 +179,7 @@ describe('AuthService (unit)', () => {
         role: Role.STUDENT,
         avatar: null,
         registrationNumber: '123456',
+        confirmationToken: null,
       };
 
       usersService.findOneByEmail.mockResolvedValue(mockUser);
